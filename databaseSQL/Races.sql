@@ -1,0 +1,12 @@
+drop table if exists races;
+create table races (race_id int identity(0), name char(10));
+insert into races(name) values('Dwarf');
+insert into races(name) values('Elf');
+insert into races(name) values('Halfling');
+insert into races(name) values('Human');
+insert into races(name) values('Dragonborn');
+insert into races(name) values('Gnome');
+insert into races(name) values('Half-Elf');
+insert into races(name) values('Half-Orc');
+insert into races(name) values('Tiefling');
+select * from races;

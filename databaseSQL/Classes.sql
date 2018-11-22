@@ -1,0 +1,15 @@
+drop table if exists classes;
+create table classes (class_id int identity(0), name char(9));
+insert into classes(name) values('Barbarian');
+insert into classes(name) values('Bard');
+insert into classes(name) values('Cleric');
+insert into classes(name) values('Druid');
+insert into classes(name) values('Fighter');
+insert into classes(name) values('Monk');
+insert into classes(name) values('Paladin');
+insert into classes(name) values('Ranger');
+insert into classes(name) values('Rogue');
+insert into classes(name) values('Sorcerer');
+insert into classes(name) values('Warlock');
+insert into classes(name) values('Wizard');
+select * from classes;
