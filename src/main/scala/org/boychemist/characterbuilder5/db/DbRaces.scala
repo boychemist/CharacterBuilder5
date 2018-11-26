@@ -32,11 +32,10 @@ object DbRaces {
   def getRacesFromDb(db: Database) = {
     val classes = TableQuery[Classes]
     val resultFuture = db.run(classes.result).map(_.foreach {
-      case (r: Tables.ClassesRow) =>
-        RacesFromDb.addRace(r.classId, r.name)
+      case r: Tables.ClassesRow => RacesFromDb.addRace(r.classId, r.name)
     })
     Await.result(resultFuture, Duration.Inf)
+    RacesFromDb.getAllRaces
   }
-  RacesFromDb.getAllRaces
 
 }
