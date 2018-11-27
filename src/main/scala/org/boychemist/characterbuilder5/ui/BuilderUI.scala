@@ -21,6 +21,7 @@ class BuilderUI (db: Database, stage: Stage) {
       root = new TabPane {
         tabClosingPolicy = TabClosingPolicy.Unavailable
         minWidth = 400
+        maxHeight = 800
         tabs = Seq(races)
     }
   }

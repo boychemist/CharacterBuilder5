@@ -2,8 +2,8 @@ package org.boychemist.characterbuilder5.ui
 
 import org.boychemist.characterbuilder5.dbInterface.DbRaces
 import org.boychemist.characterbuilder5.dbInterface.RaceFromDb
-import org.boychemist.characterbuilder5.races.{Dnd5HillDwarf, Dnd5MountainDwarf}
-import org.boychemist.characterbuilder5.ui.races.Dwarf
+import org.boychemist.characterbuilder5.races.{Dnd5HighElf, Dnd5HillDwarf, Dnd5MountainDwarf, Dnd5WoodElf}
+import org.boychemist.characterbuilder5.ui.races.{Dwarf, Elf}
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 import scalafx.scene.Node
@@ -20,6 +20,8 @@ class RacesTab(db: Database) {
   }
   pane += Dwarf.dwarfTab(Dnd5HillDwarf)
   pane += Dwarf.dwarfTab(Dnd5MountainDwarf)
+  pane += Elf.elfTab(Dnd5HighElf)
+  pane += Elf.elfTab(Dnd5WoodElf)
 
   private val raceTab = new Tab{
     text = "Races"
