@@ -1,4 +1,4 @@
-package org.boychemist.characterbuilder5.db
+package org.boychemist.characterbuilder5.dbInterface
 
 import Tables._
 import slick.jdbc.H2Profile.api._
@@ -9,11 +9,6 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import slick.jdbc.JdbcBackend.Database
 
-
-class RaceFromDb(id: Int, rname: String) {
-  val raceId: Int = id
-  val name: String = rname
-}
 object RacesFromDb {
   val allLines = new ListBuffer[RaceFromDb]
 
@@ -30,9 +25,9 @@ object RacesFromDb {
 
 object DbRaces {
   def getRacesFromDb(db: Database) = {
-    val classes = TableQuery[Classes]
-    val resultFuture = db.run(classes.result).map(_.foreach {
-      case r: Tables.ClassesRow => RacesFromDb.addRace(r.classId, r.name)
+    val races = TableQuery[Races]
+    val resultFuture = db.run(races.result).map(_.foreach {
+      case r: Tables.RacesRow => RacesFromDb.addRace(r.raceId, r.name)
     })
     Await.result(resultFuture, Duration.Inf)
     RacesFromDb.getAllRaces

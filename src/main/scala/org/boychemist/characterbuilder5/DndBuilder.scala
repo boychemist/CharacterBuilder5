@@ -1,27 +1,19 @@
 package org.boychemist.characterbuilder5
 
-import slick.jdbc.H2Profile.api._
-import org.boychemist.characterbuilder5.db.Tables._
+import slick.jdbc.JdbcBackend.Database
+import scalafx.Includes._
+import scalafx.application.JFXApp
+import scalafx.application.JFXApp.PrimaryStage
+import scalafx.event.EventTarget
+import ui.BuilderUI
 
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-import scala.collection.mutable.ListBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
+object DndBuilder extends JFXApp  {
 
-class RaceFromDb(id: Int, rname: String) {
-  val raceId = id
-  val name = rname
-}
-object RaceFromDb {
-  var allLines = new ListBuffer[RaceFromDb]
+  val db = Database.forURL("jdbc:h2:~/character5", "sa", keepAliveConnection = true,
+    driver = "org.h2.Driver")
 
-  def addRace(id: Int, name: String) = {
-    allLines += new RaceFromDb(id, name)
+  stage = new PrimaryStage {
+    title = "Dungeons and Dragons V5 Character Builder"
   }
-
-  def getAllRaces: Seq[RaceFromDb] = allLines.toList
-}
-
-object DndBuilder {
-
+  val uiBuilder = new BuilderUI(db, stage)
 }

@@ -1,4 +1,4 @@
-package org.boychemist.characterbuilder5.db
+package org.boychemist.characterbuilder5.dbInterface
 
 // AUTO-GENERATED Slick data model
 /** Stand-alone Slick data model for immediate use */
