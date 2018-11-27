@@ -1,12 +1,9 @@
 package org.boychemist.characterbuilder5.ui.races
 
 import org.boychemist.characterbuilder5.races.Dnd5Race
-import scalafx.geometry.Pos
 import scalafx.scene.control.{Label, Tab, TextArea, TextField}
-import scalafx.scene.layout.{HBox, VBox}
+import scalafx.scene.layout.{GridPane, VBox}
 import scalafx.scene.text.Font
-
-import scala.collection.mutable.ListBuffer
 
 /**
   * Creates a tab containing the information about hill dwarves.
@@ -16,7 +13,8 @@ object Dwarf {
   def dwarfTab(dwarfRace: Dnd5Race): Tab =
   {
     val name = dwarfRace.race.toString
-    val hboxList = new ListBuffer[HBox]
+    val grid = new GridPane()
+    var rowNum = 1
 
     val sizeLabel = new Label(" Size ")
     val size = new TextField {
@@ -24,9 +22,9 @@ object Dwarf {
       editable = false
       maxWidth = 80
     }
-    hboxList += new HBox{
-      children = List(sizeLabel, size)
-    }
+    grid.addRow(rowNum, sizeLabel)
+    grid.addRow(rowNum, size)
+    rowNum += 1
 
     val speedLabel = new Label(" Base Speed ")
     val speed = new TextField {
@@ -34,9 +32,10 @@ object Dwarf {
       editable = false
       maxWidth = 30
     }
-    hboxList += new HBox{
-      children = List(speedLabel, speed)
-    }
+    grid.addRow(rowNum, speedLabel)
+    grid.addRow(rowNum, speed)
+    rowNum += 1
+
     if (dwarfRace.armorProficiencies.nonEmpty) {
       val armorLabel = new Label("Armor Proficiencies")
       val armor = new TextArea {
@@ -47,9 +46,9 @@ object Dwarf {
         maxWidth = 150
         wrapText = true
       }
-      hboxList += new HBox {
-        children = List(armorLabel, armor)
-      }
+      grid.addRow(rowNum, armorLabel)
+      grid.addRow(rowNum, armor)
+      rowNum += 1
     }
 
     val toolsLabel = new Label("Tool Proficiency")
@@ -62,9 +61,7 @@ object Dwarf {
       wrapText = true
     }
     tools.autosize()
-    hboxList += new HBox {
-      children = List(toolsLabel, tools)
-    }
+    rowNum += 1
 
     val languagesLabel = new Label(" Languages ")
     val languages = new TextArea {
@@ -73,9 +70,9 @@ object Dwarf {
       maxHeight = 45
       maxWidth = 100
     }
-    hboxList += new HBox{
-      children = List(languagesLabel, languages)
-    }
+    grid.addRow(rowNum, languagesLabel)
+    grid.addRow(rowNum, languages)
+    rowNum += 1
 
     val adjustmentsLabel = new Label(" Ability Adjustments")
     val adjustmentTexts =
@@ -88,17 +85,15 @@ object Dwarf {
       children = adjustmentTexts
       spacing = 2
     }
-    hboxList += new HBox {
-      children = List(adjustmentsLabel, adjustmentsBox)
-    }
+    grid.addRow(rowNum, adjustmentsLabel)
+    grid.addRow(rowNum, adjustmentsBox)
+    rowNum += 1
 
     val racialAbilitiesLabel = new Label(" Racial Abilities ") {
       font = new Font(18)
     }
-    hboxList += new HBox{
-      children = racialAbilitiesLabel
-      alignment = Pos.Center
-    }
+    grid.add(racialAbilitiesLabel, 1, rowNum, 2, 1)
+    rowNum += 1
 
     val raIter =
       dwarfRace.racialAbilities.iterator
@@ -112,19 +107,15 @@ object Dwarf {
         maxHeight = 150
         wrapText = true
       }
-      hboxList += new HBox{
-         children = List(label, desc)
-      }
+      grid.addRow(rowNum, label)
+      grid.addRow(rowNum, desc)
+      rowNum += 1
     }
 
     val hdTab = new Tab {
       text = name
     }
-    hdTab.content = new VBox{
-      children = hboxList.toList
-      spacing = 3.0
-    }
-    val content = hdTab.delegate.getContent
+    hdTab.content = grid
     hdTab
   }
 
