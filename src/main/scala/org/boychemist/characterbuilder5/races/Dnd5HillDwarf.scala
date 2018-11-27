@@ -9,7 +9,7 @@ object Dnd5HillDwarf extends Dnd5Race {
   override val skillProficiencies = List()
   override val weaponProficiencies = List("battleaxe", "handaxe", "light hammer", "warhammer")
   override val armorProficiencies = List() // only applies to Mountain Dwarves
-  override val toolsForProficiency = List("smith's tools", "brewer's supplies", "mason's tools")
+  override val toolsForProficiency = List("You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.")
   override val abilityAdjustments = createHillDwarfAbilityAdjustments()
   override val racialAbilities = createHillDwarfRacialAbilities()
   override val languages = List(Dnd5LanguagesEnum.Common, Dnd5LanguagesEnum.Dwarvish)
