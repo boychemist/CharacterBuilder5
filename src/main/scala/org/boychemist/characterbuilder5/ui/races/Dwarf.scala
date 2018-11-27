@@ -6,7 +6,7 @@ import scalafx.scene.layout.{GridPane, VBox}
 import scalafx.scene.text.Font
 
 /**
-  * Creates a tab containing the information about hill dwarves.
+  * Creates a tab containing the information about dwarves.  Takes the specific dwarf class as an argument.
   */
 object Dwarf {
 
