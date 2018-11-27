@@ -1,7 +1,7 @@
 package org.boychemist.characterbuilder5.ui.races
 
 import org.boychemist.characterbuilder5.races.Dnd5Race
-import scalafx.scene.control.{Label, Tab, TextArea, TextField}
+import scalafx.scene.control._
 import scalafx.scene.layout.{GridPane, VBox}
 import scalafx.scene.text.Font
 
@@ -51,16 +51,30 @@ object Dwarf {
       rowNum += 1
     }
 
+    val weaponsLabel = new Label("Weapon Proficiencies")
+    val weapons = new TextArea {
+      text = dwarfRace.weaponProficiencies.mkString("\n")
+      editable = false
+      maxHeight = 80
+      editable = false
+      maxWidth = 90
+      wrapText = true
+    }
+    grid.addRow(rowNum, weaponsLabel)
+    grid.addRow(rowNum, weapons)
+    rowNum += 1
+
     val toolsLabel = new Label("Tool Proficiency")
     val tools = new TextArea {
       text = dwarfRace.toolsForProficiency.head
       editable = false
-      maxHeight = 90
+      maxHeight = 60
       editable = false
-      maxWidth = 200
+      maxWidth = 250
       wrapText = true
     }
-    tools.autosize()
+    grid.addRow(rowNum, toolsLabel)
+    grid.addRow(rowNum, tools)
     rowNum += 1
 
     val languagesLabel = new Label(" Languages ")
@@ -77,8 +91,9 @@ object Dwarf {
     val adjustmentsLabel = new Label(" Ability Adjustments")
     val adjustmentTexts =
       dwarfRace.abilityAdjustments.map(aa => new TextField {
-      text = " " + aa.ability.toString + ": +" + aa.amount + " "
-      editable = false
+        text = " " + aa.ability.toString + ": +" + aa.amount + " "
+        editable = false
+        maxWidth = 110
     })
     val adjustmentsBox =
     new VBox {
@@ -103,8 +118,8 @@ object Dwarf {
       val desc = new TextArea() {
         text = anAbility.description
         editable = false
-        maxWidth = 200
-        maxHeight = 150
+        maxWidth = 250
+        maxHeight = 110
         wrapText = true
       }
       grid.addRow(rowNum, label)
@@ -115,7 +130,9 @@ object Dwarf {
     val hdTab = new Tab {
       text = name
     }
-    hdTab.content = grid
+    hdTab.content = new ScrollPane {
+      content = grid
+    }
     hdTab
   }
 
