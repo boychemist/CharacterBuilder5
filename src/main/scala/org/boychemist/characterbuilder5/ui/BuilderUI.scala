@@ -13,9 +13,8 @@ class BuilderUI (db: Database, stage: Stage) {
   private val races = new RacesTab(db).racesTab
   val topPane = new TabPane {
     tabClosingPolicy = TabClosingPolicy.Unavailable
-    maxWidth = 460
-    minWidth = 380
-    prefWidth = 380
+    maxWidth = 720
+    minWidth = 700
     maxHeight = 700
   }
   topPane += races

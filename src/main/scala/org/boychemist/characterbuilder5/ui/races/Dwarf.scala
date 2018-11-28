@@ -3,7 +3,7 @@ package org.boychemist.characterbuilder5.ui.races
 import org.boychemist.characterbuilder5.races.Dnd5Race
 import scalafx.scene.control._
 import scalafx.scene.layout.{GridPane, VBox}
-import scalafx.scene.text.Font
+import scalafx.scene.text.{Font, FontWeight}
 
 /**
   * Creates a tab containing the information about dwarves.  Takes the specific dwarf class as an argument.
@@ -13,11 +13,11 @@ object Dwarf {
   def dwarfTab(dwarfRace: Dnd5Race): Tab =
   {
     val name = dwarfRace.race.toString
-    val grid = new GridPane()
+    val grid = GeneralRace.wideGrid()
     grid.style = "-fx-background-color: skyblue"
     var rowNum = 1
 
-    val sizeLabel = new Label(" Size ")
+    val sizeLabel = GeneralRace.enhancedLabel(" Size ")
     val size = new TextField {
       text = dwarfRace.size.toString
       editable = false
@@ -27,7 +27,7 @@ object Dwarf {
     grid.addRow(rowNum, size)
     rowNum += 1
 
-    val speedLabel = new Label(" Base Speed ")
+    val speedLabel = GeneralRace.enhancedLabel(" Base Speed ")
     val speed = new TextField {
       text = "" + dwarfRace.baseSpeed
       editable = false
@@ -38,7 +38,7 @@ object Dwarf {
     rowNum += 1
 
     if (dwarfRace.armorProficiencies.nonEmpty) {
-      val armorLabel = new Label("Armor Proficiencies")
+      val armorLabel = GeneralRace.enhancedLabel("Armor Proficiencies")
       val armor = new TextArea {
         text = dwarfRace.armorProficiencies.mkString("\n")
         editable = false
@@ -52,7 +52,7 @@ object Dwarf {
       rowNum += 1
     }
 
-    val weaponsLabel = new Label("Weapon Proficiencies")
+    val weaponsLabel = GeneralRace.enhancedLabel("Weapon Proficiencies")
     val weapons = new TextArea {
       text = dwarfRace.weaponProficiencies.mkString("\n")
       editable = false
@@ -65,7 +65,7 @@ object Dwarf {
     grid.addRow(rowNum, weapons)
     rowNum += 1
 
-    val toolsLabel = new Label("Tool Proficiency")
+    val toolsLabel = GeneralRace.enhancedLabel("Tool Proficiency")
     val tools = new TextArea {
       text = dwarfRace.toolsForProficiency.head
       editable = false
@@ -78,7 +78,7 @@ object Dwarf {
     grid.addRow(rowNum, tools)
     rowNum += 1
 
-    val languagesLabel = new Label(" Languages ")
+    val languagesLabel = GeneralRace.enhancedLabel(" Languages ")
     val languages = new TextArea {
       text = dwarfRace.languages.mkString("\n")
       editable = false
@@ -89,7 +89,7 @@ object Dwarf {
     grid.addRow(rowNum, languages)
     rowNum += 1
 
-    val adjustmentsLabel = new Label(" Ability Adjustments")
+    val adjustmentsLabel = GeneralRace.enhancedLabel(" Ability Adjustments")
     val adjustmentTexts =
       dwarfRace.abilityAdjustments.map(aa => new TextField {
         text = " " + aa.ability.toString + ": +" + aa.amount + " "
@@ -106,7 +106,7 @@ object Dwarf {
     rowNum += 1
 
     val racialAbilitiesLabel = new Label(" Racial Abilities ") {
-      font = new Font(18)
+      font = Font.font("Sans Serif", FontWeight.Bold, 16)
     }
     grid.add(racialAbilitiesLabel, 1, rowNum, 2, 1)
     rowNum += 1
@@ -115,14 +115,8 @@ object Dwarf {
       dwarfRace.racialAbilities.iterator
     while (raIter.hasNext) {
       val anAbility = raIter.next()
-      val label = new Label(" " + anAbility.abilityName + " ")
-      val desc = new TextArea() {
-        text = anAbility.description
-        editable = false
-        maxWidth = 250
-        maxHeight = 110
-        wrapText = true
-      }
+      val label = GeneralRace.enhancedLabel(" " + anAbility.abilityName + " ")
+      val desc = GeneralRace.wideTextArea(anAbility.description)
       grid.addRow(rowNum, label)
       grid.addRow(rowNum, desc)
       rowNum += 1
@@ -133,7 +127,6 @@ object Dwarf {
     }
     hdTab.content = new ScrollPane {
       content = grid
-      style = "-fx-background-color: blue"
     }
     hdTab
   }
