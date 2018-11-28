@@ -11,18 +11,16 @@ import slick.jdbc.JdbcBackend.Database
   */
 class BuilderUI (db: Database, stage: Stage) {
   private val races = new RacesTab(db).racesTab
-
-//  val tabPane = new TabPane {
-//    minWidth = 400
-//    tabs = Seq(
-//      races,
-//    )
-    stage.scene = new Scene {
-      root = new TabPane {
-        tabClosingPolicy = TabClosingPolicy.Unavailable
-        minWidth = 400
-        maxHeight = 800
-        tabs = Seq(races)
-    }
+  val topPane = new TabPane {
+    tabClosingPolicy = TabClosingPolicy.Unavailable
+    maxWidth = 460
+    minWidth = 380
+    prefWidth = 380
+    maxHeight = 700
   }
+  topPane += races
+
+    stage.scene = new Scene {
+      root = topPane
+    }
 }

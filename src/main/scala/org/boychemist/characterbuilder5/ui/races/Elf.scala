@@ -2,7 +2,7 @@ package org.boychemist.characterbuilder5.ui.races
 
 import org.boychemist.characterbuilder5.races.Dnd5Race
 import scalafx.scene.control._
-import scalafx.scene.layout.{GridPane, VBox}
+import scalafx.scene.layout.{Background, CornerRadii, GridPane, VBox}
 import scalafx.scene.text.Font
 
 object Elf {
@@ -10,6 +10,7 @@ object Elf {
   def elfTab(elfRace: Dnd5Race): Tab =
   {
     val grid = new GridPane()
+    grid.style = "-fx-background-color: skyblue"
     var rowNum = 1
 
     val sizeLabel = new Label(" Size ")

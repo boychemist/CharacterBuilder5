@@ -17,6 +17,7 @@ class RacesTab(db: Database) {
 
   val pane = new TabPane {
     tabClosingPolicy = TabClosingPolicy.Unavailable
+    style = "-fx-background-color: blue"
   }
   pane += Dwarf.dwarfTab(Dnd5HillDwarf)
   pane += Dwarf.dwarfTab(Dnd5MountainDwarf)

@@ -14,6 +14,7 @@ object Dwarf {
   {
     val name = dwarfRace.race.toString
     val grid = new GridPane()
+    grid.style = "-fx-background-color: skyblue"
     var rowNum = 1
 
     val sizeLabel = new Label(" Size ")
@@ -132,6 +133,7 @@ object Dwarf {
     }
     hdTab.content = new ScrollPane {
       content = grid
+      style = "-fx-background-color: blue"
     }
     hdTab
   }
