@@ -1,11 +1,11 @@
-package org.boychemist.characterbuilder5.ui.races
+package org.boychemist.characterbuilder5.ui
 
 import org.boychemist.characterbuilder5.races.Dnd5Race
 import scalafx.scene.control._
 import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 
-object GeneralRace {
+object GeneralRaceTab {
 
   def enhancedLabel(text: String): Label = {
     val aLabel = new Label(text) {
@@ -71,6 +71,21 @@ object GeneralRace {
     grid.addRow(rowNum, speed)
     rowNum += 1
 
+    if (aRace.armorProficiencies.nonEmpty) {
+      val armorLabel = GeneralRaceTab.enhancedLabel("Armor Proficiencies")
+      val armor = new TextArea {
+        text = aRace.armorProficiencies.mkString("\n")
+        editable = false
+        maxHeight = 45
+        editable = false
+        maxWidth = 150
+        wrapText = true
+      }
+      grid.addRow(rowNum, armorLabel)
+      grid.addRow(rowNum, armor)
+      rowNum += 1
+    }
+
     if (aRace.weaponProficiencies.nonEmpty) {
       val weaponsLabel = enhancedLabel("Weapon Proficiencies")
       val weapons = new TextArea {
@@ -83,6 +98,21 @@ object GeneralRace {
       }
       grid.addRow(rowNum, weaponsLabel)
       grid.addRow(rowNum, weapons)
+      rowNum += 1
+    }
+
+    if (aRace.toolsForProficiency.nonEmpty) {
+      val toolsLabel = GeneralRaceTab.enhancedLabel("Tool Proficiency")
+      val tools = new TextArea {
+        text = aRace.toolsForProficiency.head
+        editable = false
+        maxHeight = 60
+        editable = false
+        maxWidth = 250
+        wrapText = true
+      }
+      grid.addRow(rowNum, toolsLabel)
+      grid.addRow(rowNum, tools)
       rowNum += 1
     }
 

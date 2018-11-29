@@ -3,7 +3,7 @@ package org.boychemist.characterbuilder5.ui
 import org.boychemist.characterbuilder5.dbInterface.DbRaces
 import org.boychemist.characterbuilder5.dbInterface.RaceFromDb
 import org.boychemist.characterbuilder5.races._
-import org.boychemist.characterbuilder5.ui.races.{Dwarf, GeneralRace}
+import GeneralRaceTab
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 import slick.jdbc.JdbcBackend.Database
@@ -16,20 +16,20 @@ class RacesTab(db: Database) {
     val pane = new TabPane {
       tabClosingPolicy = TabClosingPolicy.Unavailable
     }
-    pane += Dwarf.dwarfTab(Dnd5HillDwarf)
-    pane += Dwarf.dwarfTab(Dnd5MountainDwarf)
-    pane += GeneralRace.raceTab(Dnd5HighElf)
-    pane += GeneralRace.raceTab(Dnd5WoodElf)
-    pane += GeneralRace.raceTab(Dnd5Drow)
-    pane += GeneralRace.raceTab(Dnd5LightfootHafling)
-    pane += GeneralRace.raceTab(Dnd5StoutHafling)
-    pane += GeneralRace.raceTab(Dnd5Human)
-    pane += GeneralRace.raceTab(Dnd5Dragonborn)
-    pane += GeneralRace.raceTab(Dnd5ForestGnome)
-    pane += GeneralRace.raceTab(Dnd5RockGnome)
-    pane += GeneralRace.raceTab(Dnd5HalfElf)
-    pane += GeneralRace.raceTab(Dnd5HalfOrc)
-    pane += GeneralRace.raceTab(Dnd5Tiefling)
+    pane += GeneralRaceTab.raceTab(Dnd5HillDwarf)
+    pane += GeneralRaceTab.raceTab(Dnd5MountainDwarf)
+    pane += GeneralRaceTab.raceTab(Dnd5HighElf)
+    pane += GeneralRaceTab.raceTab(Dnd5WoodElf)
+    pane += GeneralRaceTab.raceTab(Dnd5Drow)
+    pane += GeneralRaceTab.raceTab(Dnd5LightfootHafling)
+    pane += GeneralRaceTab.raceTab(Dnd5StoutHafling)
+    pane += GeneralRaceTab.raceTab(Dnd5Human)
+    pane += GeneralRaceTab.raceTab(Dnd5Dragonborn)
+    pane += GeneralRaceTab.raceTab(Dnd5ForestGnome)
+    pane += GeneralRaceTab.raceTab(Dnd5RockGnome)
+    pane += GeneralRaceTab.raceTab(Dnd5HalfElf)
+    pane += GeneralRaceTab.raceTab(Dnd5HalfOrc)
+    pane += GeneralRaceTab.raceTab(Dnd5Tiefling)
 
     val raceTabs = new Tab{
       text = "Races"

@@ -42,7 +42,7 @@ object Dnd5Drow extends Dnd5Race {
       "Your darkvision has a radius of 120 feet.")
 
     val sunSensitive = new RacialAbilitiy("Sunlight Sensitivity",
-    "You have disadvantage on attack rolls and Whidom(Perception) checks that rely on sight when " +
+    "You have disadvantage on attack rolls and Wisdom(Perception) checks that rely on sight when " +
     "you, the target of your attack, or whatever your are trying to perceive is in direct sunlight.")
 
     val drowMagic = new RacialAbilitiy("Drow Magic",
