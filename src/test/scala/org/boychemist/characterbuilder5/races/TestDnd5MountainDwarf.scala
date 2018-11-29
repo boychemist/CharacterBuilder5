@@ -28,11 +28,9 @@ class TestDnd5MountainDwarf extends FunSuite with DiagrammedAssertions {
     assert(Dnd5MountainDwarf.armorProficiencies.length == 2)
   }
 
-  test("Mountain Dwarves have 3 tool proficiency choices") {
-    assert(Dnd5MountainDwarf.toolsForProficiency.length == 3)
-    assert((Dnd5MountainDwarf.toolsForProficiency count(_ == "smith's tools")) == 1)
-    assert((Dnd5MountainDwarf.toolsForProficiency count(_ == "brewer's supplies")) == 1)
-    assert((Dnd5MountainDwarf.toolsForProficiency count(_ == "mason's tools")) == 1)
+  test("Mountain Dwarves can choose from 3 tool proficiencies") {
+    assert(Dnd5MountainDwarf.toolsForProficiency.length == 1)
+    assert(Dnd5MountainDwarf.toolsForProficiency.head == "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.")
   }
 
   test("Mountain Dwarves get +2 Con and +2 Strength") {

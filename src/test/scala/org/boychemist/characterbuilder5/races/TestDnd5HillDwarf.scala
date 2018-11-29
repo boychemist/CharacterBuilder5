@@ -32,11 +32,9 @@ class TestDnd5HillDwarf extends FunSuite with DiagrammedAssertions {
     assert(Dnd5HillDwarf.hitPointIncrement() == 1)
   }
 
-  test("Hill Dwarves have 3 tool proficiency choices") {
-    assert(Dnd5MountainDwarf.toolsForProficiency.length == 3)
-    assert((Dnd5MountainDwarf.toolsForProficiency count(_ == "smith's tools")) == 1)
-    assert((Dnd5MountainDwarf.toolsForProficiency count(_ == "brewer's supplies")) == 1)
-    assert((Dnd5MountainDwarf.toolsForProficiency count(_ == "mason's tools")) == 1)
+  test("Hill Dwarves can choose from 3 tool proficienciess") {
+    assert(Dnd5HillDwarf.toolsForProficiency.length == 1)
+    assert(Dnd5HillDwarf.toolsForProficiency.head == "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools." )
   }
 
   test("Hill Dwarves get +2 Con and +1 Wisdom") {
