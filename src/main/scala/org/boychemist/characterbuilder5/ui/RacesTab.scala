@@ -3,7 +3,6 @@ package org.boychemist.characterbuilder5.ui
 import org.boychemist.characterbuilder5.dbInterface.DbRaces
 import org.boychemist.characterbuilder5.dbInterface.RaceFromDb
 import org.boychemist.characterbuilder5.races._
-import GeneralRaceTab
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 import slick.jdbc.JdbcBackend.Database
