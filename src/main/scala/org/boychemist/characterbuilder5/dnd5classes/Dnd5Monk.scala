@@ -3,7 +3,8 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations._
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 object Dnd5Monk extends Dnd5BasicClass {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Monk
@@ -58,7 +59,7 @@ object Dnd5Monk extends Dnd5BasicClass {
   }
 
   private def creatMonkClassFeatures(): Map[Int, List[ClassFeature]] = {
-    var workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    var workingMap = new mTreeMap[Int, List[ClassFeature]]()
     // Level 1
     val defense = new ClassFeature("Unarmored Defense",
       "Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC " +
@@ -175,7 +176,8 @@ object Dnd5Monk extends Dnd5BasicClass {
     "At 20th level, when you roll for initiative and have no ki points remaining, you regain 4 ki points.")
     workingMap(20) = List(perfect)
 
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 
 }

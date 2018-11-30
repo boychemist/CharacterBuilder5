@@ -3,7 +3,8 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations._
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 object Dnd5Fighter extends Dnd5BasicClass {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Fighter
@@ -25,7 +26,7 @@ object Dnd5Fighter extends Dnd5BasicClass {
   val features: Map[Int, List[ClassFeature]] = creatFighterClassFeatures()
 
   private def creatFighterClassFeatures(): Map[Int, List[ClassFeature]] = {
-    var workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    var workingMap = new mTreeMap[Int, List[ClassFeature]]()
     // Level 1
     val style = new ClassFeature("Fighting Style",
     "You adopt a particular style of fighting as your speciality.  Choose one of the options in " +
@@ -61,7 +62,8 @@ object Dnd5Fighter extends Dnd5BasicClass {
     workingMap(9) = List(indomitable)
 
     // return an immutable Map
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 
 }

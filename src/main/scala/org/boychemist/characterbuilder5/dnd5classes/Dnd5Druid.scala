@@ -1,6 +1,7 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
@@ -117,7 +118,7 @@ object Dnd5Druid extends Dnd5BasicClass with Dnd5SpellCaster {
   }
 
   private def createDruidClassFeatures(): Map[Int, List[ClassFeature]] = {
-    val workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    val workingMap = new mTreeMap[Int, List[ClassFeature]]()
 
     // level 1
     val druidic = new ClassFeature("Druidic",
@@ -154,6 +155,7 @@ object Dnd5Druid extends Dnd5BasicClass with Dnd5SpellCaster {
     "your normal shape and you beast shape from Wild Shape.")
     workingMap(20) = List(archdruid)
 
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 }

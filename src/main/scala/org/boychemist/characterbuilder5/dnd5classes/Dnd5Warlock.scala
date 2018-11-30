@@ -3,7 +3,8 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 object Dnd5Warlock extends Dnd5BasicClass with Dnd5SpellCaster {
   // basic class features
@@ -109,7 +110,7 @@ object Dnd5Warlock extends Dnd5BasicClass with Dnd5SpellCaster {
 
 
   private def createWarlockClassFeatures(): Map[Int, List[ClassFeature]] = {
-    val workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    val workingMap = new mTreeMap[Int, List[ClassFeature]]()
 
     // Level 2
     val eldritch = new ClassFeature("Eldritch Invocations",
@@ -177,6 +178,7 @@ object Dnd5Warlock extends Dnd5BasicClass with Dnd5SpellCaster {
     workingMap.put(20, List(master))
 
     // return an immutable Map
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 }

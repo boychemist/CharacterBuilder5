@@ -1,6 +1,7 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
@@ -117,7 +118,7 @@ object Dnd5Cleric extends Dnd5BasicClass with Dnd5SpellCaster {
   }
 
   private def createClericClassFeatures(): Map[Int, List[ClassFeature]] = {
-    var workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    var workingMap = new mTreeMap[Int, List[ClassFeature]]()
 
     // Level 1
     val channel = new ClassFeature("Channel Divinity",
@@ -160,6 +161,7 @@ object Dnd5Cleric extends Dnd5BasicClass with Dnd5SpellCaster {
     workingMap.put(10, List(intervene))
 
     // return an immutable Map
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 }

@@ -3,7 +3,8 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 
-import scala.collection.mutable.HashMap
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 object Dnd5Bard extends Dnd5BasicClass with Dnd5SpellCaster {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Bard
@@ -116,7 +117,7 @@ object Dnd5Bard extends Dnd5BasicClass with Dnd5SpellCaster {
   }
 
   private def createBardClassFeatures(): Map[Int, List[ClassFeature]] = {
-    val workingMap = new HashMap[Int, List[ClassFeature]]()
+    val workingMap = new mTreeMap[Int, List[ClassFeature]]()
 
     // level 1 feature -- Player's Handdbook also include spell casting but that is handled differently above
     val inspire = new ClassFeature("Bardic Inspiration",
@@ -185,6 +186,7 @@ object Dnd5Bard extends Dnd5BasicClass with Dnd5SpellCaster {
       "one use.")
     workingMap(20) = List(superior)
 
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 }

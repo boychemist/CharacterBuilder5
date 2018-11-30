@@ -1,6 +1,7 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
@@ -116,7 +117,7 @@ object Dnd5Sorcerer extends Dnd5BasicClass with Dnd5SpellCaster {
   }
 
   private def createSorcererClassFeatures(): Map[Int, List[ClassFeature]] = {
-    var workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    var workingMap = new mTreeMap[Int, List[ClassFeature]]()
 
     // Level 2
     val font = new ClassFeature("Font of Magic",
@@ -152,6 +153,7 @@ object Dnd5Sorcerer extends Dnd5BasicClass with Dnd5SpellCaster {
     workingMap.put(20, List(restore))
 
     // return an immutable Map
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 }

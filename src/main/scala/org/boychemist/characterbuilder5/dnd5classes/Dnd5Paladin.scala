@@ -3,7 +3,9 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
+
 
 object Dnd5Paladin extends Dnd5BasicClass with Dnd5SpellCaster {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Paladin
@@ -85,7 +87,7 @@ object Dnd5Paladin extends Dnd5BasicClass with Dnd5SpellCaster {
   override def level9SlotsPerLevel(level:Int): Int = 0
 
   private def createPaladinClassFeatures() = {
-    val workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    val workingMap = new mTreeMap[Int, List[ClassFeature]]()
     // Level 1
     val sense = new ClassFeature("Divine Sense",
     "The presence of strong evil registers on our senses like a noxious odor, and powerful good rings " +
@@ -172,8 +174,8 @@ object Dnd5Paladin extends Dnd5BasicClass with Dnd5SpellCaster {
     "regain expended uses when you finish a long rest.")
     workingMap(14) = List(cleansing)
 
-
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 
 }

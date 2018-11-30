@@ -3,7 +3,8 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 object Dnd5Ranger extends Dnd5BasicClass with Dnd5SpellCaster {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Ranger
@@ -85,7 +86,7 @@ object Dnd5Ranger extends Dnd5BasicClass with Dnd5SpellCaster {
   override def level9SlotsPerLevel(level:Int): Int = 0
 
   private def createRangerClassFeatures() = {
-    val workingMap = new MutableHashMap[Int, List[ClassFeature]]()
+    val workingMap = new mTreeMap[Int, List[ClassFeature]]()
     // Level 1
     val enemy = new ClassFeature("Favored Enemy",
       "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even " +
@@ -190,6 +191,7 @@ object Dnd5Ranger extends Dnd5BasicClass with Dnd5SpellCaster {
     "of the roll are applied.")
     workingMap(20) = List(slayer)
 
-    workingMap.toMap
+    val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+    immutableMap
   }
 }
