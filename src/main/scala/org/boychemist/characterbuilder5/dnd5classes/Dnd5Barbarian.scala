@@ -88,14 +88,14 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     val rage = new ClassFeature("Rage",
     "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.\n"+
       "While raging, you gain the following benefits if you aren't wearing heavy armor:\n\n" +
-      "    You have advantage on Strength checks and Strength saving throws.\n"+
-      "    When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases " +
+      "  -  You have advantage on Strength checks and Strength saving throws.\n"+
+      "  -  When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases " +
       "as you gain levels as a barbarian, as shown in the Rage Damage column of the Barbarian table.\n" +
-      "    You have resistance to bludgeoning, piercing, and slashing damage.\n\n" +
-      "If you are able to cast spells, you can't cast them or concentrate on them while raging.\n" +
+      "  -  You have resistance to bludgeoning, piercing, and slashing damage.\n\n" +
+      "If you are able to cast spells, you can't cast them or concentrate on them while raging.\n\n" +
       "Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you " +
       "haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your " +
-      "rage on your turn as a bonus action.\n" +
+      "rage on your turn as a bonus action.\n\n" +
       "Once you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian " +
       "table, you must finish a long rest before you can rage again.")
     val defense = new ClassFeature("Unarmored Defense",
@@ -146,7 +146,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     val relentless = new ClassFeature("Relentless Rage",
     "Starting at 11th level, your rage can keep you fighting despite grievous wounds. If you drop to " +
       "0 hit points while you're raging and don't die outright, you can make a DC 10 Constitution saving throw. If " +
-      "you succeed, you drop to 1 hit point instead.\n" +
+      "you succeed, you drop to 1 hit point instead.\n\n" +
       "Each time you use this feature after the first, the DC increases by 5. When you finish a short or long " +
       "rest, the DC resets to 10.")
     workingMap(11) = List(relentless)
