@@ -1,6 +1,6 @@
 drop table if exists specializations;
-create table specializations(spec_id int identity(0), class_id int, name char(80) unique,
-    provides_spells boolean, description char(2048));
+create table specializations(spec_id int identity(0), class_id int not null, name char(80) unique not null,
+    provides_spells boolean not null, description char(2048) not null);
 alter table specializations
     add foreign key(class_id) references classes(class_id);
 /* barbarian specializations */

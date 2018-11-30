@@ -1,6 +1,6 @@
 drop table if exists spec_features;
-create table spec_features(sfeat_id int identity, spec_id int, name char(50), level int,
-description char(4096));
+create table spec_features(sfeat_id int identity, spec_id int not null, name char(50) not null, level int not null,
+description char(4096) not null);
 alter table spec_features add foreign key(spec_id) references specializations(spec_id);
 
 /* Path of the Berserker */

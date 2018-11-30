@@ -1,5 +1,5 @@
 drop table if exists classes;
-create table classes (class_id int identity(0), name char(9));
+create table classes (class_id int identity(0), name char(9) not null);
 insert into classes(name) values('Barbarian');
 insert into classes(name) values('Bard');
 insert into classes(name) values('Cleric');

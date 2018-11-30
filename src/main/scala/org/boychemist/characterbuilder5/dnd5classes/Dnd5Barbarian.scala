@@ -3,7 +3,8 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations._
 
-import scala.collection.mutable.HashMap
+import scala.collection.mutable.{TreeMap => mTreeMap}
+import scala.collection.immutable.TreeMap
 
 /**
   * Defines the base Barbarian class features
@@ -82,7 +83,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
   }
 
  private def createBarbarianClassFeatures(): Map[Int, List[ClassFeature]] = {
-    var workingMap = new HashMap[Int, List[ClassFeature]]()
+    var workingMap: mTreeMap[Int, List[ClassFeature]] = new mTreeMap()
     // Level 1
     val rage = new ClassFeature("Rage",
     "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.\n"+
@@ -100,7 +101,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     val defense = new ClassFeature("Unarmored Defense",
     "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your " +
       "Constitution modifier. You can use a shield and still gain this benefit.")
-    workingMap.put(1, List(rage, defense))
+    workingMap(1) = List(rage, defense)
 
     // Level 2
     val attack = new ClassFeature("Reckless Attack",
@@ -113,7 +114,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
       "you an edge when you dodge away from danger. You have advantage on Dexterity saving throws against " +
       "effects that you can see, such as traps and spells. To gain this benefit, you can’t be blinded, deafened, " +
       "or incapacitated.")
-    workingMap.put(2, List(attack, danger))
+    workingMap(2) = List(attack, danger)
 
     // level 3 is choose specialization (Primal Path) covered as specialization start level above
     // level 4 is improve ability scores, a character feature
@@ -123,7 +124,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     "action on your turn.")
     val movement = new ClassFeature("Fast Movement",
     "Starting at 5th level, your speed increases by 10 feet while you aren't wearing heavy armor.")
-    workingMap.put(5, List(extraAttack, movement))
+    workingMap(5) = List(extraAttack, movement)
 
     // level 6 feature is a specialization feature
     // level 7
@@ -131,7 +132,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     "By 7th level, your instincts are so honed that you have advantage on initiative rolls.\n" +
       "Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act " +
       "normally on your first turn, but only if you enter your rage before doing anything else on that turn.")
-    workingMap.put(7, List(feral))
+    workingMap(7) = List(feral)
 
     // level 8 is improve ability scores, a character feature
     // level 9
@@ -139,7 +140,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
       "Beginning at 9th level, you can roll one additional weapon damage die when determining the " +
         "extra damage for a critical hit with a melee attack. This increases to two additional dice at 13th level " +
         "and three additional dice at 17th level.")
-    workingMap.put(9, List(brutal))
+    workingMap(9) = List(brutal)
     // level 10 is a specialization feature
     // level 11
     val relentless = new ClassFeature("Relentless Rage",
@@ -148,7 +149,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
       "you succeed, you drop to 1 hit point instead.\n" +
       "Each time you use this feature after the first, the DC increases by 5. When you finish a short or long " +
       "rest, the DC resets to 10.")
-    workingMap.put(11, List(relentless))
+    workingMap(11) = List(relentless)
 
     // level 12 is improve ability scores, a character feature
     // level 13 is better Brutal Critical
@@ -157,7 +158,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     val persistent = new ClassFeature("Persistent Rage",
     "Beginning at 15th level, your rage is so fierce that it ends early only if you fall unconscious " +
       "or if you choose to end it.")
-    workingMap.put(15, List(persistent))
+    workingMap(15) = List(persistent)
 
     // level 16 is improve ability scores, a character feature
     // level 17 is better Brutal Critical
@@ -165,17 +166,18 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     val might = new ClassFeature("Indomitable Might",
     "Beginning at 18th level, if your total for a Strength check is less than your Strength score, " +
       "you can use that score in place of the total.")
-    workingMap.put(18, List(might))
+    workingMap(18) = List(might)
 
     // level 19 is improve ability scores, a character feature
     // level 20
     val champion = new ClassFeature("Primal Champion",
     "At 20th level, you embody the power of the wilds. Your Strength and Constitution scores " +
       "increase by 4. Your maximum for those scores is now 24.")
-   workingMap.put(20, List(champion))
+   workingMap(20) = List(champion)
 
-    // return an immutable Map
-    workingMap.toMap
+    // return immutable map
+   val immutableMap = TreeMap.empty[Int, List[ClassFeature]] ++ workingMap
+   immutableMap
   }
 
 }

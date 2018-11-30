@@ -1,5 +1,5 @@
 drop table if exists races;
-create table races (race_id int identity(0), name char(20));
+create table races (race_id int identity(0), name char(20) not null);
 insert into races(name) values('Hill Dwarf');
 insert into races(name) values('Mountain Dwarf');
 insert into races(name) values('High Elf');

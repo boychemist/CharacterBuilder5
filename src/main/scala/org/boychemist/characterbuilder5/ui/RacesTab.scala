@@ -1,16 +1,12 @@
 package org.boychemist.characterbuilder5.ui
 
-import org.boychemist.characterbuilder5.dbInterface.DbRaces
-import org.boychemist.characterbuilder5.dbInterface.RaceFromDb
 import org.boychemist.characterbuilder5.races._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
-import slick.jdbc.JdbcBackend.Database
 
-class RacesTab(db: Database) {
+class RacesTab() {
 
   def racesTab():Tab = {
-    val racesList: Seq[RaceFromDb] = DbRaces.getRacesFromDb(db)
 
     val pane = new TabPane {
       tabClosingPolicy = TabClosingPolicy.Unavailable
