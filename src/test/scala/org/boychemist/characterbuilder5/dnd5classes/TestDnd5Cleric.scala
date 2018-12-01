@@ -67,11 +67,11 @@ class TestDnd5Cleric extends FunSuite with DiagrammedAssertions {
     assert(Dnd5Cleric.getClassFeaturesUpToClassLevel(20).length == 4)
   }
 
-  test("Dnd5Cleric has 2 first level class features (Channel Divinity, Channel Divinity: Turn Undead)") {
-    val features = Dnd5Cleric.getClassFeaturesForClassLevel(1)
+  test("Dnd5Cleric has 2 second level class features (Channel Divinity, Channel Divinity: Turn Undead)") {
+    val features = Dnd5Cleric.getClassFeaturesForClassLevel(2)
     assert(features.length == 2)
-    assert(features.head.name == "Channel Divinity")
-    assert(features(1).name == "Channel Divinity: Turn Undead")
+    assert(features(1).name == "Channel Divinity")
+    assert(features.head.name == "Channel Divinity: Turn Undead")
   }
 
   test("Dnd5Cleric has 1 5th level class feature (Destroy Dead)") {

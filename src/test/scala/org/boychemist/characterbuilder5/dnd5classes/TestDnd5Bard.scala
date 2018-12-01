@@ -48,10 +48,10 @@ class TestDnd5Bard extends FunSuite with DiagrammedAssertions {
     assert((Dnd5Bard.savingThrowProficiencies count(_ == DndAbilitiesEnum.Charisma)) == 1)
   }
 
-  test("Dnd5Bard may choose from all skills") {
-    assert(Dnd5Bard.skillChoices.length == 1)
-    assert(Dnd5Bard.skillChoices.head == "Choose any 3")
-  }
+//  test("Dnd5Bard may choose from all skills") {
+//    assert(Dnd5Bard.skillChoices.length == 1)
+//    assert(Dnd5Bard.skillChoices.head == "Choose any 3")
+//  }
 
   test("Dnd5Bard gets to choose 3 skills") {
     assert(Dnd5Bard.numberOfSkills == 3)
