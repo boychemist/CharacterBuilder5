@@ -1,7 +1,7 @@
 package org.boychemist.characterbuilder5.ui
 
 import org.boychemist.characterbuilder5.dbInterface.DbClasses
-import org.boychemist.characterbuilder5.ui.classes.{BarbarianDisplay, BardDisplay, ClericDisplay, DruidDisplay}
+import org.boychemist.characterbuilder5.ui.classes._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 import slick.jdbc.JdbcBackend.Database
@@ -38,7 +38,8 @@ object ClassesUI {
       "Barbarian" -> BarbarianDisplay.getBarbarianGrid(db),
       "Bard" -> BardDisplay.getBardGrid(db),
       "Cleric" -> ClericDisplay.getClericGrid(db),
-      "Druid" -> DruidDisplay.getDruidGrid(db)
+      "Druid" -> DruidDisplay.getDruidGrid(db),
+      "Fighter" -> FighterDisplay.getFighterGrid(db)
     )
 
 
