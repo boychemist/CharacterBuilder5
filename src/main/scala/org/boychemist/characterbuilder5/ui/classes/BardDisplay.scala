@@ -5,8 +5,9 @@ import org.boychemist.characterbuilder5.dnd5classes.Dnd5Bard
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import scalafx.beans.property.StringProperty
 import scalafx.collections.ObservableBuffer
+import scalafx.geometry.Pos
 import scalafx.scene.control._
-import scalafx.scene.layout.VBox
+import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 import slick.jdbc.JdbcBackend.Database
 import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
@@ -84,7 +85,11 @@ object BardDisplay {
     bardGrid.addRow(rowNum, enhancedLabel(" "))
     rowNum += 1
 
-    bardGrid.add(generateBardTableView, 0, rowNum, 4, 1)
+    val centeredBox = new HBox {
+      alignment = Pos.Center
+      children = generateBardTableView
+    }
+    bardGrid.add(centeredBox, 0, rowNum, 4, 1)
 
     val thePane = new ScrollPane {
       content = bardGrid
