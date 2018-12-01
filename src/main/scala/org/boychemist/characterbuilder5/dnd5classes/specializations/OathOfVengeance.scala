@@ -15,7 +15,7 @@ object OathOfVengeance extends Dnd5ClassSpecialization {
   "to mete out justice upon those who do evil, so the paladins are often neutral or lawful neutral in alignment.  " +
   "The core principles of the tenents are brutally simple.\n" +
   "FIGHT THE GREATER EVIL.  Faced with a choice of fighting my sworn foes or combating a lesser evil, I choose " +
-  "the greater evil.\n"
+  "the greater evil.\n" +
   "NO MERCY FOR THE WICKED.  Ordinary foes might win my mercy, but my sworn enemies do not.\n" +
   "BY ANY MEANS NECSSSARY.  My qualms can't get in the way of exterminating my foes.\n" +
   "RESTITUTION.  If my foes wreak ruin on the world, it is because I failed to stop them.  I must help those " +

@@ -119,7 +119,6 @@ object Dnd5Cleric extends Dnd5BasicClass with Dnd5SpellCaster {
   private def createClericClassFeatures(): Map[Int, List[ClassFeature]] = {
     var workingMap = new mTreeMap[Int, List[ClassFeature]]()
 
-    // Level 1
     val turnUndead = new ClassFeature("Channel Divinity: Turn Undead",
       "As an action, you present your holy symbol and speak a prayer censuring the undead. Each " +
         "undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature " +
@@ -128,8 +127,6 @@ object Dnd5Cleric extends Dnd5BasicClass with Dnd5SpellCaster {
         "within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or " +
     "try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use " +
         "the Dodge action.")
-    workingMap.put(1, List(turnUndead))
-
     // level 2
     val channel = new ClassFeature("Channel Divinity",
       "At 2nd level, you gain the ability to channel divine energy directly from your deity, using " +
@@ -141,7 +138,7 @@ object Dnd5Cleric extends Dnd5BasicClass with Dnd5SpellCaster {
         "DC.\nBeginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at " +
         "18th level, you can use it three times between rests. When you finish a short or long rest, you regain " +
         "your expended uses.")
-    workingMap.put(2, List(channel))
+    workingMap.put(2, List(turnUndead, channel))
 
     // level 5
     val destroy = new ClassFeature("Destroy Undead",
