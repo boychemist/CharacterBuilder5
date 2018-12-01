@@ -81,8 +81,7 @@ object GeneralRaceTab {
         maxWidth = 150
         wrapText = true
       }
-      grid.addRow(rowNum, armorLabel)
-      grid.addRow(rowNum, armor)
+      grid.addRow(rowNum, armorLabel, armor)
       rowNum += 1
     }
 
@@ -96,8 +95,7 @@ object GeneralRaceTab {
         maxWidth = 90
         wrapText = true
       }
-      grid.addRow(rowNum, weaponsLabel)
-      grid.addRow(rowNum, weapons)
+      grid.addRow(rowNum, weaponsLabel, weapons)
       rowNum += 1
     }
 
@@ -111,8 +109,7 @@ object GeneralRaceTab {
         maxWidth = 250
         wrapText = true
       }
-      grid.addRow(rowNum, toolsLabel)
-      grid.addRow(rowNum, tools)
+      grid.addRow(rowNum, toolsLabel, tools)
       rowNum += 1
     }
 
@@ -123,8 +120,7 @@ object GeneralRaceTab {
       maxHeight = 45
       maxWidth = 100
     }
-    grid.addRow(rowNum, languagesLabel)
-    grid.addRow(rowNum, languages)
+    grid.addRow(rowNum, languagesLabel, languages)
     rowNum += 1
 
     val adjustmentsLabel = enhancedLabel(" Ability Adjustments")
@@ -139,8 +135,7 @@ object GeneralRaceTab {
         children = adjustmentTexts
         spacing = 2
       }
-    grid.addRow(rowNum, adjustmentsLabel)
-    grid.addRow(rowNum, adjustmentsBox)
+    grid.addRow(rowNum, adjustmentsLabel, adjustmentsBox)
     rowNum += 1
 
     if (aRace.racialAbilities.nonEmpty) {
@@ -156,8 +151,7 @@ object GeneralRaceTab {
         val anAbility = raIter.next()
         val label = enhancedLabel(" " + anAbility.abilityName + " ")
         val desc = wideTextArea(anAbility.description)
-        grid.addRow(rowNum, label)
-        grid.addRow(rowNum, desc)
+        grid.addRow(rowNum, label, desc)
         rowNum += 1
       }
     }

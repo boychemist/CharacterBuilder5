@@ -20,7 +20,9 @@ object Dnd5Bard extends Dnd5BasicClass with Dnd5SpellCaster {
   def toolProficiencies: List[String] = List("Three musical instruments of your choice")
   def savingThrowProficiencies: List[DndAbilitiesEnum.Value] =
     List(DndAbilitiesEnum.Dexterity, DndAbilitiesEnum.Charisma)
-  def skillChoices: List[String] = List("Choose any 3")
+  def skillChoices: List[String] = List("Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana", "History",
+                                        "Investigation", "Nature", "Religion", "Animal Handling", "Insight", "Medicine",
+                                        "Perception", "Survival", "Deception", "Intimidation", "Performance", "Persuasion")
   def numberOfSkills: Int = 3
   def features: Map[Int, List[ClassFeature]] = createBardClassFeatures()
 

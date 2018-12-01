@@ -3,11 +3,9 @@ package org.boychemist.characterbuilder5.ui
 import org.boychemist.characterbuilder5.dbInterface.DbClasses
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
-import scalafx.scene.layout.GridPane
-import scalafx.scene.Node
 import slick.jdbc.JdbcBackend.Database
 
-import scala.collection.mutable.{HashMap => mHashMap}
+import scala.collection.immutable.HashMap
 
 object ClassesUI {
   def classesTab(db: Database):Tab = {
@@ -23,7 +21,7 @@ object ClassesUI {
       val theGrid = getClassGrid(className, db)
       theGrid match {
         case Some(grid) => theTab.content = grid
-        case None => val a = 0
+        case None => val a = 0 // effectively a no-op
       }
       pane += theTab
     }
@@ -34,10 +32,11 @@ object ClassesUI {
     hdTab
   }
 
-  def getClassGrid(className: String, db: Database): Option[Node] = {
-    val paneMap = new mHashMap[String, Node]()
-
-    paneMap("Barbarian") = BarbarianDisplay.getBarbarianGrid(db)
+  def getClassGrid(className: String, db: Database): Option[ScrollPane] = {
+    val paneMap: HashMap[String, ScrollPane] = HashMap(
+      "Barbarian" -> BarbarianDisplay.getBarbarianGrid(db),
+      "Bard" -> BardDisplay.getBardGrid(db)
+    )
 
 
     val node = paneMap.get(className)

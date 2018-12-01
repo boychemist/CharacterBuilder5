@@ -135,8 +135,8 @@ object BarbarianDisplay {
         tableGrid.addRow(rowNum, enhancedLabel(rages.toString))
       else
         tableGrid.addRow(rowNum, enhancedLabel("Unlimited"))
-      tableGrid.addRow(rowNum, enhancedLabel(Dnd5Barbarian.rageDamageBonusByLevel(i).toString))
-      tableGrid.addRow(rowNum, enhancedLabel(Dnd5Barbarian.getBrutalCriticalBonusDice(i).toString))
+      tableGrid.addRow(rowNum, enhancedLabel(Dnd5Barbarian.rageDamageBonusByLevel(i).toString),
+        enhancedLabel(Dnd5Barbarian.getBrutalCriticalBonusDice(i).toString))
     }
 
     tableGrid
