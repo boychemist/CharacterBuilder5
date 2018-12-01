@@ -1,11 +1,12 @@
 package org.boychemist.characterbuilder5.ui
 
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Barbarian
-import scalafx.scene.layout.{GridPane, VBox}
+import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
 import scalafx.scene.control._
 import CharacterBuilderUIutils._
 import slick.jdbc.JdbcBackend.Database
 import org.boychemist.characterbuilder5.dbInterface.DbClasses._
+import scalafx.geometry.HPos
 import scalafx.scene.text.{Font, FontWeight}
 
 import scala.collection.mutable.ListBuffer
@@ -88,25 +89,58 @@ object BarbarianDisplay {
       }
     }
 
+    // add a blank row
+    barbGrid.addRow(rowNum, enhancedLabel(" "))
+    rowNum += 1
+
+    barbGrid.add(generateBarbarianTable, 1, rowNum, 4, 1)
+
     val thePane = new ScrollPane {
       content = barbGrid
     }
     thePane
   }
 
-  def levelAndName (level: Int, name: String): VBox = {
-    val theBox = new VBox {
-      spacing = 4
-      children = List(
-        enhancedLabel("Level " + level),
-        enhancedLabel(name)
-      )
+  private def generateBarbarianTable:GridPane = {
+    val col1Constraints = new ColumnConstraints {
+      halignment = HPos.Center
+
     }
-    theBox
+    val col2Constraints = new ColumnConstraints {
+      halignment = HPos.Center
+    }
+    val col3Constraints = new ColumnConstraints {
+      halignment = HPos.Center
+    }
+    val col4Constraints = new ColumnConstraints {
+      halignment = HPos.Center
+    }
+    val tableGrid = new GridPane {
+      gridLinesVisible = true
+      columnConstraints = List(col1Constraints, col2Constraints, col3Constraints, col4Constraints)
+      style = "-fx-background-color: white"
+      maxWidth = 352
+    }
+    var rowNum = 1
+    tableGrid.addRow(rowNum, enhancedLabel(" Level "))
+    tableGrid.addRow(rowNum, enhancedLabel(" Rages / Long Rest "))
+    tableGrid.addRow(rowNum, enhancedLabel(" Rage Damage "))
+    tableGrid.addRow(rowNum, enhancedLabel(" Brutal Critical Bonus "))
+
+    for (i <- 1 to 20) {
+      rowNum += 1
+      tableGrid.addRow(rowNum, enhancedLabel(i.toString))
+      val rages = Dnd5Barbarian.ragesByLevel(i)
+      if (rages > 0)
+        tableGrid.addRow(rowNum, enhancedLabel(rages.toString))
+      else
+        tableGrid.addRow(rowNum, enhancedLabel("Unlimited"))
+      tableGrid.addRow(rowNum, enhancedLabel(Dnd5Barbarian.rageDamageBonusByLevel(i).toString))
+      tableGrid.addRow(rowNum, enhancedLabel(Dnd5Barbarian.getBrutalCriticalBonusDice(i).toString))
+    }
+
+    tableGrid
   }
 
-  def add3ColTextArea(grid: GridPane, rowNum: Int, theText: String, startCol: Int = 1): Unit = {
-    val area = wideTextArea(theText)
-    grid.add(area, startCol, rowNum, 3, 1)
-  }
 }
+

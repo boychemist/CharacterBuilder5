@@ -1,7 +1,7 @@
 package org.boychemist.characterbuilder5.ui
 
 import scalafx.scene.control.{Label, TextArea, TextField}
-import scalafx.scene.layout.{ColumnConstraints, GridPane}
+import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 
 object CharacterBuilderUIutils {
@@ -62,6 +62,19 @@ object CharacterBuilderUIutils {
   }
 
   def easyTextField(theText: String, fieldWidth: Int = 30): TextField = {
+    val col1Constraints = new ColumnConstraints {
+      percentWidth = 25
+    }
+    val col2Constraints = new ColumnConstraints {
+      percentWidth = 25
+    }
+    val col3Constraints = new ColumnConstraints {
+      percentWidth = 25
+    }
+    val col4Constraints = new ColumnConstraints {
+      percentWidth = 25
+    }
+
     val textField = new TextField {
       text = theText
       maxWidth = fieldWidth
@@ -70,4 +83,21 @@ object CharacterBuilderUIutils {
 
     textField
   }
+
+  def add3ColTextArea(grid: GridPane, rowNum: Int, theText: String, startCol: Int = 1): Unit = {
+    val area = wideTextArea(theText)
+    grid.add(area, startCol, rowNum, 3, 1)
+  }
+
+  def levelAndName (level: Int, name: String): VBox = {
+    val theBox = new VBox {
+      spacing = 4
+      children = List(
+        enhancedLabel("Level " + level),
+        enhancedLabel(name)
+      )
+    }
+    theBox
+  }
+
 }
