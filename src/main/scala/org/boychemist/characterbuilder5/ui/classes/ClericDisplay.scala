@@ -28,6 +28,7 @@ object ClericDisplay {
     val armor = variableTextArea(Dnd5Cleric.armorProficiencies.mkString("\n"), 150, 60)
     clericGrid.addRow(rowNum, hitLabel, hit, armorLabel, armor)
     rowNum += 1
+
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
     val weapons = easyTextField(Dnd5Cleric.weaponProficiencies.mkString(""), 150)
 
