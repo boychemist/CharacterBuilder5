@@ -1,15 +1,15 @@
-package org.boychemist.characterbuilder5.ui
+package org.boychemist.characterbuilder5.ui.classes
 
+import org.boychemist.characterbuilder5.dbInterface.DbClasses.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Bard
-import scalafx.scene.layout._
-import scalafx.scene.control.{ScrollPane, TableView, TableColumn, Button, Label}
-import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
-import CharacterBuilderUIutils._
-import slick.jdbc.JdbcBackend.Database
-import org.boychemist.characterbuilder5.dbInterface.DbClasses._
+import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import scalafx.beans.property.StringProperty
 import scalafx.collections.ObservableBuffer
+import scalafx.scene.control._
+import scalafx.scene.layout.VBox
 import scalafx.scene.text.{Font, FontWeight}
+import slick.jdbc.JdbcBackend.Database
+import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
 
 import scala.collection.mutable.ListBuffer
 

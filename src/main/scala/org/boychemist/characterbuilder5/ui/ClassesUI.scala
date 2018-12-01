@@ -1,6 +1,7 @@
 package org.boychemist.characterbuilder5.ui
 
 import org.boychemist.characterbuilder5.dbInterface.DbClasses
+import org.boychemist.characterbuilder5.ui.classes.{BarbarianDisplay, BardDisplay}
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 import slick.jdbc.JdbcBackend.Database
@@ -21,7 +22,7 @@ object ClassesUI {
       val theGrid = getClassGrid(className, db)
       theGrid match {
         case Some(grid) => theTab.content = grid
-        case None => val a = 0 // effectively a no-op
+        case None =>
       }
       pane += theTab
     }

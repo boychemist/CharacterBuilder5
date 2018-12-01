@@ -1,13 +1,13 @@
-package org.boychemist.characterbuilder5.ui
+package org.boychemist.characterbuilder5.ui.classes
 
+import org.boychemist.characterbuilder5.dbInterface.DbClasses.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Barbarian
-import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
-import scalafx.scene.control._
-import CharacterBuilderUIutils._
-import slick.jdbc.JdbcBackend.Database
-import org.boychemist.characterbuilder5.dbInterface.DbClasses._
+import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import scalafx.geometry.HPos
+import scalafx.scene.control.{Button, Label, ScrollPane}
+import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
 import scalafx.scene.text.{Font, FontWeight}
+import slick.jdbc.JdbcBackend.Database
 
 import scala.collection.mutable.ListBuffer
 
@@ -119,10 +119,10 @@ object BarbarianDisplay {
       gridLinesVisible = true
       columnConstraints = List(col1Constraints, col2Constraints, col3Constraints, col4Constraints)
       style = "-fx-background-color: white"
-      maxWidth = 352
+      maxWidth = 410
     }
     var rowNum = 1
-    tableGrid.addRow(rowNum, enhancedLabel(" Level "))
+    tableGrid.addRow(rowNum, enhancedLabel(" Barbarian Level "))
     tableGrid.addRow(rowNum, enhancedLabel(" Rages / Long Rest "))
     tableGrid.addRow(rowNum, enhancedLabel(" Rage Damage "))
     tableGrid.addRow(rowNum, enhancedLabel(" Brutal Critical Bonus "))
@@ -143,4 +143,3 @@ object BarbarianDisplay {
   }
 
 }
-
