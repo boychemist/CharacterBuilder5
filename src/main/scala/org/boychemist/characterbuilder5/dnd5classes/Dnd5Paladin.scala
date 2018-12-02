@@ -90,7 +90,7 @@ object Dnd5Paladin extends Dnd5BasicClass with Dnd5SpellCaster {
     val workingMap = new mTreeMap[Int, List[ClassFeature]]()
     // Level 1
     val sense = new ClassFeature("Divine Sense",
-    "The presence of strong evil registers on our senses like a noxious odor, and powerful good rings " +
+    "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings " +
     "like heavenly music in your ears.  As an action, you can open your awareness to detect such forces.  Until the " +
     "end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is " +
     "not behind total cover.  You know the type (celestial, fiend, or undead) of any being you sense, but not its " +
