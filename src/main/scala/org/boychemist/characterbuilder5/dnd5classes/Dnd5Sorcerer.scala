@@ -124,24 +124,24 @@ object Dnd5Sorcerer extends Dnd5BasicClass with Dnd5SpellCaster {
       "At 2nd level, you tap into a deep wellspring of magic within yourself.  This wellspring is \n" +
     "represented by sorcery points, which allow you to create a variety of magical effects.\n\n" +
     "SORCERY POINTS\n" +
-    "Starting a 2nd level, you have the same number of sorcery points as your sorcerer spell level.  You can \n" +
-    "never have more sorcery points than your sorcerer level.  You regain all sorcery points when you finish a \n" +
+    "Starting a 2nd level, you have the same number of sorcery points as your sorcerer spell level.  You can " +
+    "never have more sorcery points than your sorcerer level.  You regain all sorcery points when you finish a " +
     "long rest.\n\n" +
     "FLEXIBLE CASTING\n" +
-    "You can use your sorcery points to gain additional spell slots, or you can sacrifice spell slots to gain \n" +
-    "additional sorcery points as you reach higher levels.\n" +
-    "CREATING SPELL SLOTS.  You can transform unexpended sorcery points into one spell slot as a bonus action on \n" +
-    "your turn.  The Creating Spell slots table (pg 101 of the Player's Handbook) shows the cost of creating \n" +
+    "You can use your sorcery points to gain additional spell slots, or you can sacrifice spell slots to gain" +
+    "additional sorcery points as you reach higher levels.\n\n" +
+    "CREATING SPELL SLOTS.  You can transform unexpended sorcery points into one spell slot as a bonus action on " +
+    "your turn.  The Creating Spell slots table (pg 101 of the Player's Handbook) shows the cost of creating " +
     "a spell slot of a given level.  You can create spell slots no higher in level than 5th.\n" +
     "Any spell slot you create with this feature vanishes when you finish a long rest.\n" +
-    "CONVERTING A SPELL SLOT TO SORCERY POINTS.  As a bonus action on your turn, you can expend one spell slot \n" +
+    "CONVERTING A SPELL SLOT TO SORCERY POINTS.  As a bonus action on your turn, you can expend one spell slot " +
     "and gain a number of sorcery points equal to the slot's level.")
     workingMap.put(2, List(font))
 
     // level 3
     val metamagic = new ClassFeature("Metamagic",
-      "At 3rd level, you gain the ability to twist your spells to suit your needs.  You gain two \n" +
-    "of Metamagic options of your choice.  (Metamagic options are described on pg 102 of the Player's Guide\n" +
+      "At 3rd level, you gain the ability to twist your spells to suit your needs.  You gain two n" +
+    "of Metamagic options of your choice.  (Metamagic options are described on pg 102 of the Player's Guide).\n" +
     "You gain another one at 10th level and 17th level.\n" +
     "You can only use one Metamagic option on a spell when you cast it, unless otherwise noted.\n"
     )

@@ -43,7 +43,8 @@ object ClassesUI {
       "Monk" -> MonkDisplay.getMonkGrid(db),
       "Paladin" -> PaladinDisplay.getPaladinGrid(db),
       "Ranger" -> RangerDisplay.getRangerGrid(db),
-      "Rogue" -> RogueDisplay.getRogueGrid(db)
+      "Rogue" -> RogueDisplay.getRogueGrid(db),
+      "Sorcerer" -> SorcererDisplay.getSorcererGrid(db)
     )
 
 
