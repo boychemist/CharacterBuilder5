@@ -116,7 +116,7 @@ object RangerDisplay {
   private def generateRangerTableView: TableView[RangerTableData] = {
     val view = new TableView[RangerTableData](generateRangerTableData)
     view.editable = false
-    view.columns += sfx2jfx(new TableColumn[RangerTableData, String]("Paladin\nLevel") {
+    view.columns += sfx2jfx(new TableColumn[RangerTableData, String]("Ranger\nLevel") {
       editable = false
       sortable = false
       cellValueFactory = cdf => StringProperty(cdf.value.level.toString)

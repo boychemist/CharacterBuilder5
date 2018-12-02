@@ -33,6 +33,29 @@ object Dnd5Rogue extends Dnd5BasicClass {
 
   def features: Map[Int, List[ClassFeature]] = createRogueClassFeatures()
 
+  def sneakAttackBonusByLevel(level: Int): String = {
+    if (level < 3)
+      "1d6"
+    else if (level < 5)
+      "2d6"
+    else if (level < 7)
+      "3d6"
+    else if (level < 9)
+      "4d6"
+    else if (level < 11)
+      "5d6"
+    else if (level < 13)
+      "6d6"
+    else if (level < 15)
+      "7d6"
+    else if (level < 17)
+      "8d6"
+    else if (level < 19)
+      "9d6"
+    else
+      "10d6"
+  }
+
   private def createRogueClassFeatures() = {
     val workingMap = new mTreeMap[Int, List[ClassFeature]]()
 

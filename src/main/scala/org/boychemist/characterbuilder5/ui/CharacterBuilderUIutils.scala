@@ -62,18 +62,6 @@ object CharacterBuilderUIutils {
   }
 
   def easyTextField(theText: String, fieldWidth: Int = 30): TextField = {
-    val col1Constraints = new ColumnConstraints {
-      percentWidth = 25
-    }
-    val col2Constraints = new ColumnConstraints {
-      percentWidth = 25
-    }
-    val col3Constraints = new ColumnConstraints {
-      percentWidth = 25
-    }
-    val col4Constraints = new ColumnConstraints {
-      percentWidth = 25
-    }
 
     val textField = new TextField {
       text = theText
