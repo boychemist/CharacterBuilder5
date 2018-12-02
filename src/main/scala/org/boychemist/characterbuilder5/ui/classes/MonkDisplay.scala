@@ -47,6 +47,11 @@ object MonkDisplay {
     monkGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 
+    val toolProficiencyLabel = enhancedLabel("Tool Proficiency")
+    val toolProficiency = variableTextArea(Dnd5Monk.toolProficiencies.mkString, 120, 80)
+    monkGrid.addRow(rowNum, toolProficiencyLabel, toolProficiency)
+    rowNum += 1
+
     val labelTraditionLevel = enhancedLabel("Monastic Tradition Choice Level")
     val chooseTraditionLevel = easyTextField(Dnd5Monk.specializationStartLevel.toString)
 
