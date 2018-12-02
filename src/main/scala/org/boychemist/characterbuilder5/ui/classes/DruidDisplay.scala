@@ -48,6 +48,11 @@ object DruidDisplay {
     druidGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 
+    val toolProficiencyLabel = enhancedLabel("Tool Proficiency")
+    val toolProficiency = easyTextField(Dnd5Druid.toolProficiencies.mkString, 120)
+    druidGrid.addRow(rowNum, toolProficiencyLabel, toolProficiency)
+    rowNum += 1
+
     val labelDruidCircleLevel = enhancedLabel("Druid Circles Choice Level")
     val chooseCircleLevel = easyTextField(Dnd5Druid.specializationStartLevel.toString)
 
