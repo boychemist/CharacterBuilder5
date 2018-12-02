@@ -45,6 +45,11 @@ object BardDisplay {
     bardGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 
+    val toolProficiencyLabel = enhancedLabel("Tool Proficiency")
+    val toolProficiency = variableTextArea(Dnd5Bard.toolProficiencies.mkString, 120, 60)
+    bardGrid.addRow(rowNum, toolProficiencyLabel, toolProficiency)
+    rowNum += 1
+
     val labelChooseCollegeLevel = enhancedLabel("College Choice Level")
     val chooseCollegeLevel = easyTextField(Dnd5Bard.specializationStartLevel.toString)
 
