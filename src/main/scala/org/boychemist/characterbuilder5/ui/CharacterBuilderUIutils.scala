@@ -7,7 +7,7 @@ import scalafx.scene.text.{Font, FontWeight}
 object CharacterBuilderUIutils {
 
   def enhancedLabel(text: String): Label = {
-    val aLabel = new Label(text) {
+    val aLabel = new Label(text + " ") {
       font = Font.font("Sans Serif", FontWeight.Bold, 12)
     }
     aLabel

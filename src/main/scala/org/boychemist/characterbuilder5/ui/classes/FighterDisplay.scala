@@ -3,6 +3,8 @@ package org.boychemist.characterbuilder5.ui.classes
 import org.boychemist.characterbuilder5.dbInterface.DbClassInfo.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Fighter
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
+import org.boychemist.characterbuilder5.ui.FXUtils
+import scalafx.Includes.handle
 import scalafx.geometry.HPos
 import scalafx.scene.control.{Button, Label, ScrollPane}
 import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
@@ -46,10 +48,20 @@ object FighterDisplay {
     val levelPrimalPath = easyTextField(Dnd5Fighter.specializationStartLevel.toString)
 
     val buttonList = new ListBuffer[Button]
-    val allowedSpecializations = getSpecializationNamesByClassName(db, Dnd5Fighter.classID.toString)
-    val iterator = allowedSpecializations.toIterator
+    val specializationType = "Martial Archetype"
+    val labelTraditions = enhancedLabel(specializationType)
+    val originsList = getSpecializationNamesByClassName(db, Dnd5Fighter.classID.toString)
+    val iterator = originsList.toIterator
     while (iterator.hasNext) {
-      buttonList += new Button(iterator.next())
+      val specName = iterator.next()
+      val specPane =
+        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+      buttonList += new Button(specName) {
+        onAction = handle {
+          FXUtils.onFXAndWait(
+            FXUtils.showDialogPane(specializationType, specPane))
+        }
+      }
     }
     val buttonBox = new VBox {
       children = buttonList.toList

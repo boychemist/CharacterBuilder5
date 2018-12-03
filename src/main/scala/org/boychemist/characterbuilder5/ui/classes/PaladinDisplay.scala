@@ -3,6 +3,8 @@ package org.boychemist.characterbuilder5.ui.classes
 import org.boychemist.characterbuilder5.dbInterface.DbClassInfo.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Paladin
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
+import org.boychemist.characterbuilder5.ui.FXUtils
+import scalafx.Includes.handle
 import scalafx.beans.property.StringProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Pos
@@ -52,10 +54,21 @@ object PaladinDisplay {
 
     val buttonList = new ListBuffer[Button]
     val labelSacredOaths = enhancedLabel("Sacred Oaths")
-    val sacredOathsList = getSpecializationNamesByClassName(db, Dnd5Paladin.classID.toString)
-    val iterator = sacredOathsList.toIterator
+    val specializationType = "Sacred Oath"
+    val labelPatrons = enhancedLabel(specializationType)
+    val originsList =
+      getSpecializationNamesByClassName(db, Dnd5Paladin.classID.toString)
+    val iterator = originsList.toIterator
     while (iterator.hasNext) {
-      buttonList += new Button(iterator.next())
+      val specName = iterator.next()
+      val specPane =
+        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+      buttonList += new Button(specName) {
+        onAction = handle {
+          FXUtils.onFXAndWait(
+            FXUtils.showDialogPane(specializationType, specPane))
+        }
+      }
     }
     val buttonBox = new VBox {
       children = buttonList.toList

@@ -3,6 +3,8 @@ package org.boychemist.characterbuilder5.ui.classes
 import org.boychemist.characterbuilder5.dbInterface.DbClassInfo.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Rogue
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
+import org.boychemist.characterbuilder5.ui.FXUtils
+import scalafx.Includes.handle
 import scalafx.beans.property.StringProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Pos
@@ -51,17 +53,28 @@ object RogueDisplay {
     val chooseArchetypeLevel = easyTextField(Dnd5Rogue.specializationStartLevel.toString)
 
     val buttonList = new ListBuffer[Button]
-    val labelArchetype = enhancedLabel("Roguish Archetypes")
-    val rangerArchetypeList = getSpecializationNamesByClassName(db, Dnd5Rogue.classID.toString)
-    val iterator = rangerArchetypeList.toIterator
+    val labelTraditions = enhancedLabel("Roguish Archetype")
+    val specializationType = "Roguish Archetype"
+    val labelPatrons = enhancedLabel(specializationType)
+    val originsList =
+      getSpecializationNamesByClassName(db, Dnd5Rogue.classID.toString)
+    val iterator = originsList.toIterator
     while (iterator.hasNext) {
-      buttonList += new Button(iterator.next())
+      val specName = iterator.next()
+      val specPane =
+        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+      buttonList += new Button(specName) {
+        onAction = handle {
+          FXUtils.onFXAndWait(
+            FXUtils.showDialogPane(specializationType, specPane))
+        }
+      }
     }
     val buttonBox = new VBox {
       children = buttonList.toList
       spacing = 2
     }
-    rangerGrid.addRow(rowNum, labelArchetypeLevel, chooseArchetypeLevel, labelArchetype, buttonBox)
+    rangerGrid.addRow(rowNum, labelArchetypeLevel, chooseArchetypeLevel, labelTraditions, buttonBox)
     rowNum += 1
 
     val labelToolProficiency = enhancedLabel("Tool Proficiency")

@@ -52,14 +52,15 @@ object WarlockDisplay {
     val choosePatronLevel = easyTextField(Dnd5Warlock.specializationStartLevel.toString)
 
     val buttonList = new ListBuffer[Button]
-    val labelPatrons = enhancedLabel("Otherworldly Patrons")
+    val specializationType = "Otherworldly Patrons"
+    val labelPatrons = enhancedLabel(specializationType)
     val originsList = getSpecializationNamesByClassName(db, Dnd5Warlock.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
       val specPane = ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
       buttonList += new Button(specName) {
-        onAction = handle {FXUtils.onFXAndWait(FXUtils.showDialogPane("Otherworldly Patrons", specPane))}
+        onAction = handle {FXUtils.onFXAndWait(FXUtils.showDialogPane(specializationType, specPane))}
       }
     }
     val buttonBox = new VBox {
