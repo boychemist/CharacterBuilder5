@@ -1,8 +1,9 @@
 package org.boychemist.characterbuilder5.ui.classes
 
-import org.boychemist.characterbuilder5.dbInterface.DbClasses.getSpecializationNamesByClassName
+import org.boychemist.characterbuilder5.dbInterface.DbClassInfo.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Warlock
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
+import org.boychemist.characterbuilder5.ui.FXUtils
 import scalafx.beans.property.StringProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.Pos
@@ -11,6 +12,7 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 import slick.jdbc.JdbcBackend.Database
 import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
+import scalafx.Includes._
 
 import scala.collection.mutable.ListBuffer
 
@@ -54,7 +56,11 @@ object WarlockDisplay {
     val originsList = getSpecializationNamesByClassName(db, Dnd5Warlock.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
-      buttonList += new Button(iterator.next())
+      val specName = iterator.next()
+      val specPane = ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+      buttonList += new Button(specName) {
+        onAction = handle {FXUtils.onFXAndWait(FXUtils.showDialogPane("Otherworldly Patrons", specPane))}
+      }
     }
     val buttonBox = new VBox {
       children = buttonList.toList

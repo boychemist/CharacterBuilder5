@@ -7,8 +7,11 @@ import Tables._
 import slick.jdbc.H2Profile.api._
 import slick.jdbc.JdbcBackend.Database
 
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await
 import scala.concurrent.duration._
+
+case class SpecializationInstanceDescription(level: Int, name: String, descrition: String)
 
 /**
   * Provide access to the classes in the database
@@ -19,7 +22,7 @@ object DbClassInfo {
   private lazy val allSpecializations = TableQuery[Specializations]
   private lazy val allSpecFeatures = TableQuery[SpecFeatures]
 
-  def exec[T](db: Database, action: DBIO[T]): T = Await.result(db.run(action), 2.seconds)
+  private def exec[T](db: Database, action: DBIO[T]): T = Await.result(db.run(action), 2.seconds)
 
   def getClassNames (db: Database): Seq[String] = {
     val names = allClasses.map(_.name)
@@ -39,8 +42,15 @@ object DbClassInfo {
     exec(db, specDescription.result)
   }
 
-  def getSpecilalizationFeaturesBySpecID(db: Database, specId: Int): Seq[(Int, String, String)] = {
+  def getSpecilalizationFeaturesBySpecID(db: Database, specId: Int): List[SpecializationInstanceDescription] = {
     val specFeatures = allSpecFeatures.filter(_.specId === specId).sortBy(_.level).map(s => (s.level, s.name, s.description))
-    exec(db, specFeatures.result)
+    val tuples =exec(db, specFeatures.result)
+    val features = new ListBuffer[SpecializationInstanceDescription]
+    val iter = tuples.iterator
+    while (iter.hasNext) {
+      val aTuple = iter.next()
+      features += new SpecializationInstanceDescription(aTuple._1, aTuple._2, aTuple._3)
+    }
+    features.toList
   }
 }

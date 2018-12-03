@@ -1,6 +1,6 @@
 package org.boychemist.characterbuilder5.ui.classes
 
-import org.boychemist.characterbuilder5.dbInterface.DbClasses.getSpecializationNamesByClassName
+import org.boychemist.characterbuilder5.dbInterface.DbClassInfo.getSpecializationNamesByClassName
 import org.boychemist.characterbuilder5.dnd5classes.Dnd5Bard
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import scalafx.beans.property.StringProperty

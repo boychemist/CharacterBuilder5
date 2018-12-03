@@ -1,6 +1,6 @@
 package org.boychemist.characterbuilder5.ui
 
-import org.boychemist.characterbuilder5.dbInterface.DbClasses
+import org.boychemist.characterbuilder5.dbInterface.DbClassInfo
 import org.boychemist.characterbuilder5.ui.classes._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
@@ -10,7 +10,7 @@ import scala.collection.immutable.HashMap
 
 object ClassesUI {
   def classesTab(db: Database):Tab = {
-    val classNames = DbClasses.getClassNames(db)
+    val classNames = DbClassInfo.getClassNames(db)
 
     val pane = new TabPane {
       tabClosingPolicy = TabClosingPolicy.Unavailable
