@@ -27,7 +27,8 @@ object CharacterBuilderUIutils {
       percentWidth = 25
     }
     val theGrid = new GridPane() {
-      columnConstraints = List(col1Constraints, col2Constraints, col3Constraints, col4Constraints)
+      columnConstraints =
+        List(col1Constraints, col2Constraints, col3Constraints, col4Constraints)
       minWidth = 700
       maxWidth = 1000
       minHeight = 650
@@ -50,7 +51,9 @@ object CharacterBuilderUIutils {
     textArea
   }
 
-  def variableTextArea(theText: String, labelWidth: Int, labelHeight: Int): TextArea = {
+  def variableTextArea(theText: String,
+                       labelWidth: Int,
+                       labelHeight: Int): TextArea = {
     val textArea = new TextArea() {
       text = theText
       editable = false
@@ -72,12 +75,15 @@ object CharacterBuilderUIutils {
     textField
   }
 
-  def add3ColTextArea(grid: GridPane, rowNum: Int, theText: String, startCol: Int = 1): Unit = {
+  def add3ColTextArea(grid: GridPane,
+                      rowNum: Int,
+                      theText: String,
+                      startCol: Int = 1): Unit = {
     val area = wideTextArea(theText)
     grid.add(area, startCol, rowNum, 3, 1)
   }
 
-  def levelAndName (level: Int, name: String): VBox = {
+  def levelAndName(level: Int, name: String): VBox = {
     val theBox = new VBox {
       spacing = 4
       children = List(

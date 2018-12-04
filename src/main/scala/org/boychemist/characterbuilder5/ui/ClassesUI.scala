@@ -9,7 +9,7 @@ import slick.jdbc.JdbcBackend.Database
 import scala.collection.immutable.HashMap
 
 object ClassesUI {
-  def classesTab(db: Database):Tab = {
+  def classesTab(db: Database): Tab = {
     val classNames = DbClassInfo.getClassNames(db)
 
     val pane = new TabPane {
@@ -18,11 +18,11 @@ object ClassesUI {
     val classIter = classNames.toIterator
     while (classIter.hasNext) {
       val className = classIter.next()
-      val theTab = new Tab{text = className}
+      val theTab = new Tab { text = className }
       val theGrid = getClassGrid(className, db)
       theGrid match {
         case Some(grid) => theTab.content = grid
-        case None =>
+        case None       =>
       }
       pane += theTab
     }
@@ -48,7 +48,6 @@ object ClassesUI {
       "Warlock" -> WarlockDisplay.getWarlockGrid(db),
       "Wizard" -> WizardDisplay.getWizardGrid(db)
     )
-
 
     val node = paneMap.get(className)
     node

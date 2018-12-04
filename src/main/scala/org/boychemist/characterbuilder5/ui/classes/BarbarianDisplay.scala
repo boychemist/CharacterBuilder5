@@ -26,18 +26,25 @@ object BarbarianDisplay {
     barbGrid.addRow(rowNum, hit)
 
     val armorLabel = enhancedLabel("Armor Proficiencies")
-    val armor = variableTextArea(Dnd5Barbarian.armorProficiencies.mkString("\n"), 150, 60)
+    val armor =
+      variableTextArea(Dnd5Barbarian.armorProficiencies.mkString("\n"), 150, 60)
     barbGrid.addRow(rowNum, armorLabel)
     barbGrid.addRow(rowNum, armor)
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Barbarian.weaponProficiencies.mkString("\n"), 150, 45)
+    val weapons = variableTextArea(
+      Dnd5Barbarian.weaponProficiencies.mkString("\n"),
+      150,
+      45)
     barbGrid.addRow(rowNum, weaponsLabel)
     barbGrid.addRow(rowNum, weapons)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Barbarian.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = variableTextArea(
+      Dnd5Barbarian.savingThrowProficiencies.mkString("\n"),
+      150,
+      45)
     barbGrid.addRow(rowNum, savingThrowsLabel)
     barbGrid.addRow(rowNum, savingThrows)
     rowNum += 1
@@ -48,20 +55,23 @@ object BarbarianDisplay {
     barbGrid.addRow(rowNum, numSkillChoices)
 
     val skillChoicesLabel = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Barbarian.skillChoices.mkString("\n"), 150, 120)
+    val skillChoices =
+      variableTextArea(Dnd5Barbarian.skillChoices.mkString("\n"), 150, 120)
     barbGrid.addRow(rowNum, skillChoicesLabel)
     barbGrid.addRow(rowNum, skillChoices)
     rowNum += 1
 
     val labelPrimalPathLevel = enhancedLabel("Pimal Path Choice Level")
-    val levelPrimalPath = easyTextField(Dnd5Barbarian.specializationStartLevel.toString)
+    val levelPrimalPath = easyTextField(
+      Dnd5Barbarian.specializationStartLevel.toString)
     barbGrid.addRow(rowNum, labelPrimalPathLevel)
     barbGrid.addRow(rowNum, levelPrimalPath)
 
     val buttonList = new ListBuffer[Button]
     val specializationType = "Primal Path"
     val labelTraditions = enhancedLabel(specializationType)
-    val originsList = getSpecializationNamesByClassName(db, Dnd5Barbarian.classID.toString)
+    val originsList =
+      getSpecializationNamesByClassName(db, Dnd5Barbarian.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
@@ -78,7 +88,7 @@ object BarbarianDisplay {
       children = buttonList.toList
       spacing = 2
     }
-    barbGrid.addRow(rowNum, enhancedLabel("Primal Paths"))
+    barbGrid.addRow(rowNum, labelTraditions)
     barbGrid.addRow(rowNum, buttonBox)
     rowNum += 1
 
@@ -113,7 +123,7 @@ object BarbarianDisplay {
     thePane
   }
 
-  private def generateBarbarianTable:GridPane = {
+  private def generateBarbarianTable: GridPane = {
     val col1Constraints = new ColumnConstraints {
       halignment = HPos.Center
 
@@ -129,7 +139,8 @@ object BarbarianDisplay {
     }
     val tableGrid = new GridPane {
       gridLinesVisible = true
-      columnConstraints = List(col1Constraints, col2Constraints, col3Constraints, col4Constraints)
+      columnConstraints =
+        List(col1Constraints, col2Constraints, col3Constraints, col4Constraints)
       style = "-fx-background-color: white"
       maxWidth = 410
     }
@@ -147,7 +158,9 @@ object BarbarianDisplay {
         tableGrid.addRow(rowNum, enhancedLabel(rages.toString))
       else
         tableGrid.addRow(rowNum, enhancedLabel("Unlimited"))
-      tableGrid.addRow(rowNum, enhancedLabel(Dnd5Barbarian.rageDamageBonusByLevel(i).toString),
+      tableGrid.addRow(
+        rowNum,
+        enhancedLabel(Dnd5Barbarian.rageDamageBonusByLevel(i).toString),
         enhancedLabel(Dnd5Barbarian.getBrutalCriticalBonusDice(i).toString))
     }
 

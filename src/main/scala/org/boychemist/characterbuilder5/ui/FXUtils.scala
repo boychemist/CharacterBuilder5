@@ -72,6 +72,5 @@ object FXUtils {
     // Show dialog and wait till it is closed
     dialogStage.showAndWait()
 
-
   }
 }

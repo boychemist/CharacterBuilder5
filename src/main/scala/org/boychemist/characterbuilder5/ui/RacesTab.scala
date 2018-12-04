@@ -6,7 +6,7 @@ import scalafx.scene.control._
 
 object RacesTab {
 
-  def racesTab():Tab = {
+  def racesTab(): Tab = {
 
     val pane = new TabPane {
       tabClosingPolicy = TabClosingPolicy.Unavailable
@@ -26,7 +26,7 @@ object RacesTab {
     pane += GeneralRaceTab.raceTab(Dnd5HalfOrc)
     pane += GeneralRaceTab.raceTab(Dnd5Tiefling)
 
-    val raceTabs = new Tab{
+    val raceTabs = new Tab {
       text = "Races"
       closable = false
     }

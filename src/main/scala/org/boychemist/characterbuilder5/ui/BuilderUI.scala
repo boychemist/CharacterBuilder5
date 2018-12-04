@@ -7,9 +7,9 @@ import scalafx.scene.control.TabPane.TabClosingPolicy
 import slick.jdbc.JdbcBackend.Database
 
 /*
-  * Create a tab based Scene to put on the stage.
-  */
-class BuilderUI (db: Database, stage: Stage) {
+ * Create a tab based Scene to put on the stage.
+ */
+class BuilderUI(db: Database, stage: Stage) {
   private val topPane = new TabPane {
     tabClosingPolicy = TabClosingPolicy.Unavailable
     maxWidth = 720
@@ -19,7 +19,7 @@ class BuilderUI (db: Database, stage: Stage) {
   topPane += RacesTab.racesTab()
   topPane += ClassesUI.classesTab(db)
 
-    stage.scene = new Scene {
-      root = topPane
-    }
+  stage.scene = new Scene {
+    root = topPane
+  }
 }

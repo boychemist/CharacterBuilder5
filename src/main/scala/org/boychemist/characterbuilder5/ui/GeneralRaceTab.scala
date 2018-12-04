@@ -32,12 +32,12 @@ object GeneralRaceTab {
 
   def wideTextArea(theText: String): TextArea = {
     val textArea = new TextArea() {
-    text = theText
-    editable = false
-    maxWidth = 500
-    maxHeight = 75
-    wrapText = true
-  }
+      text = theText
+      editable = false
+      maxWidth = 500
+      maxHeight = 75
+      wrapText = true
+    }
     textArea
   }
 
@@ -130,10 +130,11 @@ object GeneralRaceTab {
 
     val adjustmentsLabel = enhancedLabel(" Ability Adjustments")
     val adjustmentTexts =
-      aRace.abilityAdjustments.map(aa => new TextField {
-        text = " " + aa.ability.toString + ": +" + aa.amount + " "
-        editable = false
-        maxWidth = 110
+      aRace.abilityAdjustments.map(aa =>
+        new TextField {
+          text = " " + aa.ability.toString + ": +" + aa.amount + " "
+          editable = false
+          maxWidth = 110
       })
     val adjustmentsBox =
       new VBox {
