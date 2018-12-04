@@ -4,7 +4,7 @@ import org.boychemist.characterbuilder5.races._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 
-class RacesTab() {
+object RacesTab {
 
   def racesTab():Tab = {
 
