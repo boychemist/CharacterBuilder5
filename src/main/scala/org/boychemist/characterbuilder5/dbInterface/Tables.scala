@@ -16,7 +16,7 @@ trait Tables {
   /** DDL for all tables. Call .create to execute. */
   lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, Character.schema, CharacterClasses.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, Classes.schema, DamageType.schema, Languages.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
-  def ddl = schema
+  def ddl: profile.SchemaDescription = schema
 
   /** Entity class storing rows of table AdventuringGear
    *  @param name Database column NAME SqlType(CHAR), Length(30,false)
