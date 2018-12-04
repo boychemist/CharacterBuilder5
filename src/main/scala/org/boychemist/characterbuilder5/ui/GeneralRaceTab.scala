@@ -46,6 +46,11 @@ object GeneralRaceTab {
     val hdTab = new Tab {
       text = aRace.race.toString
     }
+    hdTab.content = raceScrollPane(aRace)
+    hdTab
+  }
+
+  def raceScrollPane(aRace: Dnd5Race): ScrollPane = {
     val grid = wideGrid()
     grid.style = "-fx-background-color: skyblue"
     grid.vgap = 2
@@ -156,9 +161,10 @@ object GeneralRaceTab {
       }
     }
 
-    hdTab.content = new ScrollPane {
+    val thePane = new ScrollPane {
       content = grid
     }
-    hdTab
+    thePane
   }
+
 }
