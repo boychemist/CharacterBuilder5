@@ -1,7 +1,7 @@
 package org.boychemist.characterbuilder5.ui
 
 import scalafx.scene.control.{Label, TextArea, TextField}
-import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
+import scalafx.scene.layout.{ColumnConstraints, GridPane, Region, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 
 object CharacterBuilderUIutils {
@@ -92,6 +92,18 @@ object CharacterBuilderUIutils {
       )
     }
     theBox
+  }
+
+  def integerTextField(defWidth: Double = 30): TextField = {
+    val intField = new TextField {
+      maxWidth = defWidth
+      maxHeight = Region.USE_COMPUTED_SIZE
+    }
+    intField.text.onChange((obs, oldVal, newVal) =>
+      if (!newVal.toString.matches("\\d*"))
+        intField.text = newVal.toString.replaceAll("[^\\d]", ""))
+
+    intField
   }
 
 }
