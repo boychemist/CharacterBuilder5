@@ -100,8 +100,8 @@ object CharacterBuilderUIutils {
       maxHeight = Region.USE_COMPUTED_SIZE
     }
     intField.text.onChange((obs, oldVal, newVal) =>
-      if (!newVal.toString.matches("\\d*"))
-        intField.text = newVal.toString.replaceAll("[^\\d]", ""))
+      if (!newVal.toString.matches("""\d*""""))
+        intField.text = newVal.toString.replaceAll("""[^\d]""", ""))
 
     intField
   }
