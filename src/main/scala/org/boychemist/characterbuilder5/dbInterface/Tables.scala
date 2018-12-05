@@ -14,7 +14,7 @@ trait Tables {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, Character.schema, CharacterClasses.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, Classes.schema, DamageType.schema, Languages.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
+  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, Character.schema, CharacterArmor.schema, CharacterClasses.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Languages.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl: profile.SchemaDescription = schema
 
@@ -178,6 +178,44 @@ trait Tables {
   /** Collection-like TableQuery object for table Character */
   lazy val Character = new TableQuery(tag => new Character(tag))
 
+  /** Entity class storing rows of table CharacterArmor
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
+   *  @param name Database column NAME SqlType(CHAR), Length(30,false)
+   *  @param armorClass Database column ARMOR_CLASS SqlType(INTEGER)
+   *  @param maxDexModifier Database column MAX_DEX_MODIFIER SqlType(INTEGER)
+   *  @param stealthDisadvantabe Database column STEALTH_DISADVANTABE SqlType(BOOLEAN)
+   *  @param minstrength Database column MINSTRENGTH SqlType(INTEGER) */
+  case class CharacterArmorRow(characterId: Int, name: String, armorClass: Int, maxDexModifier: Int, stealthDisadvantabe: Boolean, minstrength: Int)
+  /** GetResult implicit for fetching CharacterArmorRow objects using plain SQL queries */
+  implicit def GetResultCharacterArmorRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Boolean]): GR[CharacterArmorRow] = GR{
+    prs => import prs._
+    CharacterArmorRow.tupled((<<[Int], <<[String], <<[Int], <<[Int], <<[Boolean], <<[Int]))
+  }
+  /** Table description of table CHARACTER_ARMOR. Objects of this class serve as prototypes for rows in queries. */
+  class CharacterArmor(_tableTag: Tag) extends profile.api.Table[CharacterArmorRow](_tableTag, "CHARACTER_ARMOR") {
+    def * = (characterId, name, armorClass, maxDexModifier, stealthDisadvantabe, minstrength) <> (CharacterArmorRow.tupled, CharacterArmorRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(characterId), Rep.Some(name), Rep.Some(armorClass), Rep.Some(maxDexModifier), Rep.Some(stealthDisadvantabe), Rep.Some(minstrength)).shaped.<>({r=>import r._; _1.map(_=> CharacterArmorRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column CHARACTER_ID SqlType(INTEGER) */
+    val characterId: Rep[Int] = column[Int]("CHARACTER_ID")
+    /** Database column NAME SqlType(CHAR), Length(30,false) */
+    val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
+    /** Database column ARMOR_CLASS SqlType(INTEGER) */
+    val armorClass: Rep[Int] = column[Int]("ARMOR_CLASS")
+    /** Database column MAX_DEX_MODIFIER SqlType(INTEGER) */
+    val maxDexModifier: Rep[Int] = column[Int]("MAX_DEX_MODIFIER")
+    /** Database column STEALTH_DISADVANTABE SqlType(BOOLEAN) */
+    val stealthDisadvantabe: Rep[Boolean] = column[Boolean]("STEALTH_DISADVANTABE")
+    /** Database column MINSTRENGTH SqlType(INTEGER) */
+    val minstrength: Rep[Int] = column[Int]("MINSTRENGTH")
+
+    /** Foreign key referencing Character (database name CONSTRAINT_BF) */
+    lazy val characterFk = foreignKey("CONSTRAINT_BF", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table CharacterArmor */
+  lazy val CharacterArmor = new TableQuery(tag => new CharacterArmor(tag))
+
   /** Entity class storing rows of table CharacterClasses
    *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
    *  @param classId Database column CLASS_ID SqlType(INTEGER)
@@ -204,14 +242,82 @@ trait Tables {
     /** Database column CLASS_SPECIALIZATION_ID SqlType(INTEGER) */
     val classSpecializationId: Rep[Option[Int]] = column[Option[Int]]("CLASS_SPECIALIZATION_ID")
 
-    /** Primary key of CharacterClasses (database name CONSTRAINT_64) */
-    val pk = primaryKey("CONSTRAINT_64", (characterId, classId))
+    /** Primary key of CharacterClasses (database name CONSTRAINT_64F) */
+    val pk = primaryKey("CONSTRAINT_64F", (characterId, classId))
 
-    /** Foreign key referencing Character (database name CONSTRAINT_64F) */
-    lazy val characterFk = foreignKey("CONSTRAINT_64F", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+    /** Foreign key referencing Character (database name CONSTRAINT_64FD) */
+    lazy val characterFk = foreignKey("CONSTRAINT_64FD", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+    /** Foreign key referencing Classes (database name CONSTRAINT_64FD1) */
+    lazy val classesFk = foreignKey("CONSTRAINT_64FD1", classId, Classes)(r => r.classId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+    /** Foreign key referencing Specializations (database name CONSTRAINT_64) */
+    lazy val specializationsFk = foreignKey("CONSTRAINT_64", classSpecializationId, Specializations)(r => Rep.Some(r.specId), onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
   }
   /** Collection-like TableQuery object for table CharacterClasses */
   lazy val CharacterClasses = new TableQuery(tag => new CharacterClasses(tag))
+
+  /** Entity class storing rows of table CharacterGear
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
+   *  @param name Database column NAME SqlType(CHAR), Length(30,false)
+   *  @param weight Database column WEIGHT SqlType(DOUBLE) */
+  case class CharacterGearRow(characterId: Int, name: String, weight: Double)
+  /** GetResult implicit for fetching CharacterGearRow objects using plain SQL queries */
+  implicit def GetResultCharacterGearRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Double]): GR[CharacterGearRow] = GR{
+    prs => import prs._
+    CharacterGearRow.tupled((<<[Int], <<[String], <<[Double]))
+  }
+  /** Table description of table CHARACTER_GEAR. Objects of this class serve as prototypes for rows in queries. */
+  class CharacterGear(_tableTag: Tag) extends profile.api.Table[CharacterGearRow](_tableTag, "CHARACTER_GEAR") {
+    def * = (characterId, name, weight) <> (CharacterGearRow.tupled, CharacterGearRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(characterId), Rep.Some(name), Rep.Some(weight)).shaped.<>({r=>import r._; _1.map(_=> CharacterGearRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column CHARACTER_ID SqlType(INTEGER) */
+    val characterId: Rep[Int] = column[Int]("CHARACTER_ID")
+    /** Database column NAME SqlType(CHAR), Length(30,false) */
+    val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
+    /** Database column WEIGHT SqlType(DOUBLE) */
+    val weight: Rep[Double] = column[Double]("WEIGHT")
+
+    /** Foreign key referencing Character (database name CONSTRAINT_95) */
+    lazy val characterFk = foreignKey("CONSTRAINT_95", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table CharacterGear */
+  lazy val CharacterGear = new TableQuery(tag => new CharacterGear(tag))
+
+  /** Entity class storing rows of table CharacterJewels
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
+   *  @param name Database column NAME SqlType(CHAR), Length(30,false)
+   *  @param value Database column VALUE SqlType(INTEGER)
+   *  @param count Database column COUNT SqlType(INTEGER) */
+  case class CharacterJewelsRow(characterId: Int, name: String, value: Int, count: Int)
+  /** GetResult implicit for fetching CharacterJewelsRow objects using plain SQL queries */
+  implicit def GetResultCharacterJewelsRow(implicit e0: GR[Int], e1: GR[String]): GR[CharacterJewelsRow] = GR{
+    prs => import prs._
+    CharacterJewelsRow.tupled((<<[Int], <<[String], <<[Int], <<[Int]))
+  }
+  /** Table description of table CHARACTER_JEWELS. Objects of this class serve as prototypes for rows in queries. */
+  class CharacterJewels(_tableTag: Tag) extends profile.api.Table[CharacterJewelsRow](_tableTag, "CHARACTER_JEWELS") {
+    def * = (characterId, name, value, count) <> (CharacterJewelsRow.tupled, CharacterJewelsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(characterId), Rep.Some(name), Rep.Some(value), Rep.Some(count)).shaped.<>({r=>import r._; _1.map(_=> CharacterJewelsRow.tupled((_1.get, _2.get, _3.get, _4.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column CHARACTER_ID SqlType(INTEGER) */
+    val characterId: Rep[Int] = column[Int]("CHARACTER_ID")
+    /** Database column NAME SqlType(CHAR), Length(30,false) */
+    val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
+    /** Database column VALUE SqlType(INTEGER) */
+    val value: Rep[Int] = column[Int]("VALUE")
+    /** Database column COUNT SqlType(INTEGER) */
+    val count: Rep[Int] = column[Int]("COUNT")
+
+    /** Primary key of CharacterJewels (database name CONSTRAINT_8) */
+    val pk = primaryKey("CONSTRAINT_8", (characterId, name, value))
+
+    /** Foreign key referencing Character (database name CONSTRAINT_82) */
+    lazy val characterFk = foreignKey("CONSTRAINT_82", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table CharacterJewels */
+  lazy val CharacterJewels = new TableQuery(tag => new CharacterJewels(tag))
 
   /** Entity class storing rows of table CharacterLanguages
    *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
@@ -246,26 +352,29 @@ trait Tables {
 
   /** Entity class storing rows of table CharacterProficiencies
    *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
-   *  @param proficiency Database column PROFICIENCY SqlType(CHAR), Length(20,false) */
-  case class CharacterProficienciesRow(characterId: Int, proficiency: String)
+   *  @param proficiencyType Database column PROFICIENCY_TYPE SqlType(CHAR), Length(6,false)
+   *  @param proficiency Database column PROFICIENCY SqlType(CHAR), Length(30,false) */
+  case class CharacterProficienciesRow(characterId: Int, proficiencyType: String, proficiency: String)
   /** GetResult implicit for fetching CharacterProficienciesRow objects using plain SQL queries */
   implicit def GetResultCharacterProficienciesRow(implicit e0: GR[Int], e1: GR[String]): GR[CharacterProficienciesRow] = GR{
     prs => import prs._
-    CharacterProficienciesRow.tupled((<<[Int], <<[String]))
+    CharacterProficienciesRow.tupled((<<[Int], <<[String], <<[String]))
   }
   /** Table description of table CHARACTER_PROFICIENCIES. Objects of this class serve as prototypes for rows in queries. */
   class CharacterProficiencies(_tableTag: Tag) extends profile.api.Table[CharacterProficienciesRow](_tableTag, "CHARACTER_PROFICIENCIES") {
-    def * = (characterId, proficiency) <> (CharacterProficienciesRow.tupled, CharacterProficienciesRow.unapply)
+    def * = (characterId, proficiencyType, proficiency) <> (CharacterProficienciesRow.tupled, CharacterProficienciesRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = (Rep.Some(characterId), Rep.Some(proficiency)).shaped.<>({r=>import r._; _1.map(_=> CharacterProficienciesRow.tupled((_1.get, _2.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = (Rep.Some(characterId), Rep.Some(proficiencyType), Rep.Some(proficiency)).shaped.<>({r=>import r._; _1.map(_=> CharacterProficienciesRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column CHARACTER_ID SqlType(INTEGER) */
     val characterId: Rep[Int] = column[Int]("CHARACTER_ID")
-    /** Database column PROFICIENCY SqlType(CHAR), Length(20,false) */
-    val proficiency: Rep[String] = column[String]("PROFICIENCY", O.Length(20,varying=false))
+    /** Database column PROFICIENCY_TYPE SqlType(CHAR), Length(6,false) */
+    val proficiencyType: Rep[String] = column[String]("PROFICIENCY_TYPE", O.Length(6,varying=false))
+    /** Database column PROFICIENCY SqlType(CHAR), Length(30,false) */
+    val proficiency: Rep[String] = column[String]("PROFICIENCY", O.Length(30,varying=false))
 
     /** Primary key of CharacterProficiencies (database name CONSTRAINT_F3) */
-    val pk = primaryKey("CONSTRAINT_F3", (characterId, proficiency))
+    val pk = primaryKey("CONSTRAINT_F3", (characterId, proficiencyType, proficiency))
 
     /** Foreign key referencing Character (database name CONSTRAINT_F) */
     lazy val characterFk = foreignKey("CONSTRAINT_F", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
@@ -304,6 +413,44 @@ trait Tables {
   }
   /** Collection-like TableQuery object for table CharacterSpells */
   lazy val CharacterSpells = new TableQuery(tag => new CharacterSpells(tag))
+
+  /** Entity class storing rows of table CharacterWeapons
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
+   *  @param name Database column NAME SqlType(CHAR), Length(30,false)
+   *  @param hitDie Database column HIT_DIE SqlType(CHAR), Length(4,false)
+   *  @param weight Database column WEIGHT SqlType(DOUBLE)
+   *  @param toHitBonus Database column TO_HIT_BONUS SqlType(INTEGER)
+   *  @param damageBonus Database column DAMAGE_BONUS SqlType(INTEGER) */
+  case class CharacterWeaponsRow(characterId: Int, name: String, hitDie: String, weight: Double, toHitBonus: Option[Int], damageBonus: Option[Int])
+  /** GetResult implicit for fetching CharacterWeaponsRow objects using plain SQL queries */
+  implicit def GetResultCharacterWeaponsRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Double], e3: GR[Option[Int]]): GR[CharacterWeaponsRow] = GR{
+    prs => import prs._
+    CharacterWeaponsRow.tupled((<<[Int], <<[String], <<[String], <<[Double], <<?[Int], <<?[Int]))
+  }
+  /** Table description of table CHARACTER_WEAPONS. Objects of this class serve as prototypes for rows in queries. */
+  class CharacterWeapons(_tableTag: Tag) extends profile.api.Table[CharacterWeaponsRow](_tableTag, "CHARACTER_WEAPONS") {
+    def * = (characterId, name, hitDie, weight, toHitBonus, damageBonus) <> (CharacterWeaponsRow.tupled, CharacterWeaponsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(characterId), Rep.Some(name), Rep.Some(hitDie), Rep.Some(weight), toHitBonus, damageBonus).shaped.<>({r=>import r._; _1.map(_=> CharacterWeaponsRow.tupled((_1.get, _2.get, _3.get, _4.get, _5, _6)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column CHARACTER_ID SqlType(INTEGER) */
+    val characterId: Rep[Int] = column[Int]("CHARACTER_ID")
+    /** Database column NAME SqlType(CHAR), Length(30,false) */
+    val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
+    /** Database column HIT_DIE SqlType(CHAR), Length(4,false) */
+    val hitDie: Rep[String] = column[String]("HIT_DIE", O.Length(4,varying=false))
+    /** Database column WEIGHT SqlType(DOUBLE) */
+    val weight: Rep[Double] = column[Double]("WEIGHT")
+    /** Database column TO_HIT_BONUS SqlType(INTEGER) */
+    val toHitBonus: Rep[Option[Int]] = column[Option[Int]]("TO_HIT_BONUS")
+    /** Database column DAMAGE_BONUS SqlType(INTEGER) */
+    val damageBonus: Rep[Option[Int]] = column[Option[Int]]("DAMAGE_BONUS")
+
+    /** Foreign key referencing Character (database name CONSTRAINT_7B) */
+    lazy val characterFk = foreignKey("CONSTRAINT_7B", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table CharacterWeapons */
+  lazy val CharacterWeapons = new TableQuery(tag => new CharacterWeapons(tag))
 
   /** Entity class storing rows of table Classes
    *  @param classId Database column CLASS_ID SqlType(INTEGER), AutoInc, PrimaryKey

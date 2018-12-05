@@ -3,6 +3,10 @@ drop table if exists character_spells;
 drop table if exists character_languages;
 drop table if exists character_classes;
 drop table if exists character_proficiencies;
+drop table if exists character_weapons;
+drop table if exists character_armor;
+drop table if exists character_gear;
+drop table if exists character_jewels;
 drop table if exists character;
 create table character(
    character_id int identity(0),
@@ -57,7 +61,44 @@ create table character_spells(
 
 create table character_proficiencies (
    character_id int not null,
-   proficiency char(20) not null,
+   proficiency_type char(6) not null,
+   proficiency char(30) not null,
    foreign key (character_id) references character(character_id),
-   primary key (character_id, proficiency)
+   primary key (character_id, proficiency_type, proficiency)
+);
+
+create table character_weapons (
+   character_id int not null,
+   name char(30) not null,
+   hit_die char(4) not null,
+   weight float not null,
+   to_hit_bonus int null,
+   damage_bonus int null,
+   foreign key (character_id) references character(character_id)
+);
+
+create table character_armor (
+   character_id int not null,
+   name char(30) not null,
+   armor_class int not null,
+   max_dex_modifier int not null,
+   stealth_disadvantabe boolean not null,
+   minStrength int not null,
+   foreign key (character_id) references character(character_id)
+);
+
+create table character_gear (
+   character_id int not null,
+   name char(30) not null,
+   weight float not null,
+   foreign key (character_id) references character(character_id)   
+);
+
+create table character_jewels (
+   character_id int not null,
+   name char(30) not null,
+   value int not null,
+   count int not null,
+   primary key (character_id, name, value),
+   foreign key (character_id) references character(character_id)
 );
