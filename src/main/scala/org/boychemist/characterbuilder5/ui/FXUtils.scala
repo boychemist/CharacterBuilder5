@@ -2,11 +2,10 @@ package org.boychemist.characterbuilder5.ui
 
 import java.util.concurrent
 
-import scalafx.Includes._
 import scalafx.application.Platform
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ScrollPane}
+import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.BorderPane
 import scalafx.stage.{Modality, Stage}
 
@@ -31,7 +30,7 @@ object FXUtils {
     }
   }
 
-  def showDialogPane(specType: String, rootNode: ScrollPane) = {
+  def showDialogPane(specType: String, rootNode: ScrollPane): Unit = {
     val dialogStage = new Stage {
       outer =>
       title = specType
@@ -47,30 +46,5 @@ object FXUtils {
     }
     // Show dialog and wait till it is closed
     dialogStage.showAndWait()
-  }
-
-  /** Show a `message` in a dialog box, wait till dialog is closed */
-  def showInDialog(message: String) {
-    // Create dialog
-    val dialogStage = new Stage {
-      outer =>
-      title = "Stand-Alone Dialog - runAndWait"
-      initModality(Modality.ApplicationModal)
-      scene = new Scene {
-        root = new BorderPane {
-          padding = Insets(25)
-          bottom = new Button {
-            text = message
-            onAction = handle {
-              outer.close()
-            }
-          }
-        }
-      }
-    }
-
-    // Show dialog and wait till it is closed
-    dialogStage.showAndWait()
-
   }
 }
