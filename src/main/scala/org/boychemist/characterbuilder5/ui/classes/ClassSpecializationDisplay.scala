@@ -58,7 +58,7 @@ object ClassSpecializationDisplay {
       val featureLevel = enhancedLabel(featureInfo.level.toString)
       val featureName = enhancedLabel(featureInfo.name)
       val featureDescription =
-        variableTextArea(featureInfo.descrition, 350, 105)
+        variableTextArea(featureInfo.description, 350, 105)
       specGrid.addRow(rowNum, featureLevel, featureName, featureDescription)
       rowNum += 1
     }

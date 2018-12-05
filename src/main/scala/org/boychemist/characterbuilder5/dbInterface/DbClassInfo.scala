@@ -1,8 +1,6 @@
 package org.boychemist.characterbuilder5.dbInterface
 
 
-import java.time.Duration
-
 import Tables._
 import slick.jdbc.H2Profile.api._
 import slick.jdbc.JdbcBackend.Database
@@ -11,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-case class SpecializationInstanceDescription(level: Int, name: String, descrition: String)
+case class SpecializationInstanceDescription(level: Int, name: String, description: String)
 
 /**
   * Provide access to the classes in the database
@@ -49,7 +47,7 @@ object DbClassInfo {
     val iter = tuples.iterator
     while (iter.hasNext) {
       val aTuple = iter.next()
-      features += new SpecializationInstanceDescription(aTuple._1, aTuple._2, aTuple._3)
+      features += SpecializationInstanceDescription(aTuple._1, aTuple._2, aTuple._3)
     }
     features.toList
   }

@@ -2,7 +2,7 @@ package org.boychemist.characterbuilder5.dnd5classes.specializations
 
 import scala.collection.mutable.{MutableList, TreeMap}
 
-class SpecializationFeature(val name: String, val description: String)
+case class SpecializationFeature(val name: String, val description: String)
 
 /**
   * Defines the data for a Dungeons and Dragons 5th Edition class specialization.  The Player's Handbook
