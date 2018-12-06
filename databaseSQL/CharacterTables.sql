@@ -7,13 +7,16 @@ drop table if exists character_weapons;
 drop table if exists character_armor;
 drop table if exists character_gear;
 drop table if exists character_jewels;
+drop table if exists equipped_weapons;
+drop table if exists equipped_armor;
+drop table if exists equipped_gear;
+
 drop table if exists character;
 create table character(
-   character_id int identity(0),
    name char(30) unique not null,
    race char(18) not null,
    alignment char(30) not null,
-   hit_point_bonus int not null, // Hill Dwarf only
+   hit_point_bonus int not null, // Hill Dwarf only has non-zero value
    strength int not null,
    dexterity int not null,
    constitution int not null,
@@ -23,6 +26,9 @@ create table character(
    initial_max_hp int not null,
    adjusted_max_hp int not null,
    current_hp int not null,
+   experience_points int not null,
+   check_points int not null,
+   treasure_points int not null,
    level int not null,
    base_armor_class int not null,
    base_speed int not null,
@@ -30,7 +36,9 @@ create table character(
    silver bigint not null default 0,
    electrum bigint not null default 0,
    gold bigint not null default 0,
-   platinum bigint not null default 0
+   platinum bigint not null default 0,
+   draconic_ancestry char(6) not null,
+   character_id int identity(0)
 );
 
 create table character_classes(
@@ -72,8 +80,11 @@ create table character_weapons (
    name char(30) not null,
    hit_die char(4) not null,
    weight float not null,
-   to_hit_bonus int null,
-   damage_bonus int null,
+   to_hit_bonus int not null,
+   damage_bonus int not null,
+   ac_adjust int not null,
+   equipped boolean not null,
+   ability_adjustments char (90) not null,
    foreign key (character_id) references character(character_id)
 );
 
@@ -84,6 +95,11 @@ create table character_armor (
    max_dex_modifier int not null,
    stealth_disadvantabe boolean not null,
    minStrength int not null,
+   to_hit_bonus int not null,
+   damage_bonus int not null,
+   ac_adjust int not null,
+   equipped boolean not null,
+   ability_adjustments char (90) not null,
    foreign key (character_id) references character(character_id)
 );
 
@@ -91,6 +107,11 @@ create table character_gear (
    character_id int not null,
    name char(30) not null,
    weight float not null,
+   to_hit_bonus int not null,
+   damage_bonus int not null,
+   ac_adjust int not null,
+   equipped boolean not null,
+   ability_adjustments char (90) not null,
    foreign key (character_id) references character(character_id)   
 );
 
