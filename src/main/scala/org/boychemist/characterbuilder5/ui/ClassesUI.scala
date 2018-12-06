@@ -1,10 +1,9 @@
 package org.boychemist.characterbuilder5.ui
 
-import org.boychemist.characterbuilder5.dbInterface.{CharacterDatabaseConnection, DbClassInfo}
+import org.boychemist.characterbuilder5.dbInterface.DbClassInfo
 import org.boychemist.characterbuilder5.ui.classes._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
-import slick.jdbc.JdbcBackend.Database
 
 import scala.collection.immutable.HashMap
 
