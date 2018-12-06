@@ -11,14 +11,13 @@ import scalafx.geometry.Pos
 import scalafx.scene.control._
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
-import slick.jdbc.JdbcBackend.Database
 import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
 
 import scala.collection.mutable.ListBuffer
 
 object MonkDisplay {
 
-  def getMonkGrid(db: Database): ScrollPane = {
+  def getMonkGrid: ScrollPane = {
     val monkGrid = wideGrid4()
     monkGrid.style = "-fx-background-color: skyblue"
     monkGrid.vgap = 2
@@ -60,12 +59,12 @@ object MonkDisplay {
     val buttonList = new ListBuffer[Button]
     val specializationType = "Monastic Tradition"
     val labelTraditions = enhancedLabel(specializationType)
-    val originsList = getSpecializationNamesByClassName(db, Dnd5Monk.classID.toString)
+    val originsList = getSpecializationNamesByClassName(Dnd5Monk.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
       val specPane =
-        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+        ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
         onAction = handle {
           FXUtils.onFXAndWait(

@@ -5,16 +5,14 @@ import org.boychemist.characterbuilder5.dnd5classes.Dnd5Fighter
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import org.boychemist.characterbuilder5.ui.FXUtils
 import scalafx.Includes.handle
-import scalafx.geometry.HPos
 import scalafx.scene.control.{Button, Label, ScrollPane}
-import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
+import scalafx.scene.layout.VBox
 import scalafx.scene.text.{Font, FontWeight}
-import slick.jdbc.JdbcBackend.Database
 
 import scala.collection.mutable.ListBuffer
 
 object FighterDisplay {
-  def getFighterGrid(db: Database): ScrollPane = {
+  def getFighterGrid: ScrollPane = {
     val fighterGrid = wideGrid4()
     fighterGrid.style = "-fx-background-color: skyblue"
     fighterGrid.vgap = 2
@@ -50,12 +48,12 @@ object FighterDisplay {
     val buttonList = new ListBuffer[Button]
     val specializationType = "Martial Archetype"
     val labelTraditions = enhancedLabel(specializationType)
-    val originsList = getSpecializationNamesByClassName(db, Dnd5Fighter.classID.toString)
+    val originsList = getSpecializationNamesByClassName(Dnd5Fighter.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
       val specPane =
-        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+        ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
         onAction = handle {
           FXUtils.onFXAndWait(

@@ -11,13 +11,12 @@ import scalafx.geometry.Pos
 import scalafx.scene.control._
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
-import slick.jdbc.JdbcBackend.Database
 import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
 
 import scala.collection.mutable.ListBuffer
 
 object ClericDisplay {
-  def getClericGrid(db: Database): ScrollPane = {
+  def getClericGrid: ScrollPane = {
     val clericGrid = wideGrid4()
     clericGrid.style = "-fx-background-color: skyblue"
     clericGrid.vgap = 2
@@ -54,12 +53,12 @@ object ClericDisplay {
     val buttonList = new ListBuffer[Button]
     val specializationType = "Divine Domain"
     val labelDivineDomains = enhancedLabel(specializationType)
-    val originsList = getSpecializationNamesByClassName(db, Dnd5Cleric.classID.toString)
+    val originsList = getSpecializationNamesByClassName(Dnd5Cleric.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
       val specPane =
-        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+        ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
         onAction = handle {
           FXUtils.onFXAndWait(

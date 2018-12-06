@@ -9,7 +9,7 @@ import slick.jdbc.JdbcBackend.Database
 /*
  * Create a tab based Scene to put on the stage.
  */
-class BuilderUI(db: Database, stage: Stage) {
+class BuilderUI(stage: Stage) {
   private val topPane = new TabPane {
     tabClosingPolicy = TabClosingPolicy.Unavailable
     maxWidth = 720
@@ -17,7 +17,7 @@ class BuilderUI(db: Database, stage: Stage) {
     maxHeight = 700
   }
   topPane += RacesTab.racesTab()
-  topPane += ClassesUI.classesTab(db)
+  topPane += ClassesUI.classesTab()
 
   stage.scene = new Scene {
     root = topPane

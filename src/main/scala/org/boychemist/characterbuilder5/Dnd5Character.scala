@@ -1,7 +1,7 @@
 package org.boychemist.characterbuilder5
 
 import org.boychemist.characterbuilder5.dnd5classes._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecialization
+import org.boychemist.characterbuilder5.dnd5classes.specializations.{Dnd5ClassSpecialization, Dnd5ClassSpecializationImpl}
 
 /**
   * This class contains the attributes of a Dungeons and Dragons Version 5 character.
@@ -103,5 +103,5 @@ class CharacterClassDescription(charClass: String) {
   /*
      data not saved in the database
   */
-  var specialization: Dnd5ClassSpecialization = _
+  var specialization: Dnd5ClassSpecializationImpl = _
 }

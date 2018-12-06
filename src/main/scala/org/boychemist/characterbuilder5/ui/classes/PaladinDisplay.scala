@@ -11,14 +11,13 @@ import scalafx.geometry.Pos
 import scalafx.scene.control._
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
-import slick.jdbc.JdbcBackend.Database
 import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
 
 import scala.collection.mutable.ListBuffer
 
 object PaladinDisplay {
 
-  def getPaladinGrid(db: Database): ScrollPane = {
+  def getPaladinGrid: ScrollPane = {
     val palGrid = wideGrid4()
     palGrid.style = "-fx-background-color: skyblue"
     palGrid.vgap = 2
@@ -57,12 +56,12 @@ object PaladinDisplay {
     val specializationType = "Sacred Oath"
     val labelPatrons = enhancedLabel(specializationType)
     val originsList =
-      getSpecializationNamesByClassName(db, Dnd5Paladin.classID.toString)
+      getSpecializationNamesByClassName(Dnd5Paladin.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
       val specPane =
-        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+        ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
         onAction = handle {
           FXUtils.onFXAndWait(

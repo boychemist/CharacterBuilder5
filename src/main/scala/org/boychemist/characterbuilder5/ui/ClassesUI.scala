@@ -1,6 +1,6 @@
 package org.boychemist.characterbuilder5.ui
 
-import org.boychemist.characterbuilder5.dbInterface.DbClassInfo
+import org.boychemist.characterbuilder5.dbInterface.{CharacterDatabaseConnection, DbClassInfo}
 import org.boychemist.characterbuilder5.ui.classes._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
@@ -9,8 +9,8 @@ import slick.jdbc.JdbcBackend.Database
 import scala.collection.immutable.HashMap
 
 object ClassesUI {
-  def classesTab(db: Database): Tab = {
-    val classNames = DbClassInfo.getClassNames(db)
+  def classesTab(): Tab = {
+    val classNames = DbClassInfo.getClassNames
 
     val pane = new TabPane {
       tabClosingPolicy = TabClosingPolicy.Unavailable
@@ -19,7 +19,7 @@ object ClassesUI {
     while (classIter.hasNext) {
       val className = classIter.next()
       val theTab = new Tab { text = className }
-      val theGrid = getClassGrid(className, db)
+      val theGrid = getClassGrid(className)
       theGrid match {
         case Some(grid) => theTab.content = grid
         case None       =>
@@ -33,20 +33,20 @@ object ClassesUI {
     hdTab
   }
 
-  def getClassGrid(className: String, db: Database): Option[ScrollPane] = {
+  def getClassGrid(className: String): Option[ScrollPane] = {
     val paneMap: HashMap[String, ScrollPane] = HashMap(
-      "Barbarian" -> BarbarianDisplay.getBarbarianGrid(db),
-      "Bard" -> BardDisplay.getBardGrid(db),
-      "Cleric" -> ClericDisplay.getClericGrid(db),
-      "Druid" -> DruidDisplay.getDruidGrid(db),
-      "Fighter" -> FighterDisplay.getFighterGrid(db),
-      "Monk" -> MonkDisplay.getMonkGrid(db),
-      "Paladin" -> PaladinDisplay.getPaladinGrid(db),
-      "Ranger" -> RangerDisplay.getRangerGrid(db),
-      "Rogue" -> RogueDisplay.getRogueGrid(db),
-      "Sorcerer" -> SorcererDisplay.getSorcererGrid(db),
-      "Warlock" -> WarlockDisplay.getWarlockGrid(db),
-      "Wizard" -> WizardDisplay.getWizardGrid(db)
+      "Barbarian" -> BarbarianDisplay.getBarbarianGrid,
+      "Bard" -> BardDisplay.getBardGrid,
+      "Cleric" -> ClericDisplay.getClericGrid,
+      "Druid" -> DruidDisplay.getDruidGrid,
+      "Fighter" -> FighterDisplay.getFighterGrid,
+      "Monk" -> MonkDisplay.getMonkGrid,
+      "Paladin" -> PaladinDisplay.getPaladinGrid,
+      "Ranger" -> RangerDisplay.getRangerGrid,
+      "Rogue" -> RogueDisplay.getRogueGrid,
+      "Sorcerer" -> SorcererDisplay.getSorcererGrid,
+      "Warlock" -> WarlockDisplay.getWarlockGrid,
+      "Wizard" -> WizardDisplay.getWizardGrid
     )
 
     val node = paneMap.get(className)

@@ -9,12 +9,11 @@ import scalafx.geometry.HPos
 import scalafx.scene.control.{Button, Label, ScrollPane}
 import scalafx.scene.layout.{ColumnConstraints, GridPane, VBox}
 import scalafx.scene.text.{Font, FontWeight}
-import slick.jdbc.JdbcBackend.Database
 
 import scala.collection.mutable.ListBuffer
 
 object BarbarianDisplay {
-  def getBarbarianGrid(db: Database): ScrollPane = {
+  def getBarbarianGrid: ScrollPane = {
     val barbGrid = wideGrid4()
     barbGrid.style = "-fx-background-color: skyblue"
     barbGrid.vgap = 2
@@ -71,12 +70,12 @@ object BarbarianDisplay {
     val specializationType = "Primal Path"
     val labelTraditions = enhancedLabel(specializationType)
     val originsList =
-      getSpecializationNamesByClassName(db, Dnd5Barbarian.classID.toString)
+      getSpecializationNamesByClassName(Dnd5Barbarian.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
       val specPane =
-        ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+        ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
         onAction = handle {
           FXUtils.onFXAndWait(

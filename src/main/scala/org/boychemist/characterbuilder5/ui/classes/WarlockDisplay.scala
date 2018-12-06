@@ -10,14 +10,13 @@ import scalafx.geometry.Pos
 import scalafx.scene.control._
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
-import slick.jdbc.JdbcBackend.Database
 import scalafx.scene.control.TableColumn.{sfxTableColumn2jfx => sfx2jfx}
 import scalafx.Includes._
 
 import scala.collection.mutable.ListBuffer
 
 object WarlockDisplay {
-  def getWarlockGrid(db: Database): ScrollPane = {
+  def getWarlockGrid: ScrollPane = {
     val clericGrid = wideGrid4()
     clericGrid.style = "-fx-background-color: skyblue"
     clericGrid.vgap = 2
@@ -54,11 +53,11 @@ object WarlockDisplay {
     val buttonList = new ListBuffer[Button]
     val specializationType = "Otherworldly Patrons"
     val labelPatrons = enhancedLabel(specializationType)
-    val originsList = getSpecializationNamesByClassName(db, Dnd5Warlock.classID.toString)
+    val originsList = getSpecializationNamesByClassName(Dnd5Warlock.classID.toString)
     val iterator = originsList.toIterator
     while (iterator.hasNext) {
       val specName = iterator.next()
-      val specPane = ClassSpecializationDisplay.buildSpecializationGrid(db, specName)
+      val specPane = ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
         onAction = handle {FXUtils.onFXAndWait(FXUtils.showDialogPane(specializationType, specPane))}
       }

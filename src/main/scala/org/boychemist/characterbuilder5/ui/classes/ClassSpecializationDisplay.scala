@@ -10,7 +10,7 @@ import slick.jdbc.JdbcBackend.Database
 
 object ClassSpecializationDisplay {
 
-  def buildSpecializationGrid(db: Database, specName: String): ScrollPane = {
+  def buildSpecializationGrid(specName: String): ScrollPane = {
     val specGrid = new GridPane {
       minWidth = 730
       maxWidth = 1000
@@ -28,7 +28,7 @@ object ClassSpecializationDisplay {
       children = specNameLabel
     }
 
-    val classInfo = DbClassInfo.getSpecializationDataByName(db, specName)
+    val classInfo = DbClassInfo.getSpecializationDataByName(specName)
     val specId: Int = classInfo.head._1
     val description: String = classInfo.head._2
     var rowNum = 0
@@ -51,7 +51,7 @@ object ClassSpecializationDisplay {
     rowNum += 1
 
     val specializationFeatures =
-      DbClassInfo.getSpecilalizationFeaturesBySpecID(db, specId)
+      DbClassInfo.getSpecilalizationFeaturesBySpecID(specId)
     val specFeaturesIter = specializationFeatures.iterator
     while (specFeaturesIter.hasNext) {
       val featureInfo = specFeaturesIter.next()
