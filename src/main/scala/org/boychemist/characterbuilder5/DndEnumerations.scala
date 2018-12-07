@@ -23,7 +23,6 @@ object Dnd5LanguagesEnum extends Enumeration {
   val Primordial = Value
   val Sylvan = Value
   val Undercommon = Value
-  val NotSet = Value // to indicate class get to choose their second or later language
 }
 
 /**
@@ -44,11 +43,10 @@ object Dnd5RacesEnum extends Enumeration {
   val StoutHafling = Value("Stout Hafling")
   val DragonBorn = Value
   val Tiefling = Value
-  val NotSet = Value
 }
 
 object DndCharacterSizeEnum extends Enumeration {
-  val Small, Medium, Large, NotSet = Value
+  val Small, Medium, Large = Value
 }
 
 /**
@@ -68,7 +66,6 @@ object Dnd5ClassesEnum extends Enumeration {
   val Sorcerer = Value
   val Warlock = Value
   val Wizard = Value
-  val NotSet = Value
 }
 
 object DndAlignmentEnum extends Enumeration {
@@ -81,7 +78,6 @@ object DndAlignmentEnum extends Enumeration {
   val LawfulEvil = Value("Lawful Evil")
   val NeutralEvil = Value("Neutral Evil")
   val ChaoticEvil = Value("Chaotic Evil")
-  val NotSet = Value
 }
 
 object Dnd5SkillsEnum extends Enumeration {
@@ -103,7 +99,6 @@ object Dnd5SkillsEnum extends Enumeration {
   val Intimidation = Value
   val Performance = Value
   val Persuasion = Value
-  val choose = Value
 }
 
 object DndAbilitiesEnum extends Enumeration {
