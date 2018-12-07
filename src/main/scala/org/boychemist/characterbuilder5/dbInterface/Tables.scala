@@ -18,29 +18,32 @@ trait Tables {
   /** DDL for all tables. Call .create to execute. */
   lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, Character.schema, CharacterArmor.schema, CharacterClasses.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Languages.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
-  def ddl = schema
+  def ddl: profile.SchemaDescription = schema
 
   /** Entity class storing rows of table AdventuringGear
    *  @param name Database column NAME SqlType(CHAR), Length(30,false)
    *  @param weight Database column WEIGHT SqlType(DOUBLE)
+   *  @param maxNumber Database column MAX_NUMBER SqlType(INTEGER)
    *  @param `type` Database column TYPE SqlType(CHAR), Length(14,false) */
-  case class AdventuringGearRow(name: String, weight: Double, `type`: Option[String])
+  case class AdventuringGearRow(name: String, weight: Double, maxNumber: Option[Int], `type`: Option[String])
   /** GetResult implicit for fetching AdventuringGearRow objects using plain SQL queries */
-  implicit def GetResultAdventuringGearRow(implicit e0: GR[String], e1: GR[Double], e2: GR[Option[String]]): GR[AdventuringGearRow] = GR{
+  implicit def GetResultAdventuringGearRow(implicit e0: GR[String], e1: GR[Double], e2: GR[Option[Int]], e3: GR[Option[String]]): GR[AdventuringGearRow] = GR{
     prs => import prs._
-    AdventuringGearRow.tupled((<<[String], <<[Double], <<?[String]))
+    AdventuringGearRow.tupled((<<[String], <<[Double], <<?[Int], <<?[String]))
   }
   /** Table description of table ADVENTURING_GEAR. Objects of this class serve as prototypes for rows in queries.
    *  NOTE: The following names collided with Scala keywords and were escaped: type */
   class AdventuringGear(_tableTag: Tag) extends profile.api.Table[AdventuringGearRow](_tableTag, "ADVENTURING_GEAR") {
-    def * = (name, weight, `type`) <> (AdventuringGearRow.tupled, AdventuringGearRow.unapply)
+    def * = (name, weight, maxNumber, `type`) <> (AdventuringGearRow.tupled, AdventuringGearRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = (Rep.Some(name), Rep.Some(weight), `type`).shaped.<>({r=>import r._; _1.map(_=> AdventuringGearRow.tupled((_1.get, _2.get, _3)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = (Rep.Some(name), Rep.Some(weight), maxNumber, `type`).shaped.<>({r=>import r._; _1.map(_=> AdventuringGearRow.tupled((_1.get, _2.get, _3, _4)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column NAME SqlType(CHAR), Length(30,false) */
     val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
     /** Database column WEIGHT SqlType(DOUBLE) */
     val weight: Rep[Double] = column[Double]("WEIGHT")
+    /** Database column MAX_NUMBER SqlType(INTEGER) */
+    val maxNumber: Rep[Option[Int]] = column[Option[Int]]("MAX_NUMBER")
     /** Database column TYPE SqlType(CHAR), Length(14,false)
      *  NOTE: The name was escaped because it collided with a Scala keyword. */
     val `type`: Rep[Option[String]] = column[Option[String]]("TYPE", O.Length(14,varying=false))

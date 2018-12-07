@@ -4,7 +4,7 @@ import org.boychemist.characterbuilder5.dnd5classes._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecializationImpl
 
 object Dnd5Character {
-  lazy private val invalidCharacter = invalidChar
+  private val invalidCharacter = invalidChar
   private var referenceCharacter: Dnd5Character = invalidCharacter
   private var working: Dnd5Character = invalidCharacter
 
@@ -57,6 +57,8 @@ object Dnd5Character {
 
   case class CharacterGearItem(name: String,
                                weight: Double,
+                               maxNumber: Int = 0,
+                               currentNumber: Int = 0,
                                acAdjust: Int = 0,
                                toHitBonus: Int = 0,
                                damagenBonus: Int = 0,
@@ -102,8 +104,8 @@ object Dnd5Character {
         case Dnd5ClassesEnum.Wizard => Dnd5Wizard
       }
     var level: Int = 1 // all classes start at level 1
-    var specialization_id
-    : Int = -1; // database primary key of the specialization
+    // database primary key of the specialization
+    var specialization_id: Int = -1
     /*
        data not saved in the database
      */
@@ -120,8 +122,8 @@ class Dnd5Character {
      data that is saved in the database
    */
   var name: String = "" // unique key in the database
-  var race: Dnd5RacesEnum.Value = Dnd5RacesEnum.NotSet
-  var size: DndCharacterSizeEnum.Value = DndCharacterSizeEnum.NotSet
+  var race: Dnd5RacesEnum.Value = _
+  var size: DndCharacterSizeEnum.Value = _
   var characterClass: List[Dnd5Character.CharacterClassDescription] = List()
   var gear: List[Dnd5Character.CharacterGearItem] = List()
   var equippedGear: List[Dnd5Character.CharacterGearItem] = List()
