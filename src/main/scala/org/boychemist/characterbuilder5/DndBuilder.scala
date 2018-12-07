@@ -8,10 +8,6 @@ import ui.BuilderUI
 
 object DndBuilder extends JFXApp {
 
-//  val db = Database.forURL("jdbc:h2:~/character5",
-//                           "sa",
-//                           keepAliveConnection = true,
-//                           driver = "org.h2.Driver")
   CharacterDatabaseConnection.connectToDB("jdbc:h2:~/character5")
 
   stage = new PrimaryStage {
