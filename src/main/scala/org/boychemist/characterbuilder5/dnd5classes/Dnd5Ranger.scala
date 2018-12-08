@@ -23,6 +23,7 @@ object Dnd5Ranger extends Dnd5BasicClass with Dnd5SpellCaster {
     "Perception", "Stealth", "Survival")
   def numberOfSkills: Int = 3
   def features: Map[Int, List[ClassFeature]] = createRangerClassFeatures()
+  override val specializationName: String = "Ranger Archetype"
 
   // spell caster related features
   val spellSourceType: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Ranger  // defines the spell list to use when choosing spells

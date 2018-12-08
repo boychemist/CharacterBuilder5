@@ -24,6 +24,7 @@ object Dnd5Fighter extends Dnd5BasicClass {
    "Intimidation", "Perception", "Survival")
   val numberOfSkills: Int = 2
   val features: Map[Int, List[ClassFeature]] = creatFighterClassFeatures()
+  override val specializationName: String = "Martial Archetype"
 
   private def creatFighterClassFeatures(): Map[Int, List[ClassFeature]] = {
     var workingMap = new mTreeMap[Int, List[ClassFeature]]()

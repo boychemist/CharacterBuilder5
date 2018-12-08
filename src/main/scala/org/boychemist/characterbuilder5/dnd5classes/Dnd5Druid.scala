@@ -24,6 +24,7 @@ object Dnd5Druid extends Dnd5BasicClass with Dnd5SpellCaster {
   "Perception", "Religion", "Survival")
   val numberOfSkills: Int = 2
   val features: Map[Int, List[ClassFeature]] = createDruidClassFeatures()
+  override val specializationName: String = "Druid Circle"
 
   // spell caster features
   // defines the spell list to use when choosing spells

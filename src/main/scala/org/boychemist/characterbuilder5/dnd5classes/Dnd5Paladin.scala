@@ -25,6 +25,7 @@ object Dnd5Paladin extends Dnd5BasicClass with Dnd5SpellCaster {
   "Persuasion", "Religion")
   def numberOfSkills: Int = 2
   def features: Map[Int, List[ClassFeature]] = createPaladinClassFeatures()
+  override val specializationName: String = "Sacred Oath"
 
   // spell caster related features
   val spellSourceType: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Paladin  // defines the spell list to use when choosing spells

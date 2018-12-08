@@ -23,6 +23,7 @@ object Dnd5Sorcerer extends Dnd5BasicClass with Dnd5SpellCaster {
   val skillChoices: List[String] = List("Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion")
   val numberOfSkills: Int = 2
   val features: Map[Int, List[ClassFeature]] = createSorcererClassFeatures()
+  override val specializationName: String = "Sorcerous Origin"
 
   // spell caster features
   // defines the spell list to use when choosing spells

@@ -23,6 +23,7 @@ object Dnd5Wizard extends Dnd5BasicClass with Dnd5SpellCaster {
   val skillChoices: List[String] = List("Arcana", "History", "Insight", "Investigation", "Medicine", "Religion")
   val numberOfSkills: Int = 2
   val features: Map[Int, List[ClassFeature]] = createWizardClassFeatures()
+  override val specializationName: String = "Arcane Tradition"
 
   // spell caster features
   // defines the spell list to use when choosing spells

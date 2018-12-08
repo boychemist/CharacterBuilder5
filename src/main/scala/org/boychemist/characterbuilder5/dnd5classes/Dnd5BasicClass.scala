@@ -24,6 +24,7 @@ trait Dnd5BasicClass {
   def skillChoices: List[String]
   def numberOfSkills: Int
   def features: Map[Int, List[ClassFeature]]
+  val specializationName: String
 
   /**
     * Extract the class features for a class level

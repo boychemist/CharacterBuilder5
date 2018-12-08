@@ -25,6 +25,7 @@ object Dnd5Barbarian extends Dnd5BasicClass {
     List("Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival")
   val numberOfSkills = 2
   val features: Map[Int, List[ClassFeature]] = createBarbarianClassFeatures()
+  override val specializationName: String = "Primal Path"
 
   /**
     * Provide the number of Barbarian rages per day by Barbarian level

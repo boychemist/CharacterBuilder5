@@ -24,6 +24,7 @@ object Dnd5Monk extends Dnd5BasicClass {
     "Religion", "Stealth")
   val numberOfSkills: Int = 2
   val features: Map[Int, List[ClassFeature]] = creatMonkClassFeatures()
+  override val specializationName: String = "Monastic Tradition"
 
   def getMartialArtsHitDie(classLevel: Int): String = {
     if (classLevel < 5)

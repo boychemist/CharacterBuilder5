@@ -26,6 +26,8 @@ object Dnd5Bard extends Dnd5BasicClass with Dnd5SpellCaster {
   def numberOfSkills: Int = 3
   def features: Map[Int, List[ClassFeature]] = createBardClassFeatures()
 
+  override val specializationName: String = "Bard College"
+
   // spell caster related features
   val spellSourceType: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Bard  // defines the spell list to use when choosing spells
   val classLevelForFirstSpells: Int = 1

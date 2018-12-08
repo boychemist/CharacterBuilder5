@@ -14,6 +14,7 @@ object Dnd5Rogue extends Dnd5BasicClass {
     Vector(Dnd5SpecializationsEnum.Thief, Dnd5SpecializationsEnum.Assassin, Dnd5SpecializationsEnum.ArcaneTrickster)
   // the class level at which a character must choose to specialize, ranges from 1 to 3
   val specializationStartLevel: Int = 3
+  override val specializationName: String = "Roguish Archetype"
 
   def hitDice: String = "1d8"
 

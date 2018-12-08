@@ -25,6 +25,7 @@ object Dnd5Warlock extends Dnd5BasicClass with Dnd5SpellCaster {
     "Nature", "Religion")
   val numberOfSkills: Int = 2
   val features: Map[Int, List[ClassFeature]] = createWarlockClassFeatures()
+  override val specializationName: String = "Otherworldly Patron"
 
   // spell caster features
   // defines the spell list to use when choosing spells
