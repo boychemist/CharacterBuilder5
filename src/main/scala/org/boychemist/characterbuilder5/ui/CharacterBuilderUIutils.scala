@@ -1,6 +1,8 @@
 package org.boychemist.characterbuilder5.ui
 
+import javafx.scene.input.TransferMode
 import scalafx.scene.control.{Label, TextArea, TextField}
+import scalafx.scene.input.ClipboardContent
 import scalafx.scene.layout.{ColumnConstraints, GridPane, Region, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 
@@ -99,11 +101,96 @@ object CharacterBuilderUIutils {
       maxWidth = defWidth
       maxHeight = Region.USE_COMPUTED_SIZE
     }
-    intField.text.onChange((obs, oldVal, newVal) =>
+    intField.text.onChange((_, _, newVal) =>
       if (!newVal.toString.matches("""\d*""""))
         intField.text = newVal.toString.replaceAll("""[^\d]""", ""))
 
     intField
+  }
+
+  /**
+    * Create a TextField that can be either the source or destination of drag
+    * and drop actions.  It will only act as the target of a drag if the field
+    * is empty and will only act as the source of a drag if it is not empty.
+    *
+    * @param initialText initial text for the field, default to empty string
+    * @param defWidth width for the field, default is for small integers
+    * @return the new TextField with all the necessary event handlers
+    */
+  def dragToIfEmptyTextField(initialText: String = "", defWidth: Double = 30): TextField = {
+    val theField = new TextField {
+      maxWidth = defWidth
+      minWidth = defWidth
+      text = initialText
+    }
+    val defaultCSS = theField.style
+
+    theField.onDragDetected = { evt => {
+      if (!theField.text.isEmpty.getValue) {
+        // field has something to drag, show it is ready to drag
+        theField.style = "-fx-background-color: red"
+        val db = theField.startDragAndDrop(TransferMode.MOVE)
+        val content = new ClipboardContent()
+        content.putString(theField.text.value)
+        db.setContent(content)
+      }
+      evt.consume()
+    }
+    }
+    theField.onDragDone = { evt => {
+      // this is where the drag started, clear the color and the content
+      if (evt.getGestureSource == theField.delegate) {
+        if (evt.getTransferMode == TransferMode.MOVE) {
+          theField.text = "" // only clear the text if transfer successful
+        }
+        theField.style = defaultCSS.value
+      }
+      evt.consume()
+    }
+    }
+    theField.onDragOver = { evt => {
+      // accept it only if it is not dragged from the same node, this field is
+      // empty, and if the event has string data
+      if (evt.getGestureSource != theField.delegate && evt.getDragboard.hasString &&
+        theField.text.isEmpty.getValue) {
+        // allow moving only
+        evt.acceptTransferModes(TransferMode.MOVE)
+      }
+      evt.consume()
+    }
+    }
+    theField.onDragEntered = { evt => {
+      // show the user that this is a gesture target
+      if (evt.getGestureSource != theField.delegate && evt.getDragboard.hasString &&
+        theField.text.isEmpty.getValue) {
+        theField.style = "-fx-background-color: green"
+      }
+      evt.consume()
+    }
+    }
+    theField.onDragExited = { evt => {
+      // mouse moved away, remove graphical cues
+      theField.style = defaultCSS.value
+      evt.consume()
+    }
+    }
+    theField.onDragDropped = { evt => {
+      val db = evt.getDragboard
+      var success = false
+      if (db.hasString && evt.getGestureTarget == theField.delegate) {
+        val dragged = new TextField(
+          evt.getGestureSource.asInstanceOf[javafx.scene.control.TextField])
+        theField.text = dragged.text.value
+        success = true
+      }
+      // let the source know whether the string was successfully transferred and used
+      evt.setDropCompleted(success)
+      evt.consume()
+    }
+    }
+
+    // value to return
+    theField
   }
 
 }
