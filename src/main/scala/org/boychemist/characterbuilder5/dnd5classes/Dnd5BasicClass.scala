@@ -3,7 +3,7 @@ package org.boychemist.characterbuilder5.dnd5classes
 import org.boychemist.characterbuilder5._
 import org.boychemist.characterbuilder5.dnd5classes.specializations._
 
-import scala.collection.mutable.{MutableList, TreeMap}
+import scala.collection.mutable.{MutableList => mList, TreeMap => tMap}
 
 class ClassFeature(val name: String, val description: String)
 
@@ -51,10 +51,10 @@ trait Dnd5BasicClass {
     *         lower class levels are nearer the head of the list than the features for higher class levels.
     */
   def getClassFeaturesUpToClassLevel(classLevel: Int): List[ClassFeature] ={
-    val sorted: TreeMap[Int, List[ClassFeature]] = new TreeMap[Int, List[ClassFeature]]()
+    val sorted: tMap[Int, List[ClassFeature]] = new tMap[Int, List[ClassFeature]]()
     sorted ++= features.filterKeys(_<= classLevel)
 
-    val outList: MutableList[ClassFeature] = new MutableList[ClassFeature]()
+    val outList: mList[ClassFeature] = new mList[ClassFeature]()
     val iter = sorted.keysIterator
     while (iter.hasNext) {
       val aList = sorted(iter.next())
@@ -63,4 +63,6 @@ trait Dnd5BasicClass {
 
     outList.toList
   }
+
+  override def toString: String = classID.toString
 }
