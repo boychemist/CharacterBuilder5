@@ -30,10 +30,10 @@ object FXUtils {
     }
   }
 
-  def showDialogPane(specType: String, rootNode: ScrollPane): Unit = {
+  def showDialogPane(dialogTitle: String, rootNode: ScrollPane): Unit = {
     val dialogStage = new Stage {
       outer =>
-      title = specType
+      title = dialogTitle
       initModality(Modality.ApplicationModal)
       scene = new Scene {
         root = new BorderPane {
