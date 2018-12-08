@@ -24,9 +24,9 @@ object RacesFromDb {
 }
 
 object DbRaces {
-  def getRacesFromDb(db: Database) = {
+  def getRacesFromDb() = {
     val races = TableQuery[Races]
-    val resultFuture = db.run(races.result).map(_.foreach {
+    val resultFuture = CharacterDatabaseConnection.db.run(races.result).map(_.foreach {
       case r: Tables.RacesRow => RacesFromDb.addRace(r.raceId, r.name)
     })
     Await.result(resultFuture, Duration.Inf)

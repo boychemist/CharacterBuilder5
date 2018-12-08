@@ -4,7 +4,6 @@ import scalafx.scene.control._
 import scalafx.stage.Stage
 import scalafx.scene.Scene
 import scalafx.scene.control.TabPane.TabClosingPolicy
-import slick.jdbc.JdbcBackend.Database
 
 /*
  * Create a tab based Scene to put on the stage.
@@ -18,6 +17,7 @@ class BuilderUI(stage: Stage) {
   }
   topPane += RacesTab.racesTab()
   topPane += ClassesUI.classesTab()
+  topPane += character.NewCharacterUI.newCharacterTab()
 
   stage.scene = new Scene {
     root = topPane

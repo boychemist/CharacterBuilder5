@@ -3,6 +3,9 @@ package org.boychemist.characterbuilder5
 import org.boychemist.characterbuilder5.dnd5classes._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecializationImpl
 
+import scala.collection.mutable
+import scala.collection.mutable.StringBuilder
+
 object Dnd5Character {
   private val invalidCharacter = invalidChar
   private var referenceCharacter: Dnd5Character = invalidCharacter
@@ -14,7 +17,7 @@ object Dnd5Character {
     invalid
   }
 
-  private def saveReference(): Unit = {
+  private def createReference(): Unit = {
     if (working == invalidCharacter) {
       working = new Dnd5Character()
     }
@@ -39,12 +42,12 @@ object Dnd5Character {
 
   def startEditingCharacter(forEditing: Dnd5Character): Unit = {
     working = forEditing
-    saveReference()
+    createReference()
   }
 
   def editNewCharacter: Dnd5Character = {
     working = new Dnd5Character
-    saveReference()
+    createReference()
     working
   }
 
@@ -105,12 +108,26 @@ object Dnd5Character {
       }
     var level: Int = 1 // all classes start at level 1
     // database primary key of the specialization
-    var specialization_id: Int = -1
+    var specializationId: Int = -1
     /*
        data not saved in the database
      */
     var specialization: Dnd5ClassSpecializationImpl = _
+
+    override def toString: String = {
+      val builder = new mutable.StringBuilder()
+      builder.append(s"$dndClass( $level ) specialization = ")
+      if (specializationId == -1) {
+        builder.append("none")
+      }
+      else {
+        builder.append(specialization.toString)
+      }
+
+      builder.mkString
+    }
   }
+
 
 }
 
@@ -154,7 +171,9 @@ class Dnd5Character {
   var wisdom: Int = 8
   var charisma: Int = 8
   var draconicAncestry: String = "" // Dragonborn and draconic sorcerer only
-  var characterId: Int = -1 // not set value
+  var characterId: Int = -1 // not set value, database serial key for this character
+
+  // todo -- add character background skills, tools, languages, equipment, specialization
 
   /*
      stuff not saved in the database
@@ -173,7 +192,7 @@ class Dnd5Character {
   def charismaModifier: Int = calculateAbilityModifier(charisma)
 
   private def calculateAbilityModifier(abilityScore: Int): Int = {
-    (((abilityScore - 10) / 2.0) - 0.5).toInt
+    (scala.math.floor((abilityScore - 10) / 2.0)).toInt
   }
 
   def totalWeightCarried: Int = {
@@ -330,6 +349,24 @@ class Dnd5Character {
     theCopy.characterId = characterId
 
     theCopy
+  }
+
+  override def toString: String = {
+    val builder = new StringBuilder()
+    builder.append(s"Name = $name\n")
+    builder.append(s"Race = $race\n")
+    builder.append(s"Size = $size\n")
+    builder.append(s"class = $characterClass\n")
+    builder.append(s"level $characterLevel\n")
+    builder.append(s"XP $experiencePoints\n")
+    builder.append(s"Strength $strength ($strengthModifier)\n")
+    builder.append(s"Constitution $constitution ($constitutionModifier)\n")
+    builder.append(s"Dexterity $dexterity ($dexterityModifier)\n")
+    builder.append(s"Intelligence $intelligence ($intelligenceModifier)\n")
+    builder.append(s"Wisdom $wisdom ($wisdomModifier)\n")
+    builder.append(s"Charisma $charisma ($charismaModifier)\n")
+
+    builder.mkString
   }
 
   // todo -- add a method to compute hit bonus and damage bonus for a weapon (includes proficiency bonus and other pluses)

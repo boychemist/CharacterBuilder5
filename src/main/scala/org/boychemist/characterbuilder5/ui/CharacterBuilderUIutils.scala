@@ -123,7 +123,6 @@ object CharacterBuilderUIutils {
       minWidth = defWidth
       text = initialText
     }
-    val defaultCSS = theField.style
 
     theField.onDragDetected = { evt => {
       if (!theField.text.isEmpty.getValue) {
@@ -143,8 +142,9 @@ object CharacterBuilderUIutils {
         if (evt.getTransferMode == TransferMode.MOVE) {
           theField.text = "" // only clear the text if transfer successful
         }
-        theField.style = defaultCSS.value
+        theField.style = ""
       }
+      theField.style = ""
       evt.consume()
     }
     }
@@ -170,7 +170,7 @@ object CharacterBuilderUIutils {
     }
     theField.onDragExited = { evt => {
       // mouse moved away, remove graphical cues
-      theField.style = defaultCSS.value
+      theField.style = ""
       evt.consume()
     }
     }
@@ -182,6 +182,7 @@ object CharacterBuilderUIutils {
           evt.getGestureSource.asInstanceOf[javafx.scene.control.TextField])
         theField.text = dragged.text.value
         success = true
+        theField.style = ""
       }
       // let the source know whether the string was successfully transferred and used
       evt.setDropCompleted(success)

@@ -1,12 +1,16 @@
 package org.boychemist.characterbuilder5.ui.character
 
+import javafx.scene.layout.{BorderStroke, Border => jfxBorder}
 import scalafx.geometry.{HPos, Orientation, Pos}
-import scalafx.scene.control.{ComboBox, ScrollPane, Tab, TextField}
-import scalafx.scene.layout.{FlowPane, GridPane, HBox, Region}
+import scalafx.scene.control._
+import scalafx.scene.layout._
 import org.boychemist.characterbuilder5.{Dnd5Character, Dnd5RacesEnum}
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
+import org.boychemist.characterbuilder5.ui.FXUtils
 import scalafx.Includes.handle
+import scalafx.scene.Node
 
+import scala.collection.mutable.{MutableList => mList}
 import scala.collection.mutable.ListBuffer
 
 object NewCharacterUI {
@@ -44,15 +48,40 @@ object NewCharacterUI {
 
   private def getTopLevelNewCharacterPane = {
     val leftSide = LeftSide.pane
-    val rightSide = new FlowPane() {
-      orientation = Orientation.Vertical
-      columnHalignment = HPos.Left
-    }
+    val rightSide = generateRightSide
 
-    val theBox = new HBox {
+    val theBox = new HBox(10) {
       children = List(leftSide, rightSide)
+      style = "-fx-background-color: red"
     }
     theBox
+  }
+
+  private def generateRightSide: FlowPane = {
+    val theChildren = new mList[Node]
+
+    val abilityList = new Button("From List"){
+      onAction = handle {
+        FXUtils.onFXAndWait(
+          FXUtils.showDialogPane("Ability Scores from List", AbilitiesFromListPanel.abilitiesFromListPane))
+      }
+    }
+    val abilityPoints = new Button("From Points")  // todo popup dialog
+    theChildren += new VBox {
+      alignment = Pos.Center
+      children = List(enhancedLabel("Set Ability Scores"),
+        new HBox(5) {
+          children = List(abilityList, abilityPoints)
+        })
+    }
+
+    val fPane = new FlowPane(Orientation.Vertical, 5, 3) {
+      columnHalignment = HPos.Left
+      children = theChildren.toList
+      style = "-fx-background-color: cyan"
+    }
+
+    fPane
   }
 
   object LeftSide {
