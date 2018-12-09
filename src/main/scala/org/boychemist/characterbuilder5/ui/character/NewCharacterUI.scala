@@ -1,6 +1,5 @@
 package org.boychemist.characterbuilder5.ui.character
 
-import javafx.scene.layout.{BorderStroke, Border => jfxBorder}
 import scalafx.geometry.{HPos, Orientation, Pos}
 import scalafx.scene.control._
 import scalafx.scene.layout._
@@ -19,7 +18,9 @@ object NewCharacterUI {
 
   def newCharacterTab(): Tab = {
     val pane = new ScrollPane {
+      border = getBorder
       content = getTopLevelNewCharacterPane
+      style = "-fx-background-color: cyan"
     }
 
     val hdTab = new Tab {
@@ -76,6 +77,7 @@ object NewCharacterUI {
     }
 
     val fPane = new FlowPane(Orientation.Vertical, 5, 3) {
+      border = getBorder
       columnHalignment = HPos.Left
       children = theChildren.toList
       style = "-fx-background-color: cyan"
@@ -264,6 +266,7 @@ object NewCharacterUI {
 
     private def buildLeftSide: GridPane = {
       val leftSide = new GridPane {
+        border = getBorder
         maxWidth = 700
         vgap = 2
         hgap = 2

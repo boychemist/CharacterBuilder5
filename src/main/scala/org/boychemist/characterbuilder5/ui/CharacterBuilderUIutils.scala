@@ -1,12 +1,34 @@
 package org.boychemist.characterbuilder5.ui
 
+import javafx.scene.layout.{Border => JBorder, BorderStroke => JBorderStroke, BorderStrokeStyle => JBorderStrokeStyle, CornerRadii => JCornerRadii}
+import javafx.scene.paint.Color
 import javafx.scene.input.TransferMode
 import scalafx.scene.control.{Label, TextArea, TextField}
 import scalafx.scene.input.ClipboardContent
-import scalafx.scene.layout.{ColumnConstraints, GridPane, Region, VBox}
+import scalafx.scene.layout._
 import scalafx.scene.text.{Font, FontWeight}
 
+import scala.collection.mutable.ArrayBuffer
+
 object CharacterBuilderUIutils {
+
+  private var border: Border = _
+
+  def getBorder:Border = {
+    if (border == null) {
+      val strokes = new ArrayBuffer[JBorderStroke]
+      strokes += new JBorderStroke(Color.SKYBLUE, JBorderStrokeStyle.SOLID,
+        JCornerRadii.EMPTY, JBorderStroke.THICK)
+      strokes += new JBorderStroke(Color.SKYBLUE, JBorderStrokeStyle.SOLID,
+        JCornerRadii.EMPTY, JBorderStroke.THICK)
+      strokes += new JBorderStroke(Color.SKYBLUE, JBorderStrokeStyle.SOLID,
+        JCornerRadii.EMPTY, JBorderStroke.THICK)
+      strokes += new JBorderStroke(Color.SKYBLUE, JBorderStrokeStyle.SOLID,
+        JCornerRadii.EMPTY, JBorderStroke.THICK)
+      border = new Border(new JBorder(strokes:_*))
+    }
+    border
+  }
 
   def enhancedLabel(text: String): Label = {
     val aLabel = new Label(text + " ") {
@@ -15,6 +37,10 @@ object CharacterBuilderUIutils {
     aLabel
   }
 
+  /**
+    * Create a 4 column GridPane where each column take 25% of the width of the pane
+    * @return
+    */
   def wideGrid4(): GridPane = {
     val col1Constraints = new ColumnConstraints {
       percentWidth = 25

@@ -4,11 +4,14 @@ import org.boychemist.characterbuilder5.races._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 
+import CharacterBuilderUIutils.getBorder
+
 object RacesTab {
 
   def racesTab(): Tab = {
 
     val pane = new TabPane {
+      border = getBorder
       tabClosingPolicy = TabClosingPolicy.Unavailable
     }
     pane += GeneralRaceTab.raceTab(Dnd5HillDwarf)

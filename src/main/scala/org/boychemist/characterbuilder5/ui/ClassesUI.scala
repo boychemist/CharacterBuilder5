@@ -5,6 +5,8 @@ import org.boychemist.characterbuilder5.ui.classes._
 import scalafx.scene.control.TabPane.TabClosingPolicy
 import scalafx.scene.control._
 
+import CharacterBuilderUIutils.getBorder
+
 import scala.collection.immutable.HashMap
 
 object ClassesUI {
@@ -12,6 +14,7 @@ object ClassesUI {
     val classNames = DbClassInfo.getClassNames
 
     val pane = new TabPane {
+      border = getBorder
       tabClosingPolicy = TabClosingPolicy.Unavailable
     }
     val classIter = classNames.toIterator

@@ -4,7 +4,6 @@ import org.boychemist.characterbuilder5.dnd5classes._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecializationImpl
 
 import scala.collection.mutable
-import scala.collection.mutable.StringBuilder
 
 object Dnd5Character {
   private val invalidCharacter = invalidChar
@@ -192,7 +191,7 @@ class Dnd5Character {
   def charismaModifier: Int = calculateAbilityModifier(charisma)
 
   private def calculateAbilityModifier(abilityScore: Int): Int = {
-    (scala.math.floor((abilityScore - 10) / 2.0)).toInt
+    scala.math.floor((abilityScore - 10) / 2.0).toInt
   }
 
   def totalWeightCarried: Int = {
@@ -352,7 +351,7 @@ class Dnd5Character {
   }
 
   override def toString: String = {
-    val builder = new StringBuilder()
+    val builder = new mutable.StringBuilder()
     builder.append(s"Name = $name\n")
     builder.append(s"Race = $race\n")
     builder.append(s"Size = $size\n")
