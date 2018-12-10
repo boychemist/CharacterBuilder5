@@ -22,7 +22,7 @@ class BuilderUI(stage: Stage) {
   topPane += ClassesUI.classesTab()
   topPane += character.NewCharacterUI.newCharacterTab()
 
-  val scn = new Scene {
+  private val scn = new Scene {
     stylesheets = List(getClass.getResource("style.css").toExternalForm)
     root = topPane
   }

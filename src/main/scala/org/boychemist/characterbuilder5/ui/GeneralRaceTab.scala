@@ -163,6 +163,7 @@ object GeneralRaceTab {
     }
 
     val thePane = new ScrollPane {
+      border = CharacterBuilderUIutils.getBorder
       content = grid
     }
     thePane

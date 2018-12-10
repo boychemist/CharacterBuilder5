@@ -67,7 +67,12 @@ object NewCharacterUI {
           FXUtils.showDialogPane("Ability Scores from List", AbilitiesFromListPanel.abilitiesFromListPane))
       }
     }
-    val abilityPoints = new Button("From Points")  // todo popup dialog
+    val abilityPoints = new Button("From Points") {
+      onAction = handle {
+        FXUtils.onFXAndWait(
+          FXUtils.showDialogPane("Ability Scores from Points", AbilitiesFromPoints.abilitiesFromPointsPanel))
+      }
+    }
     theChildren += new VBox {
       alignment = Pos.Center
       children = List(enhancedLabel("Set Ability Scores"),
