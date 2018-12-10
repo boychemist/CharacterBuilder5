@@ -5,9 +5,10 @@ import java.util.concurrent
 import scalafx.application.Platform
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.control.ScrollPane
+import scalafx.scene.control.{Button, ScrollPane}
 import scalafx.scene.layout.BorderPane
-import scalafx.stage.{Modality, Stage}
+import scalafx.stage.{Modality, Stage, StageStyle}
+import scalafx.Includes.handle
 
 object FXUtils {
 
@@ -33,12 +34,16 @@ object FXUtils {
   def showDialogPane(dialogTitle: String, rootNode: ScrollPane): Unit = {
     val dialogStage = new Stage {
       outer =>
+      initStyle(StageStyle.Undecorated)
       title = dialogTitle
       initModality(Modality.ApplicationModal)
       scene = new Scene {
         root = new BorderPane {
           padding = Insets(5)
           center = rootNode
+          bottom = new Button("Close") {
+            onAction = handle{outer.close}
+          }
           minHeight = rootNode.width.toDouble + 20.0
           minWidth = rootNode.height.toDouble + 20.0
         }

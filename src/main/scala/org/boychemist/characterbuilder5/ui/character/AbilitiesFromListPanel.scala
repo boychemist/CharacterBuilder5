@@ -49,14 +49,15 @@ object AbilitiesFromListPanel {
   def abilitiesFromListPane: ScrollPane = {
 
     val theGrid = new GridPane {
-      maxWidth = 500
-      prefWidth = 350
+      maxWidth = 300
+      prefWidth = 250
       maxHeight = 700
     }
     var rowNum = 0
 
     theGrid.add(enhancedLabel("Ability Scores"), 0, rowNum, 2, 1)
-    theGrid.add(enhancedLabel("Scores to Allocate"), 2, rowNum)
+    theGrid.add(enhancedLabel("     "), 2, rowNum)
+    theGrid.add(enhancedLabel("Scores to Allocate"), 3, rowNum)
     rowNum += 1
 
     val strength = dragToIfEmptyTextField()
@@ -64,6 +65,7 @@ object AbilitiesFromListPanel {
     theGrid.addRow(rowNum,
       enhancedLabel("Strength"),
       strength,
+      enhancedLabel("     "),
       dragToIfEmptyTextField("15"))
     rowNum += 1
 
@@ -72,6 +74,7 @@ object AbilitiesFromListPanel {
     theGrid.addRow(rowNum,
       enhancedLabel("Constitution"),
       constitution,
+      enhancedLabel("     "),
       dragToIfEmptyTextField("14"))
     rowNum += 1
 
@@ -80,6 +83,7 @@ object AbilitiesFromListPanel {
     theGrid.addRow(rowNum,
       enhancedLabel("Dexterity"),
       dexterity,
+      enhancedLabel("     "),
       dragToIfEmptyTextField("13"))
     rowNum += 1
 
@@ -88,6 +92,7 @@ object AbilitiesFromListPanel {
     theGrid.addRow(rowNum,
       enhancedLabel("Intelligence"),
       intelligence,
+      enhancedLabel("     "),
       dragToIfEmptyTextField("12"))
     rowNum += 1
 
@@ -96,6 +101,7 @@ object AbilitiesFromListPanel {
     theGrid.addRow(rowNum,
       enhancedLabel("Wisdom"),
       wisdom,
+      enhancedLabel("     "),
       dragToIfEmptyTextField("10"))
     rowNum += 1
 
@@ -104,6 +110,7 @@ object AbilitiesFromListPanel {
     theGrid.addRow(rowNum,
       enhancedLabel("Charisma"),
       charisma,
+      enhancedLabel("     "),
       dragToIfEmptyTextField("8"))
 
     new ScrollPane {

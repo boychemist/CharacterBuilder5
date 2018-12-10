@@ -2,6 +2,7 @@ package org.boychemist.characterbuilder5
 
 import org.boychemist.characterbuilder5.dnd5classes._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecializationImpl
+import org.boychemist.characterbuilder5.races._
 
 import scala.collection.mutable
 
@@ -55,6 +56,20 @@ object Dnd5Character {
       editNewCharacter
     } else
       working
+  }
+
+  private val raceLookup: Map[Dnd5RacesEnum.Value, Dnd5Race] =
+    Map(Dnd5RacesEnum.Human -> Dnd5Human, Dnd5RacesEnum.HillDwarf -> Dnd5HillDwarf,
+      Dnd5RacesEnum.MountainDwarf -> Dnd5MountainDwarf, Dnd5RacesEnum.HighElf -> Dnd5HighElf,
+      Dnd5RacesEnum.WoodElf -> Dnd5WoodElf, Dnd5RacesEnum.Drow -> Dnd5Drow,
+      Dnd5RacesEnum.ForestGnome -> Dnd5ForestGnome, Dnd5RacesEnum.RockGnome -> Dnd5RockGnome,
+      Dnd5RacesEnum.HalfElf -> Dnd5HalfElf, Dnd5RacesEnum.HalfOrc -> Dnd5HalfOrc,
+      Dnd5RacesEnum.LightfootHalfling -> Dnd5LightfootHafling,
+      Dnd5RacesEnum.StoutHafling -> Dnd5StoutHafling, Dnd5RacesEnum.DragonBorn -> Dnd5Dragonborn,
+      Dnd5RacesEnum.Tiefling -> Dnd5Tiefling)
+
+  def getRaceDescription(raceId: Dnd5RacesEnum.Value):Dnd5Race = {
+    raceLookup(raceId)
   }
 
   case class CharacterGearItem(name: String,
@@ -139,7 +154,7 @@ class Dnd5Character {
    */
   var name: String = "" // unique key in the database
   var race: Dnd5RacesEnum.Value = _
-  var size: DndCharacterSizeEnum.Value = _
+  var alignment: DndAlignmentEnum.Value = _
   var characterClass: List[Dnd5Character.CharacterClassDescription] = List()
   var gear: List[Dnd5Character.CharacterGearItem] = List()
   var equippedGear: List[Dnd5Character.CharacterGearItem] = List()
@@ -151,6 +166,7 @@ class Dnd5Character {
   var weaponProficiencies: List[String] = List()
   var toolProficiencies: List[String] = List()
   var skillProficiencies: List[String] = List()
+  var languages: List[Dnd5LanguagesEnum.Value] = List()
   var characterLevel: Int = 1 // all characters start at level 1
   var experiencePoints: Int = 0 // all characters start with 0 experience
   var checkPoints: Int = 0 // alternate experience determination mechanism
@@ -171,12 +187,17 @@ class Dnd5Character {
   var charisma: Int = 8
   var draconicAncestry: String = "" // Dragonborn and draconic sorcerer only
   var characterId: Int = -1 // not set value, database serial key for this character
+  var racialFeaturesAddedToLists: Boolean = false
 
   // todo -- add character background skills, tools, languages, equipment, specialization
 
   /*
      stuff not saved in the database
    */
+
+  var size: DndCharacterSizeEnum.Value = _
+  var speed: Int = _
+  var racialAbilities:List[RacialAbilitiy] = List()
 
   def strengthModifier: Int = calculateAbilityModifier(strength)
 
@@ -355,6 +376,8 @@ class Dnd5Character {
     builder.append(s"Name = $name\n")
     builder.append(s"Race = $race\n")
     builder.append(s"Size = $size\n")
+    builder.append(s"Speed = $speed\n")
+    builder.append(s"Alignment = $alignment\n")
     builder.append(s"class = $characterClass\n")
     builder.append(s"level $characterLevel\n")
     builder.append(s"XP $experiencePoints\n")
@@ -368,6 +391,17 @@ class Dnd5Character {
     builder.mkString
   }
 
+  /**
+    * method to add the racial abilities that do not need to be chosen by a human and the ability score
+    * adjustments that need to be done only once as part of character creation.
+    */
+  def addRacialBasicAbilities(): Unit = {
+    if (race == null) return
+    val theRace = Dnd5Character.getRaceDescription(race)
+    size = theRace.size
+    speed = theRace.baseSpeed
+    racialAbilities = theRace.racialAbilities
+  }
   // todo -- add a method to compute hit bonus and damage bonus for a weapon (includes proficiency bonus and other pluses)
   // todo -- add a method to compute armor class based on what is equipped, class, dexterity, and other factors
 }

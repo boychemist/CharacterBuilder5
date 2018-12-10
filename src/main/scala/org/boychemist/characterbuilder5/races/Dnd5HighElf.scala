@@ -3,15 +3,15 @@ package org.boychemist.characterbuilder5.races
 import org.boychemist.characterbuilder5._
 
 object Dnd5HighElf extends Dnd5Race {
-  override val race = Dnd5RacesEnum.HighElf
-  override val size = DndCharacterSizeEnum.Medium
+  override val race: Dnd5RacesEnum.Value = Dnd5RacesEnum.HighElf
+  override val size: DndCharacterSizeEnum.Value = DndCharacterSizeEnum.Medium
   override val baseSpeed = 30
   override val skillProficiencies = List()
   override val weaponProficiencies = List("longsword", "shortsword", "shortbow", "longbow")
   override val armorProficiencies = List() // Mountain Dwarf only
   override val toolsForProficiency = List()
-  override val abilityAdjustments = createHighElfAbilityAdjustments()
-  override val racialAbilities = createHighElfRacialAbilities()
+  override val abilityAdjustments: List[AbilityAdjustment] = createHighElfAbilityAdjustments()
+  override val racialAbilities: List[RacialAbilitiy] = createHighElfRacialAbilities()
   override val languages = List(Dnd5LanguagesEnum.Common, Dnd5LanguagesEnum.Elvish)
   override def hitPointIncrement() = 0
 

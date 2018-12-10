@@ -21,7 +21,9 @@ object AbilitiesFromPoints {
   private def calculatePointChange(oldVal: Int, newVal: Int): Int = abilityCostMap(newVal) - abilityCostMap(oldVal)
 
   private def createSpinner(dependent: TextField): Spinner[Int] = {
-    val theSpinner = new Spinner[Int](8, 15, 8)
+    val theSpinner = new Spinner[Int](8, 15, 8) {
+      maxWidth = 60
+    }
     val spinVal: ReadOnlyObjectProperty[Int] = theSpinner.value
     spinVal.onChange((obs, oldVal: Int, newVal: Int) => {
       val userData = theSpinner.userData
@@ -45,8 +47,8 @@ object AbilitiesFromPoints {
 
   def abilitiesFromPointsPanel: ScrollPane = {
     val spinGrid = new GridPane {
-      maxWidth = 500
-      prefWidth = 350
+      maxWidth = 200
+      prefWidth = 150
       maxHeight = 700
     }
     var rowNum = 0
@@ -72,8 +74,8 @@ object AbilitiesFromPoints {
     spinGrid.addRow(rowNum, enhancedLabel("Charisma"), createSpinner(NewCharacterUI.LeftSide.charisma))
 
     val pointsGrid = new GridPane {
-      maxWidth = 250
-      prefWidth = 200
+      maxWidth = 200
+      prefWidth = 150
       maxHeight = 700
     }
     var pRowNum = 0
