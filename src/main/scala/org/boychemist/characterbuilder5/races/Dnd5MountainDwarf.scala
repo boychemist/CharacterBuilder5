@@ -3,15 +3,15 @@ package org.boychemist.characterbuilder5.races
 import org.boychemist.characterbuilder5._
 
 object Dnd5MountainDwarf extends Dnd5Race {
-  override val race = Dnd5RacesEnum.MountainDwarf
-  override val size = DndCharacterSizeEnum.Medium
+  override val race: Dnd5RacesEnum.Value = Dnd5RacesEnum.MountainDwarf
+  override val size: DndCharacterSizeEnum.Value = DndCharacterSizeEnum.Medium
   override val baseSpeed = 25
   override val skillProficiencies = List()
   override val weaponProficiencies = List("battleaxe", "handaxe", "light hammer", "warhammer")
   override val armorProficiencies = List("light armor", "medium armor")
-  override val toolsForProficiency = List("You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.")
-  override val abilityAdjustments = createMountainDwarfAbilityAdjustments()
-  override val racialAbilities = createMountainDwarfRacialAbilities()
+  override val toolsForProficiency = List("smith's tools", "brewer's supplies", "mason's tools")
+  override val abilityAdjustments: List[AbilityAdjustment] = createMountainDwarfAbilityAdjustments()
+  override val racialAbilities: List[RacialAbilitiy] = createMountainDwarfRacialAbilities()
   override val languages = List(Dnd5LanguagesEnum.Common, Dnd5LanguagesEnum.Dwarvish)
   override def hitPointIncrement() = 0
 

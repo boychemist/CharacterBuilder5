@@ -4,7 +4,6 @@ import scalafx.scene.control.{ScrollPane, Spinner, TextArea, TextField}
 import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import scalafx.beans.property.ReadOnlyObjectProperty
 import scalafx.scene.layout.{GridPane, HBox}
-import scalafx.Includes.handle
 
 import scala.collection.immutable.TreeMap
 
@@ -15,7 +14,8 @@ object AbilitiesFromPoints {
 
   private val points = integerTextField()
 
-  private val abilityCostMap: Map[Int, Int] = TreeMap(8 -> 0, 9 -> 1, 10 -> 2, 11 -> 3, 12 -> 4, 13 -> 5, 14 -> 7, 15 -> 9)
+  val abilityCostMap: Map[Int, Int] = TreeMap(8 -> 0, 9 -> 1, 10 -> 2, 11 -> 3, 12 -> 4, 13 -> 5, 14 -> 7, 15 -> 9)
+  val maxPointsToSpend: Int = 27
 
 
   private def calculatePointChange(oldVal: Int, newVal: Int): Int = abilityCostMap(newVal) - abilityCostMap(oldVal)
@@ -25,7 +25,7 @@ object AbilitiesFromPoints {
       maxWidth = 60
     }
     val spinVal: ReadOnlyObjectProperty[Int] = theSpinner.value
-    spinVal.onChange((obs, oldVal: Int, newVal: Int) => {
+    spinVal.onChange((_, oldVal: Int, newVal: Int) => {
       val userData = theSpinner.userData
       val pointsVal = points.text.value.toInt
       val change = calculatePointChange(oldVal, newVal)
@@ -80,12 +80,12 @@ object AbilitiesFromPoints {
     }
     var pRowNum = 0
 
-    points.text = "27"
+    points.text = maxPointsToSpend.toString
     pointsGrid.addRow(pRowNum, enhancedLabel("Points Remaining  "), points)
     pRowNum += 1
 
     val keys = abilityCostMap.keys
-    var keyCostString = new StringBuilder
+    val keyCostString = new StringBuilder
     keyCostString.append("Ability Score Costs\nScore\tCost")
     val keyIter = keys.iterator
     while (keyIter.hasNext) {

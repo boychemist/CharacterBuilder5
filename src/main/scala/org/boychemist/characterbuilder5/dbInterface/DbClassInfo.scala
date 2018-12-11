@@ -3,7 +3,6 @@ package org.boychemist.characterbuilder5.dbInterface
 
 import Tables._
 import slick.jdbc.H2Profile.api._
-import slick.jdbc.JdbcBackend.Database
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Await

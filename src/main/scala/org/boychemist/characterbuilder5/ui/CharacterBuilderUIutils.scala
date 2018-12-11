@@ -3,6 +3,7 @@ package org.boychemist.characterbuilder5.ui
 import javafx.scene.layout.{Border => JBorder, BorderStroke => JBorderStroke, BorderStrokeStyle => JBorderStrokeStyle, CornerRadii => JCornerRadii}
 import javafx.scene.paint.Color
 import javafx.scene.input.TransferMode
+import scalafx.geometry.Pos
 import scalafx.scene.control.{Label, TextArea, TextField}
 import scalafx.scene.input.ClipboardContent
 import scalafx.scene.layout._
@@ -220,4 +221,73 @@ object CharacterBuilderUIutils {
     theField
   }
 
+  /**
+    * Create a TextField that will act as the destination of a drag.  Any value in the
+    * field will be replaced with the dragged value.  The field only accept COPY mode
+    * drag and drop.
+    */
+  def dragCopyToField(initialText: String = "", defWidth: Double = 60): TextField = {
+    val theField = new TextField {
+      maxWidth = defWidth
+      minWidth = defWidth
+      editable = false
+      text = initialText
+      alignment = Pos.Center
+    }
+
+    theField.onDragOver = { evt => {
+      // accept it only if it is not dragged from the same node, this field is
+      // empty, and if the event has string data
+      if (evt.getGestureSource != theField.delegate && evt.getDragboard.hasString) {
+        // allow copy only
+        evt.acceptTransferModes(TransferMode.COPY)
+      }
+      evt.consume()
+    }
+    }
+
+    theField.onDragDropped = { evt => {
+      val db = evt.getDragboard
+      var success = false
+      if (db.hasString && evt.getGestureTarget == theField.delegate) {
+        val dragged = new TextField(
+          evt.getGestureSource.asInstanceOf[javafx.scene.control.TextField])
+        theField.text = dragged.text.value
+        success = true
+      }
+      // let the source know whether the string was successfully transferred and used
+      evt.setDropCompleted(success)
+      evt.consume()
+    }
+    }
+
+    theField
+  }
+
+  /**
+    * Create a TextField that will act as the source of a drag.  The field only performs COPY mode
+    * drag and drop.
+    */
+  def dragCopyFromField(initialText: String, defWidth: Double = 60): TextField = {
+    val theField = new TextField {
+      maxWidth = defWidth
+      minWidth = defWidth
+      text = initialText
+      editable = false
+      alignment = Pos.Center
+    }
+
+    theField.onDragDetected = { evt => {
+      if (!theField.text.isEmpty.getValue) {
+        val db = theField.startDragAndDrop(TransferMode.COPY)
+        val content = new ClipboardContent()
+        content.putString(theField.text.value)
+        db.setContent(content)
+      }
+      evt.consume()
+    }
+    }
+
+    theField
+  }
 }
