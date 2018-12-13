@@ -31,10 +31,30 @@ object FXUtils {
     }
   }
 
-  def showDialogPane(dialogTitle: String, rootNode: ScrollPane): Unit = {
+  def showDialogPane(rootNode: ScrollPane): Unit = {
     val dialogStage = new Stage {
       outer =>
       initStyle(StageStyle.Undecorated)
+      initModality(Modality.ApplicationModal)
+      scene = new Scene {
+        root = new BorderPane {
+          padding = Insets(5)
+          center = rootNode
+          bottom = new Button("Close") {
+            onAction = handle{outer.close}
+          }
+          minHeight = rootNode.width.toDouble + 20.0
+          minWidth = rootNode.height.toDouble + 20.0
+        }
+      }
+    }
+    // Show dialog and wait till it is closed
+    dialogStage.showAndWait()
+  }
+
+  def showDialogWindow(dialogTitle: String, rootNode: ScrollPane): Unit = {
+    val dialogStage = new Stage {
+      outer =>
       title = dialogTitle
       initModality(Modality.ApplicationModal)
       scene = new Scene {
