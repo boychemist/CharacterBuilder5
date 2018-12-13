@@ -34,7 +34,7 @@ object NewCharacterUI {
           resetRightSide()
         }
         needsInit = !needsInit
-        println(Dnd5Character.getWorkingCharacter.toString) // development debug
+        println(Dnd5Character.getWorkingCharacter.toString) // development debug todo remove for production
       }
     }
     hdTab
@@ -125,7 +125,6 @@ object NewCharacterUI {
             LeftSide.dexterity.text =
               (workingCharacter.dexterity + adjustment.amount).toString
           case DndAbilitiesEnum.Constitution =>
-            workingCharacter.constitution + adjustment.amount
             LeftSide.constitution.text =
               (workingCharacter.constitution + adjustment.amount).toString
           case DndAbilitiesEnum.Intelligence =>
@@ -211,7 +210,7 @@ object NewCharacterUI {
   }
 
   val racialFeatures
-  : Button = new Button("Set Racial Features") { // todo add dialog, disable race select
+  : Button = new Button("Set Racial Features") {
     disable = true // enable when race selected
     onAction = handle {
       LeftSide.raceIn.disable = true
