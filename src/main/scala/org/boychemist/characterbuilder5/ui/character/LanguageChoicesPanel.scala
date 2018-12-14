@@ -23,8 +23,21 @@ object LanguageChoicesPanel {
     */
   val chosenLanguage:  TextField = dragCopyToField("",100)
 
-  def saveSelectedLanguage(): Unit = Dnd5Character.getWorkingCharacter.languages ++
-    List(Dnd5LanguagesEnum.withName(chosenLanguage.text.value))
+  def saveSelectedLanguage(): Boolean = {
+    var saved = false
+    val chosen = chosenLanguage.text.value
+     try {
+       val working = Dnd5Character.getWorkingCharacter
+      working.languages =  working.languages ++ List(Dnd5LanguagesEnum.withName(chosen))
+      chosenLanguage.text = ""  // clear for next use
+      chosenLanguage.disable = true
+      saved = true
+    } catch {
+      case ex: java.util.NoSuchElementException => saved = false
+    }
+
+    saved
+  }
 
   /**
     * Get a Node containing the available languages
@@ -35,6 +48,7 @@ object LanguageChoicesPanel {
   def getLanguageChoiceBox(workingCharacter: Dnd5Character): VBox = {
     val raceInfo = Dnd5Character.getRaceDescription(workingCharacter.race)
     val unselectableLanguages: List[Dnd5LanguagesEnum.Value] = workingCharacter.languages ++ raceInfo.languages
+    chosenLanguage.disable = false
 
     val windowTitle = new Label("New Language Chooser") {
       font = Font.font("Sans Serif", FontWeight.Bold, 16)
@@ -85,9 +99,10 @@ object LanguageChoicesPanel {
     val newLanguageBox: VBox = getLanguageChoiceBox(workingCharacter)
 
     val saveButton = new Button("Save") {
-      onAction = handle({saveSelectedLanguage()
-        this.disable = true
-        NewCharacterUI.choiceMade = true
+      onAction = handle({
+        val result = saveSelectedLanguage() // returns true if save successful, false otherwise
+        this.disable = result
+        NewCharacterUI.choiceMade = result
       })
     }
 

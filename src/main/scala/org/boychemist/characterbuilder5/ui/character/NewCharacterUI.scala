@@ -58,6 +58,9 @@ object NewCharacterUI {
     alignmentsList.toList
   }
 
+  // to ensure racial dialogs provide the necessary choices before making other changes
+  var choiceMade: Boolean = false
+
   private def getTopLevelNewCharacterPane = {
     val leftSide = LeftSide.pane
     val rightSide = generateRightSide
@@ -77,8 +80,7 @@ object NewCharacterUI {
     disable = true
     onAction = handle {
       classChooser.disable = false
-      addRaceAbilityAdjustments()
-      disable = true
+      disable = addRaceAbilityAdjustments()
     }
   }
 
@@ -110,10 +112,26 @@ object NewCharacterUI {
       abilityCostMap(theAbility)
   }
 
-  private def addRaceAbilityAdjustments() = {
+  private def addRaceAbilityAdjustments(): Boolean = {
     val workingCharacter = Dnd5Character.getWorkingCharacter
     val (isReady, totalCost) = abilityPointsReadyForUpdate(workingCharacter)
     if (isReady) {
+      if (Dnd5Character.getWorkingCharacter.race == Dnd5RacesEnum.HalfElf) {
+        choiceMade = false
+        FXUtils.onFXAndWait(
+          FXUtils.showDialogPane(
+            new HalfElfChoicesPanel().getHalfElfAbilityChoices))
+        if (!choiceMade) {
+          new Alert(AlertType.Warning) {
+            initOwner(DndBuilder.stage)
+            title = "Warning Dialog"
+            headerText = "Unable to Make Racial Adjustment to Abilities"
+            contentText = "You must choose two additional abilities"
+          }.showAndWait()
+          racialAbilities.disable = false
+          return false
+        }
+      }
       val raceInfo = Dnd5Character.getRaceDescription(workingCharacter.race)
       val raceAdjustments = raceInfo.abilityAdjustments
       for (adjustment: AbilityAdjustment <- raceAdjustments) {
@@ -156,10 +174,9 @@ object NewCharacterUI {
         }.showAndWait()
       }
     }
+    isReady
   }
 
-  var choiceMade
-  : Boolean = false // to ensure racial dialogs provide the necessary choices before making other changes
   /**
     * Adds all racial features to the character except the ability bonuses
     *
@@ -168,28 +185,30 @@ object NewCharacterUI {
   private def setRaceOneTimeValues(raceId: Dnd5RacesEnum.Value): Unit = {
     val raceInfo = Dnd5Character.getRaceDescription(raceId)
     val workingChar = Dnd5Character.getWorkingCharacter
+    choiceMade = false
     raceId match {
       case Dnd5RacesEnum.MountainDwarf =>
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane("",
+          FXUtils.showDialogPane(
             ToolChoicePanel.toolChoicePanel(workingChar)))
       case Dnd5RacesEnum.HillDwarf =>
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane("",
+          FXUtils.showDialogPane(
             ToolChoicePanel.toolChoicePanel(workingChar)))
       case Dnd5RacesEnum.HighElf =>
         FXUtils.onFXAndWait(
           FXUtils.showDialogPane(
-            "",
             LanguageChoicesPanel.getLanguageChoicePane(workingChar)))
       case Dnd5RacesEnum.Human =>
         FXUtils.onFXAndWait(
           FXUtils.showDialogPane(
-            "",
-            LanguageChoicesPanel.getLanguageChoicePane(workingChar)))
-      case Dnd5RacesEnum.DragonBorn => println("Dragonborn -- choose ancestry")
+           LanguageChoicesPanel.getLanguageChoicePane(workingChar)))
+      case Dnd5RacesEnum.DragonBorn => println("Dragonborn -- choose ancestry") // todo all the choices a person must make
       case Dnd5RacesEnum.HalfElf =>
-        println("Half-Elf -- choose 1 language and 2 abilities") // todo all the choices a person must make
+        FXUtils.onFXAndWait(
+          FXUtils.showDialogPane(
+            new HalfElfChoicesPanel().getHalfElfChoices(workingChar)))
+
       case _ => choiceMade = true
     }
     if (!choiceMade) {
@@ -199,6 +218,7 @@ object NewCharacterUI {
         headerText = "Selection Not Made"
         contentText = "You did not choose the race options for your character"
       }.showAndWait()
+      LeftSide.raceIn.disable = false
       return
     }
     if (raceInfo.weaponProficiencies.nonEmpty)
@@ -206,7 +226,8 @@ object NewCharacterUI {
     if (raceInfo.armorProficiencies.nonEmpty)
       workingChar.armorProficiencies = workingChar.armorProficiencies ++ raceInfo.armorProficiencies
     if (raceInfo.languages.nonEmpty)
-      workingChar.languages = workingChar.languages ++ raceInfo.languages
+      workingChar.languages = raceInfo.languages ++ workingChar.languages
+    workingChar.racialFeaturesAddedToLists = true
   }
 
   val racialFeatures
@@ -226,7 +247,7 @@ object NewCharacterUI {
     val abilityList = new Button("From List") {
       onAction = handle {
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane("Ability Scores from List",
+          FXUtils.showDialogPane(
             AbilitiesFromListPanel.abilitiesFromListPane))
       }
     }
@@ -234,7 +255,7 @@ object NewCharacterUI {
     val abilityPoints = new Button("From Points") {
       onAction = handle {
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane("Ability Scores from Points",
+          FXUtils.showDialogPane(
             AbilitiesFromPoints.abilitiesFromPointsPanel))
       }
     }

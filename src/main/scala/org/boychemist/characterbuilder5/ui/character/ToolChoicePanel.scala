@@ -68,7 +68,6 @@ object ToolChoicePanel {
       )
     }
 
-
     new ScrollPane {
       style = "-fx-background-color: cyan"
       content = new VBox{

@@ -38,7 +38,7 @@ object Dnd5ClassSpecializationImpl {
     else {
 
         val details =
-        specType match {
+        specType match {  // todo get all this information from the database, including the list of specializations
           case Dnd5SpecializationsEnum.PathOfTheBerserker => (PathOfTheBerserker.description,
             PathOfTheBerserker.features)
           case Dnd5SpecializationsEnum.PathOfTheTotemWarrior => (PathOfTheTotemWarrior.description,

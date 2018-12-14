@@ -157,11 +157,8 @@ class Dnd5Character {
   var alignment: DndAlignmentEnum.Value = _
   var characterClass: List[Dnd5Character.CharacterClassDescription] = List()
   var gear: List[Dnd5Character.CharacterGearItem] = List()
-  var equippedGear: List[Dnd5Character.CharacterGearItem] = List()
   var weapons: List[Dnd5Character.CharacterWeapon] = List()
-  var equippedWeapons: List[Dnd5Character.CharacterWeapon] = List()
   var armor: List[Dnd5Character.CharacterArmor] = List()
-  var equippedArmor: List[Dnd5Character.CharacterArmor] = List()
   var armorProficiencies: List[String] = List()
   var weaponProficiencies: List[String] = List()
   var toolProficiencies: List[String] = List()
@@ -195,6 +192,12 @@ class Dnd5Character {
      stuff not saved in the database
    */
 
+  // the equipped X is set by a pass through the appropriate list of owned items
+  var equippedWeapons: List[Dnd5Character.CharacterWeapon] = List()
+  var equippedGear: List[Dnd5Character.CharacterGearItem] = List()
+  var equippedArmor: List[Dnd5Character.CharacterArmor] = List()
+
+  // copied from the race specific info
   var size: DndCharacterSizeEnum.Value = _
   var speed: Int = _
   var racialAbilities:List[RacialAbilitiy] = List()
@@ -387,6 +390,7 @@ class Dnd5Character {
     builder.append(s"Intelligence $intelligence ($intelligenceModifier)\n")
     builder.append(s"Wisdom $wisdom ($wisdomModifier)\n")
     builder.append(s"Charisma $charisma ($charismaModifier)\n")
+    builder.append(s"Languages = $languages\n")
 
     builder.mkString
   }

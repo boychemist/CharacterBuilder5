@@ -78,7 +78,7 @@ object WizardDisplay {
       buttonList += new Button(specName) {
         onAction = handle {
           FXUtils.onFXAndWait(
-            FXUtils.showDialogPane(specializationType, specPane))
+            FXUtils.showDialogWindow(specializationType, specPane))
         }
       }
     }

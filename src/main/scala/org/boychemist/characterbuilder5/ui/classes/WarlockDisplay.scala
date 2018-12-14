@@ -59,7 +59,7 @@ object WarlockDisplay {
       val specName = iterator.next()
       val specPane = ClassSpecializationDisplay.buildSpecializationGrid(specName)
       buttonList += new Button(specName) {
-        onAction = handle {FXUtils.onFXAndWait(FXUtils.showDialogPane(specializationType, specPane))}
+        onAction = handle {FXUtils.onFXAndWait(FXUtils.showDialogWindow(specializationType, specPane))}
       }
     }
     val buttonBox = new VBox {

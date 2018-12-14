@@ -9,6 +9,7 @@ import CharacterBuilderUIutils.getBorder
 
 /*
  * Create a tab based Scene to put on the stage.
+  * TODO -- Consider changing this to an Accordian with TitledPanes rather than tabs
  */
 class BuilderUI(stage: Stage) {
   private val topPane = new TabPane {
