@@ -4,6 +4,7 @@ import org.boychemist.characterbuilder5.dnd5classes._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecializationImpl
 import org.boychemist.characterbuilder5.races._
 
+import scala.collection.immutable.ListMap
 import scala.collection.mutable
 
 object Dnd5Character {
@@ -72,6 +73,13 @@ object Dnd5Character {
     raceLookup(raceId)
   }
 
+  lazy val draconicAncestryMap: Map[String, (String, String)] =
+    ListMap("Black" -> ("Acid", "5 by 30 ft. line (Dex save)"), "Blue" -> ("Lightning", "5 by 30 ft. line (Dex. save)"),
+    "Brass" -> ("Fire","5 by 30 ft. line (Dex. save)"), "Bronze" -> ("Lightning", "5 by 30 ft. line (Dex. save)"),
+    "Copper" -> ("Acid", "5 by 30 ft. line (Dex. save)"), "Gold" -> ("Fire", "15 ft. cone (Dex. save)"),
+    "Green" -> ("Poison", "15 ft. cone (Con. save)"), "Red" -> ("Fire", "15 ft. cone (Dex. save)"),
+    "Silver" -> ("Cold", "15 ft. cone (Con. save)"), "White" -> ("Cold", "15 ft. cone (Con. save)"))
+
   case class CharacterGearItem(name: String,
                                weight: Double,
                                maxNumber: Int = 0,
@@ -105,8 +113,16 @@ object Dnd5Character {
     /*
        data that is saved in the database
      */
+    val characterClass: String = charClass.toLowerCase.capitalize // ensure proper string format for enum
+    var level: Int = 1 // all classes start at level 1
+    // database primary key of the specialization
+    var specializationId: Int = -1
+
+    /*
+       data not saved in the database
+     */
     val dndClass: Dnd5BasicClass =
-      Dnd5ClassesEnum.withName(charClass) match {
+      Dnd5ClassesEnum.withName(characterClass) match {
         case Dnd5ClassesEnum.Barbarian => Dnd5Barbarian
         case Dnd5ClassesEnum.Bard => Dnd5Bard
         case Dnd5ClassesEnum.Cleric => Dnd5Cleric
@@ -120,17 +136,11 @@ object Dnd5Character {
         case Dnd5ClassesEnum.Warlock => Dnd5Warlock
         case Dnd5ClassesEnum.Wizard => Dnd5Wizard
       }
-    var level: Int = 1 // all classes start at level 1
-    // database primary key of the specialization
-    var specializationId: Int = -1
-    /*
-       data not saved in the database
-     */
     var specialization: Dnd5ClassSpecializationImpl = _
 
     override def toString: String = {
       val builder = new mutable.StringBuilder()
-      builder.append(s"$dndClass( $level ) specialization = ")
+      builder.append(s"$charClass( $level ) specialization = ")
       if (specializationId == -1) {
         builder.append("none")
       }
@@ -391,6 +401,9 @@ class Dnd5Character {
     builder.append(s"Wisdom $wisdom ($wisdomModifier)\n")
     builder.append(s"Charisma $charisma ($charismaModifier)\n")
     builder.append(s"Languages = $languages\n")
+    if (race == Dnd5RacesEnum.DragonBorn) {
+      builder.append(s"Draconic Ancestry = $draconicAncestry")
+    }
 
     builder.mkString
   }

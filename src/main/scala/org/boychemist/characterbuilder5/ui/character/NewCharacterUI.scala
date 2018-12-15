@@ -76,21 +76,13 @@ object NewCharacterUI {
     disable = true // can't set HP until abilities adjusted for race
   } // todo add dialog windows (and set HP)
 
-  val racialAbilities: Button = new Button("Add Racial Ability Adjustments") {
-    disable = true
-    onAction = handle {
-      classChooser.disable = false
-      disable = addRaceAbilityAdjustments()
-    }
-  }
-
   private def resetRightSide(): Unit = {
     racialFeatures.disable = true
     racialAbilities.disable = true
   }
 
   def abilityPointsReadyForUpdate(
-                                   workingCharacter: Dnd5Character): (Boolean, Int) = {
+      workingCharacter: Dnd5Character): (Boolean, Int) = {
     // ability point cost for all abilities must equal 27 for success
     var totalAbilityCost = costForAbilityScore(workingCharacter.strength)
     totalAbilityCost += costForAbilityScore(workingCharacter.dexterity)
@@ -189,12 +181,10 @@ object NewCharacterUI {
     raceId match {
       case Dnd5RacesEnum.MountainDwarf =>
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane(
-            ToolChoicePanel.toolChoicePanel(workingChar)))
+          FXUtils.showDialogPane(ToolChoicePanel.toolChoicePanel(workingChar)))
       case Dnd5RacesEnum.HillDwarf =>
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane(
-            ToolChoicePanel.toolChoicePanel(workingChar)))
+          FXUtils.showDialogPane(ToolChoicePanel.toolChoicePanel(workingChar)))
       case Dnd5RacesEnum.HighElf =>
         FXUtils.onFXAndWait(
           FXUtils.showDialogPane(
@@ -202,8 +192,11 @@ object NewCharacterUI {
       case Dnd5RacesEnum.Human =>
         FXUtils.onFXAndWait(
           FXUtils.showDialogPane(
-           LanguageChoicesPanel.getLanguageChoicePane(workingChar)))
-      case Dnd5RacesEnum.DragonBorn => println("Dragonborn -- choose ancestry") // todo all the choices a person must make
+            LanguageChoicesPanel.getLanguageChoicePane(workingChar)))
+      case Dnd5RacesEnum.DragonBorn =>
+        FXUtils.onFXAndWait(
+          FXUtils.showDialogPane(
+            DraconicAncestryChoicePanel().getDraconicAncestryChoicePanel))
       case Dnd5RacesEnum.HalfElf =>
         FXUtils.onFXAndWait(
           FXUtils.showDialogPane(
@@ -230,8 +223,7 @@ object NewCharacterUI {
     workingChar.racialFeaturesAddedToLists = true
   }
 
-  val racialFeatures
-  : Button = new Button("Set Racial Features") {
+  val racialFeatures: Button = new Button("Set Racial Features") {
     disable = true // enable when race selected
     onAction = handle {
       LeftSide.raceIn.disable = true
@@ -241,24 +233,33 @@ object NewCharacterUI {
     }
   }
 
+  private val abilityList = new Button("From List") {
+    onAction = handle {
+      FXUtils.onFXAndWait(
+        FXUtils.showDialogPane(AbilitiesFromListPanel.abilitiesFromListPane))
+    }
+  }
+
+  private val abilityPoints = new Button("From Points") {
+    onAction = handle {
+      FXUtils.onFXAndWait(
+        FXUtils.showDialogPane(AbilitiesFromPoints.abilitiesFromPointsPanel))
+    }
+  }
+
+  val racialAbilities: Button = new Button("Add Racial Ability Adjustments") {
+    disable = true
+    onAction = handle {
+      classChooser.disable = false
+      val success = addRaceAbilityAdjustments()
+      disable = success
+      abilityPoints.disable = success
+      abilityList.disable = success
+    }
+  }
+
   private def generateRightSide: FlowPane = {
     val theChildren = new mList[Node]
-
-    val abilityList = new Button("From List") {
-      onAction = handle {
-        FXUtils.onFXAndWait(
-          FXUtils.showDialogPane(
-            AbilitiesFromListPanel.abilitiesFromListPane))
-      }
-    }
-
-    val abilityPoints = new Button("From Points") {
-      onAction = handle {
-        FXUtils.onFXAndWait(
-          FXUtils.showDialogPane(
-            AbilitiesFromPoints.abilitiesFromPointsPanel))
-      }
-    }
 
     theChildren += new VBox {
       alignment = Pos.Center
@@ -344,17 +345,18 @@ object NewCharacterUI {
       alignment = Pos.Center
       editable = false
       text = Dnd5Character.getWorkingCharacter.strength.toString
-      text.onChange { (_, _, newVal) => {
-        var checkVar = newVal.toString
-        if (!checkVar.matches("""\d*""")) {
-          checkVar = checkVar.replaceAll("""[^\d]""", "")
+      text.onChange { (_, _, newVal) =>
+        {
+          var checkVar = newVal.toString
+          if (!checkVar.matches("""\d*""")) {
+            checkVar = checkVar.replaceAll("""[^\d]""", "")
+          }
+          text = checkVar
+          if (checkVar.length > 0)
+            Dnd5Character.getWorkingCharacter.strength = checkVar.toInt
+          strengthModifier.text =
+            Dnd5Character.getWorkingCharacter.strengthModifier.toString
         }
-        text = checkVar
-        if (checkVar.length > 0)
-          Dnd5Character.getWorkingCharacter.strength = checkVar.toInt
-        strengthModifier.text =
-          Dnd5Character.getWorkingCharacter.strengthModifier.toString
-      }
       }
     }
 
@@ -376,17 +378,18 @@ object NewCharacterUI {
       alignment = Pos.Center
       editable = false
       text = Dnd5Character.getWorkingCharacter.constitution.toString
-      text.onChange { (_, _, newVal) => {
-        var checkVar = newVal.toString
-        if (!checkVar.matches("""\d*""")) {
-          checkVar = checkVar.replaceAll("""[^\d]""", "")
+      text.onChange { (_, _, newVal) =>
+        {
+          var checkVar = newVal.toString
+          if (!checkVar.matches("""\d*""")) {
+            checkVar = checkVar.replaceAll("""[^\d]""", "")
+          }
+          text = checkVar
+          if (checkVar.length > 0)
+            Dnd5Character.getWorkingCharacter.constitution = checkVar.toInt
+          constitutionModifier.text =
+            Dnd5Character.getWorkingCharacter.constitutionModifier.toString
         }
-        text = checkVar
-        if (checkVar.length > 0)
-          Dnd5Character.getWorkingCharacter.constitution = checkVar.toInt
-        constitutionModifier.text =
-          Dnd5Character.getWorkingCharacter.constitutionModifier.toString
-      }
       }
     }
 
@@ -551,39 +554,39 @@ object NewCharacterUI {
       abilityRow += 1
 
       abilityGrid.addRow(abilityRow,
-        enhancedLabel("Strength"),
-        strength,
-        strengthModifier)
+                         enhancedLabel("Strength"),
+                         strength,
+                         strengthModifier)
       abilityRow += 1
 
       abilityGrid.addRow(abilityRow,
-        enhancedLabel("Constitution"),
-        constitution,
-        constitutionModifier)
+                         enhancedLabel("Constitution"),
+                         constitution,
+                         constitutionModifier)
       abilityRow += 1
 
       abilityGrid.addRow(abilityRow,
-        enhancedLabel("Dexterity"),
-        dexterity,
-        dexterityModifier)
+                         enhancedLabel("Dexterity"),
+                         dexterity,
+                         dexterityModifier)
       abilityRow += 1
 
       abilityGrid.addRow(abilityRow,
-        enhancedLabel("Intelligence"),
-        intelligence,
-        intelligenceModifier)
+                         enhancedLabel("Intelligence"),
+                         intelligence,
+                         intelligenceModifier)
       abilityRow += 1
 
       abilityGrid.addRow(abilityRow,
-        enhancedLabel("Wisdom"),
-        wisdom,
-        wisdomModifier)
+                         enhancedLabel("Wisdom"),
+                         wisdom,
+                         wisdomModifier)
       abilityRow += 1
 
       abilityGrid.addRow(abilityRow,
-        enhancedLabel("Charisma"),
-        charisma,
-        charismaModifier)
+                         enhancedLabel("Charisma"),
+                         charisma,
+                         charismaModifier)
 
       leftSide.add(abilityGrid, 0, leftRowNum, 2, 1)
 
