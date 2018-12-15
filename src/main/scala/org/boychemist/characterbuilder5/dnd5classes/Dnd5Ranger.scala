@@ -1,16 +1,12 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.boychemist.characterbuilder5._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 
 import scala.collection.mutable.{TreeMap => mTreeMap}
 import scala.collection.immutable.TreeMap
 
 object Dnd5Ranger extends Dnd5BasicClass with Dnd5SpellCaster {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Ranger
-  // specialization is the unique choice for class leveling and has different names for each class
-  val allowedSpecializations: Vector[Dnd5SpecializationsEnum.Value] =
-    Vector(Dnd5SpecializationsEnum.Hunter, Dnd5SpecializationsEnum.BeastMaster)
   // the class level at which a character must choose to specialize, ranges from 1 to 3
   val specializationStartLevel: Int = 3
   def hitDice: String = "1d10"

@@ -26,6 +26,12 @@ object DbClassInfo {
     exec(names.result)
   }
 
+  def getClassIdByClassName(className: String): Int = {
+    val getClassId = allClasses.filter(_.name === className).map(_.classId)
+    val retClassId = exec(getClassId.result)
+    retClassId.head
+  }
+
   def getSpecializationNamesByClassName(className: String): Seq[String] = {
     val getClassId = allClasses.filter(_.name === className).map(_.classId)
     val retClassId = exec(getClassId.result)
@@ -34,8 +40,18 @@ object DbClassInfo {
     exec(getSpecNames.result)
   }
 
-  def getSpecializationDataByName(specName: String): Seq[(Int, String)] = {
-    val specDescription = allSpecializations.filter(_.name === specName).map(s => (s.specId, s.description))
+  def getSpecializationsDataByClassId(classId: Int): Seq[(Int, String, String, Boolean)] = {
+    val getSpecData = allSpecializations.filter(_.classId === classId).map(s => (s.specId, s.name, s.description, s.providesSpells))
+    exec(getSpecData.result)
+  }
+
+  def getSpecializationDataByName(specName: String): Seq[(Int, String, Boolean)] = {
+    val specDescription = allSpecializations.filter(_.name === specName).map(s => (s.specId, s.description, s.providesSpells))
+    exec(specDescription.result)
+  }
+
+  def getSpecializationDataById(id: Int): Seq[(String, String, Boolean)] = {
+    val specDescription = allSpecializations.filter(_.specId === id).map(s => (s.name, s.description, s.providesSpells))
     exec(specDescription.result)
   }
 

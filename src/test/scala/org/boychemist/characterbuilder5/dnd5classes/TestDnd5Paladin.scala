@@ -1,19 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Paladin extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Paladin is '" + Dnd5ClassesEnum.Paladin.toString + "'") {
     assert(Dnd5Paladin.classID == Dnd5ClassesEnum.Paladin)
-  }
-
-  test("Dnd5Paladin has 3 allowed specializations (Oath of Devotion, Oath of the Ancients, Oath of Vengeance)") {
-    assert(Dnd5Paladin.allowedSpecializations.length == 3)
-    assert(Dnd5Paladin.allowedSpecializations(0) == Dnd5SpecializationsEnum.OathOfDevotion)
-    assert(Dnd5Paladin.allowedSpecializations(1) == Dnd5SpecializationsEnum.OathOfTheAncients)
-    assert(Dnd5Paladin.allowedSpecializations(2) == Dnd5SpecializationsEnum.OathOfVengeance)
   }
 
 

@@ -1,23 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Cleric extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Cleric is '" + Dnd5ClassesEnum.Cleric.toString + "'") {
     assert(Dnd5Cleric.classID == Dnd5ClassesEnum.Cleric)
-  }
-
-  test("Dnd5Cleric has 7 allowed specializations (Divine Domains)") {
-    assert(Dnd5Cleric.allowedSpecializations.length == 7)
-    assert(Dnd5Cleric.allowedSpecializations(0) == Dnd5SpecializationsEnum.KnowledgeDomain)
-    assert(Dnd5Cleric.allowedSpecializations(1) == Dnd5SpecializationsEnum.LifeDomain)
-    assert(Dnd5Cleric.allowedSpecializations(2) == Dnd5SpecializationsEnum.LightDomain)
-    assert(Dnd5Cleric.allowedSpecializations(3) == Dnd5SpecializationsEnum.NatureDomain)
-    assert(Dnd5Cleric.allowedSpecializations(4) == Dnd5SpecializationsEnum.TempestDomain)
-    assert(Dnd5Cleric.allowedSpecializations(5) == Dnd5SpecializationsEnum.TrickeryDomain)
-    assert(Dnd5Cleric.allowedSpecializations(6) == Dnd5SpecializationsEnum.WarDomain)
   }
 
   test("Dnd5Cleric is specialized starting at level 1") {

@@ -12,8 +12,6 @@ class ClassFeature(val name: String, val description: String)
   */
 trait Dnd5BasicClass {
   def classID: Dnd5ClassesEnum.Value
-  // specialization is the unique choice for class leveling and has different names for each class
-  def allowedSpecializations: Vector[Dnd5SpecializationsEnum.Value]
   // the class level at which a character must choose to specialize, ranges from 1 to 3
   def specializationStartLevel: Int
   def hitDice: String

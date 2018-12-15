@@ -1,19 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Monk extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Monk is '" + Dnd5ClassesEnum.Monk.toString + "'") {
     assert(Dnd5Monk.classID == Dnd5ClassesEnum.Monk)
-  }
-
-  test("Dnd5Monk has three allowed specializations (Way of the Open Hand, Way of Shadow, and Way of the Four Elements)") {
-    assert(Dnd5Monk.allowedSpecializations.length == 3)
-    assert(Dnd5Monk.allowedSpecializations(0) == Dnd5SpecializationsEnum.WayOfTheOpenHand)
-    assert(Dnd5Monk.allowedSpecializations(1) == Dnd5SpecializationsEnum.WayOfShadow)
-    assert(Dnd5Monk.allowedSpecializations(2) == Dnd5SpecializationsEnum.WayOfTheFourElements)
   }
 
   test("Dnd5Monk is specialized starting at level 3") {

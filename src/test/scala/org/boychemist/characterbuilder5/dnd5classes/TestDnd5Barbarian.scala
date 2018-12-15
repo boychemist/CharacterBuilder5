@@ -1,18 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Barbarian extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Barbarian is '" + Dnd5ClassesEnum.Barbarian.toString + "'") {
     assert(Dnd5Barbarian.classID == Dnd5ClassesEnum.Barbarian)
-  }
-
-  test("Dnd5Barbarian has two allowed specializations (Path of the Berserker and Path of the Totem Warrior") {
-    assert(Dnd5Barbarian.allowedSpecializations.length == 2)
-    assert(Dnd5Barbarian.allowedSpecializations(0) == Dnd5SpecializationsEnum.PathOfTheBerserker)
-    assert(Dnd5Barbarian.allowedSpecializations(1) == Dnd5SpecializationsEnum.PathOfTheTotemWarrior)
   }
 
   test("Dnd5Barbarian is specialized starting at level 3") {

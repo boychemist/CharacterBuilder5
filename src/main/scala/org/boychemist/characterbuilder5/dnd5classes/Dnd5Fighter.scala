@@ -8,10 +8,6 @@ import scala.collection.immutable.TreeMap
 
 object Dnd5Fighter extends Dnd5BasicClass {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Fighter
-  // specialization is the unique choice for class leveling and has different names for each class
-  val allowedSpecializations: Vector[Dnd5SpecializationsEnum.Value] =
-    Vector(Dnd5SpecializationsEnum.Champion, Dnd5SpecializationsEnum.BattleMaster,
-      Dnd5SpecializationsEnum.EldritchKnight)
   // the class level at which a character must choose to specialize, ranges from 1 to 3
   val specializationStartLevel: Int = 3
   val hitDice: String = "1d10"

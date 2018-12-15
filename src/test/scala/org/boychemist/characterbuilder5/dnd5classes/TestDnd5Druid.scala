@@ -1,18 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Druid extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Druid is '" + Dnd5ClassesEnum.Cleric.toString + "'") {
     assert(Dnd5Druid.classID == Dnd5ClassesEnum.Druid)
-  }
-
-  test("Dnd5Druid has 2 allowed specializations (Circle of the Land and Circle of the Moon)") {
-    assert(Dnd5Druid.allowedSpecializations.length == 2)
-    assert(Dnd5Druid.allowedSpecializations(0) == Dnd5SpecializationsEnum.CircleOfTheLand)
-    assert(Dnd5Druid.allowedSpecializations(1) == Dnd5SpecializationsEnum.CircleOfTheMoon)
   }
 
   test("Dnd5Druid is specialized starting at level 2") {

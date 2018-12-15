@@ -1,18 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Bard extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Bard is '" + Dnd5ClassesEnum.Bard.toString + "'") {
     assert(Dnd5Bard.classID == Dnd5ClassesEnum.Bard)
-  }
-
-  test("Dnd5Bard has two allowed specializations (College of Lore and College of Valor)") {
-    assert(Dnd5Bard.allowedSpecializations.length == 2)
-    assert(Dnd5Bard.allowedSpecializations(0) == Dnd5SpecializationsEnum.CollegeOfLore)
-    assert(Dnd5Bard.allowedSpecializations(1) == Dnd5SpecializationsEnum.CollegeOfValor)
   }
 
   test("Dnd5Bard is specialized starting at level 3") {

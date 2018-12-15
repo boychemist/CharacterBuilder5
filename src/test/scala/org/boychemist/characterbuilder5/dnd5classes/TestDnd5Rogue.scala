@@ -1,19 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Rogue extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Rogue is '" + Dnd5ClassesEnum.Rogue.toString + "'") {
     assert(Dnd5Rogue.classID == Dnd5ClassesEnum.Rogue)
-  }
-
-  test("Dnd5Rogue has three allowed specializations (Thief, Assassin, Arcane Trickster)") {
-    assert(Dnd5Rogue.allowedSpecializations.length == 3)
-    assert(Dnd5Rogue.allowedSpecializations(0) == Dnd5SpecializationsEnum.Thief)
-    assert(Dnd5Rogue.allowedSpecializations(1) == Dnd5SpecializationsEnum.Assassin)
-    assert(Dnd5Rogue.allowedSpecializations(2) == Dnd5SpecializationsEnum.ArcaneTrickster)
   }
 
   test("Dnd5Rogue is specialized starting at level 3") {

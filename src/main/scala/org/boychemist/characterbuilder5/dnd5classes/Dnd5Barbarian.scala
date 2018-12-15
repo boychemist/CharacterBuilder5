@@ -11,8 +11,6 @@ import scala.collection.immutable.TreeMap
   */
 object Dnd5Barbarian extends Dnd5BasicClass {
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Barbarian
-  val allowedSpecializations: Vector[Dnd5SpecializationsEnum.Value] =
-    Vector(Dnd5SpecializationsEnum.PathOfTheBerserker, Dnd5SpecializationsEnum.PathOfTheTotemWarrior)
   // the class level at which a character must choose to specialize, ranges from 1 to 3
   val specializationStartLevel: Int = 3
   val hitDice: String = "1d12"

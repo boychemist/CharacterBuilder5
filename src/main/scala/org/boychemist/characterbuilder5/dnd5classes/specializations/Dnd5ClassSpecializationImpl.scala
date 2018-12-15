@@ -1,84 +1,68 @@
 package org.boychemist.characterbuilder5.dnd5classes.specializations
 
-import scala.collection.mutable.{HashMap => MutableHashMap}
+import org.boychemist.characterbuilder5.dbInterface.DbClassInfo
+
+import scala.collection.mutable
+import scala.collection.mutable.{ListBuffer, HashMap => MutableHashMap}
 
 /**
   * Class to provide access to the features of a specific class specialization based on the
   * Enum that is used to specify the specialization.
   *
-  * @param id the enum value that provides the type of specializaton
+  * @param specName name of the specialization
   * @param specializationMap the Map that contains the specialization features for the class
   */
-class Dnd5ClassSpecializationImpl(id: Dnd5SpecializationsEnum.Value, descript: String,
+class Dnd5ClassSpecializationImpl(specName: String, descript: String, spells: Boolean,
                                   specializationMap: Map[Int, List[SpecializationFeature]])
-  extends Dnd5ClassSpecialization {
-  val specId: Dnd5SpecializationsEnum.Value = id
+  extends Dnd5ClassSpecialization { // todo -- merge with trait and remove trait (and all specializations)
+  val name: String = specName
   val description: String = descript
+  override val providesSpells: Boolean = spells
   val features: Map[Int, List[SpecializationFeature]] = specializationMap
 
-  override def toString: String = specId.toString
+  override def toString: String = name
 }
 
 object Dnd5ClassSpecializationImpl {
 
-  private val specializationCache =
-    new MutableHashMap[Dnd5SpecializationsEnum.Value, Dnd5ClassSpecializationImpl]()
-  /**
-    * Return an object that provides an instance class that contains the data from
-    * a specialization Object.  The object returned is created new if no specialization of that
-    * type was previously or is provided as a cached instance if it was previously requested.
-    *
-    * @param specType enum value specifying the type of specialization desired
-    *
-    * @return a class instance that contains the specialization features for a specific class specialization
-    */
-  def createFromEnum(specType:  Dnd5SpecializationsEnum.Value): Dnd5ClassSpecializationImpl = {
-    if (specializationCache.nonEmpty && specializationCache.contains(specType))
-      specializationCache(specType)
-    else {
-
-        val details =
-        specType match {  // todo get all this information from the database, including the list of specializations
-          case Dnd5SpecializationsEnum.PathOfTheBerserker => (PathOfTheBerserker.description,
-            PathOfTheBerserker.features)
-          case Dnd5SpecializationsEnum.PathOfTheTotemWarrior => (PathOfTheTotemWarrior.description,
-            PathOfTheTotemWarrior.features)
-          case Dnd5SpecializationsEnum.CollegeOfLore => (CollegeOfLore.description, CollegeOfLore.features)
-          case Dnd5SpecializationsEnum.CollegeOfValor => (CollegeOfValor.description, CollegeOfValor.features)
-          case Dnd5SpecializationsEnum.KnowledgeDomain => (KnowledgeDomain.description, KnowledgeDomain.features)
-          case Dnd5SpecializationsEnum.LifeDomain => (LifeDomain.description, LifeDomain.features)
-          case Dnd5SpecializationsEnum.LightDomain => (LightDomain.description, LightDomain.features)
-          case Dnd5SpecializationsEnum.NatureDomain => (NatureDomain.description, NatureDomain.features)
-          case Dnd5SpecializationsEnum.TempestDomain => (TempestDomain.description, TempestDomain.features)
-          case Dnd5SpecializationsEnum.TrickeryDomain => (TrickeryDomain.description, TrickeryDomain.features)
-          case Dnd5SpecializationsEnum.WarDomain => (WarDomain.description, WarDomain.features)
-          case Dnd5SpecializationsEnum.CircleOfTheLand => (CircleOfTheLand.description, CircleOfTheLand.features)
-          case Dnd5SpecializationsEnum.CircleOfTheMoon => (CircleOfTheMoon.description, CircleOfTheMoon.features)
-          case Dnd5SpecializationsEnum.Champion => (Champion.description, Champion.features)
-          case Dnd5SpecializationsEnum.BattleMaster => (BattleMaster.description, BattleMaster.features)
-          case Dnd5SpecializationsEnum.EldritchKnight => (EldritchKnight.description, EldritchKnight.features)
-          case Dnd5SpecializationsEnum.WayOfTheOpenHand => (WayOfTheOpenHand.description, WayOfTheOpenHand.features)
-          case Dnd5SpecializationsEnum.WayOfShadow => (WayOfShadow.description, WayOfShadow.features)
-          case Dnd5SpecializationsEnum.WayOfTheFourElements => (WayOfTheFourElements.description,
-            WayOfTheFourElements.features)
-          case Dnd5SpecializationsEnum.OathOfDevotion => (OathOfDevotion.description, OathOfDevotion.features)
-          case Dnd5SpecializationsEnum.OathOfTheAncients => (OathOfTheAncients.description, OathOfTheAncients.features)
-          case Dnd5SpecializationsEnum.OathOfVengeance => (OathOfVengeance.description, OathOfVengeance.features)
-          case Dnd5SpecializationsEnum.Hunter => (Hunter.description, Hunter.features)
-          case Dnd5SpecializationsEnum.BeastMaster => (BeastMaster.description, BeastMaster.features)
-          case Dnd5SpecializationsEnum.Thief => (Thief.description, Thief.features)
-          case Dnd5SpecializationsEnum.Assassin => (Assassin.description, Assassin.features)
-          case Dnd5SpecializationsEnum.ArcaneTrickster => (ArcaneTrickster.description, ArcaneTrickster.features)
-          case Dnd5SpecializationsEnum.DraconicBloodline => (DraconicBloodline.description, DraconicBloodline.features)
-          case Dnd5SpecializationsEnum.WildMagic => (WildMagic.description, WildMagic.features)
-          case Dnd5SpecializationsEnum.TheArchfey => (TheArchFey.description, TheArchFey.features)
-          case Dnd5SpecializationsEnum.TheFiend => (TheFiend.description, TheFiend.features)
-          case Dnd5SpecializationsEnum.TheGreatOldOne => (TheGreatOldOne.description, TheGreatOldOne.features)
-          case _ => throw new IllegalArgumentException
-        }
-      val newSpec = new Dnd5ClassSpecializationImpl(specType, details._1, details._2)
-      specializationCache(specType) = newSpec
-      newSpec
+  def getSpecialilzationNamesAndDescriptionsByClassId(classId: Int): List[(String, String)] = {
+    val rawSpecializations = DbClassInfo.getSpecializationDataById(classId)
+    val working = new ListBuffer[(String, String)]
+    val rawIter = rawSpecializations.iterator
+    while (rawIter.hasNext) {
+      val (name, description, _) = rawIter.next()
+      working += Tuple2(name, description)
     }
+    working.toList
+  }
+
+  private def getSpecializationFeaturesById(id: Int): Map[Int, List[SpecializationFeature]] = {
+    val rawSpecializationFeatures = DbClassInfo.getSpecilalizationFeaturesBySpecID(id)
+    val featuresIter = rawSpecializationFeatures.iterator
+    val featuresMap = new mutable.TreeMap[Int, List[SpecializationFeature]]
+    while (featuresIter.hasNext) {
+      val feature = featuresIter.next()
+      val specFeature = SpecializationFeature(feature.name, feature.description)
+      if (featuresMap.contains(feature.level)) {
+        featuresMap(feature.level) = featuresMap(feature.level) ++ List(specFeature)
+      } else {
+        featuresMap(feature.level) = List(specFeature)
+      }
+    }
+    featuresMap.toMap
+  }
+
+  def getSpecializationImplFromDbBySpecializationName(name: String): (Int, Dnd5ClassSpecializationImpl) = {
+    val (specializationId: Int, description: String, hasSpells: Boolean) =
+      DbClassInfo.getSpecializationDataByName(name).head
+    val featuresMap = getSpecializationFeaturesById(specializationId)
+
+    (specializationId, new Dnd5ClassSpecializationImpl(name, description, hasSpells, featuresMap))
+  }
+
+  def getSpecializationImplFromDbById(id: Int): Dnd5ClassSpecializationImpl = {
+    val (name, description, hasSpells) = DbClassInfo.getSpecializationDataById(id).head
+    val featuresMap = getSpecializationFeaturesById(id)
+    new Dnd5ClassSpecializationImpl(name, description, hasSpells, featuresMap)
   }
 }

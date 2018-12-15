@@ -4,13 +4,10 @@ import scala.collection.mutable.{TreeMap => mTreeMap}
 import scala.collection.immutable.TreeMap
 
 import org.boychemist.characterbuilder5._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 
 object Dnd5Wizard extends Dnd5BasicClass with Dnd5SpellCaster {
   // basic class features
   val classID: Dnd5ClassesEnum.Value = Dnd5ClassesEnum.Wizard
-  // specialization is the unique choice for class leveling and has different names for each class
-  val allowedSpecializations: Vector[Dnd5SpecializationsEnum.Value] = Vector.empty  // todo -- remove this from base
 
   // the class level at which a character must choose to specialize, ranges from 1 to 3
   val  specializationStartLevel: Int = 1

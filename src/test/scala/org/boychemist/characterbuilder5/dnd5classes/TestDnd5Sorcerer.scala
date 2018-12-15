@@ -1,18 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Sorcerer extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Sorcerer is '" + Dnd5ClassesEnum.Sorcerer.toString + "'") {
     assert(Dnd5Sorcerer.classID == Dnd5ClassesEnum.Sorcerer)
-  }
-
-  test("Dnd5Sorcerer has 2 allowed specializations (Sorcerous Origins)") {
-    assert(Dnd5Sorcerer.allowedSpecializations.length == 2)
-    assert(Dnd5Sorcerer.allowedSpecializations.head == Dnd5SpecializationsEnum.DraconicBloodline)
-    assert(Dnd5Sorcerer.allowedSpecializations.last == Dnd5SpecializationsEnum.WildMagic)
   }
 
   test("Dnd5Sorcerer is specialized starting at level 1") {

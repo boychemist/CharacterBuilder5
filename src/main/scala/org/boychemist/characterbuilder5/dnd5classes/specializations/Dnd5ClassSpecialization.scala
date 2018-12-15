@@ -1,8 +1,8 @@
 package org.boychemist.characterbuilder5.dnd5classes.specializations
 
-import scala.collection.mutable.{MutableList, TreeMap}
+import scala.collection.mutable
 
-case class SpecializationFeature(val name: String, val description: String)
+case class SpecializationFeature(name: String, description: String)
 
 /**
   * Defines the data for a Dungeons and Dragons 5th Edition class specialization.  The Player's Handbook
@@ -55,10 +55,10 @@ trait Dnd5ClassSpecialization {
     *         lower class levels are nearer the head of the list than the features for higher class levels.
     */
   def getClassFeaturesUpToClassLevel(classLevel: Int): List[SpecializationFeature] ={
-    val sorted: TreeMap[Int, List[SpecializationFeature]] = new TreeMap[Int, List[SpecializationFeature]]()
+    val sorted: mutable.TreeMap[Int, List[SpecializationFeature]] = new mutable.TreeMap[Int, List[SpecializationFeature]]()
     sorted ++= features.filterKeys(_ <= classLevel)
 
-    val outList: MutableList[SpecializationFeature] = new MutableList[SpecializationFeature]()
+    val outList: mutable.MutableList[SpecializationFeature] = new mutable.MutableList[SpecializationFeature]()
     val iter = sorted.keysIterator
     while (iter.hasNext) {
       val aList = sorted(iter.next())

@@ -1,18 +1,11 @@
 package org.boychemist.characterbuilder5.dnd5classes
 
 import org.scalatest._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5SpecializationsEnum
 import org.boychemist.characterbuilder5._
 
 class TestDnd5Ranger extends FunSuite with DiagrammedAssertions {
   test("The class ID for Dnd5Ranger is '" + Dnd5ClassesEnum.Ranger.toString + "'") {
     assert(Dnd5Ranger.classID == Dnd5ClassesEnum.Ranger)
-  }
-
-  test("Dnd5Ranger has 2 allowed specializations (Hunter and BeastMaster)") {
-    assert(Dnd5Ranger.allowedSpecializations.length == 2)
-    assert(Dnd5Ranger.allowedSpecializations(0) == Dnd5SpecializationsEnum.Hunter)
-    assert(Dnd5Ranger.allowedSpecializations(1) == Dnd5SpecializationsEnum.BeastMaster)
   }
 
   test("Dnd5Ranger is specialized starting at level 3") {
