@@ -1,33 +1,27 @@
 package org.boychemist.characterbuilder5.dnd5classes.specializations
 
+import org.boychemist.characterbuilder5.dbInterface.DbClassInfo
+
 import scala.collection.mutable
+import scala.collection.mutable.{ListBuffer, HashMap => MutableHashMap}
 
 case class SpecializationFeature(name: String, description: String)
 
 /**
-  * Defines the data for a Dungeons and Dragons 5th Edition class specialization.  The Player's Handbook
-  * provides different names for the specializations for each class.
-  * Barbarians choose a Primal Path
-  * Bards choose a Bard College
-  * Clerics choose a Divine Domain
-  * Druids choose a Druid Circle
-  * Fighters choose a Martial Archetype
-  * Monks choose a Monastic Tradition
-  * Paladins choose a Sacred Oath
-  * Rangers choose a Ranger Archetype
-  * Rogues choose a Roguish Archetype
-  * Sorcerers choose a Sorcerous Origin
-  * Warlocks choose an Otherworldly Patron
-  * Wizards choose an Arcane Tradition
+  * Class to provide access to the features of a specific class specialization based on the
+  * Enum that is used to specify the specialization.
+  *
+  * @param specName name of the specialization
+  * @param specializationMap the Map that contains the specialization features for the class
   */
-trait Dnd5ClassSpecialization {
-  def providesSpells:Boolean = false
-  val description: String
-  /**
-    * Contains a Map whose key is the integer level for which a List of specialization features
-    * exist and whose value is the List of specialization features.
-    */
-  val features: Map[Int, List[SpecializationFeature]]
+class Dnd5ClassSpecialization(specName: String, descript: String, spells: Boolean,
+                              specializationMap: Map[Int, List[SpecializationFeature]]) {
+  val name: String = specName
+  val description: String = descript
+  val providesSpells: Boolean = spells
+  val features: Map[Int, List[SpecializationFeature]] = specializationMap
+
+  override def toString: String = name
 
   /**
     * Extract the specialization features for a class level
@@ -66,5 +60,49 @@ trait Dnd5ClassSpecialization {
     }
 
     outList.toList
+  }
+}
+
+object Dnd5ClassSpecialization {
+
+  def getSpecialilzationNamesAndDescriptionsByClassId(classId: Int): List[(String, String)] = {
+    val rawSpecializations = DbClassInfo.getSpecializationDataById(classId)
+    val working = new ListBuffer[(String, String)]
+    val rawIter = rawSpecializations.iterator
+    while (rawIter.hasNext) {
+      val (name, description, _) = rawIter.next()
+      working += Tuple2(name, description)
+    }
+    working.toList
+  }
+
+  private def getSpecializationFeaturesById(id: Int): Map[Int, List[SpecializationFeature]] = {
+    val rawSpecializationFeatures = DbClassInfo.getSpecilalizationFeaturesBySpecID(id)
+    val featuresIter = rawSpecializationFeatures.iterator
+    val featuresMap = new mutable.TreeMap[Int, List[SpecializationFeature]]
+    while (featuresIter.hasNext) {
+      val feature = featuresIter.next()
+      val specFeature = SpecializationFeature(feature.name, feature.description)
+      if (featuresMap.contains(feature.level)) {
+        featuresMap(feature.level) = featuresMap(feature.level) ++ List(specFeature)
+      } else {
+        featuresMap(feature.level) = List(specFeature)
+      }
+    }
+    featuresMap.toMap
+  }
+
+  def getSpecializationImplFromDbBySpecializationName(name: String): (Int, Dnd5ClassSpecialization) = {
+    val (specializationId: Int, description: String, hasSpells: Boolean) =
+      DbClassInfo.getSpecializationDataByName(name).head
+    val featuresMap = getSpecializationFeaturesById(specializationId)
+
+    (specializationId, new Dnd5ClassSpecialization(name, description, hasSpells, featuresMap))
+  }
+
+  def getSpecializationImplFromDbById(id: Int): Dnd5ClassSpecialization = {
+    val (name, description, hasSpells) = DbClassInfo.getSpecializationDataById(id).head
+    val featuresMap = getSpecializationFeaturesById(id)
+    new Dnd5ClassSpecialization(name, description, hasSpells, featuresMap)
   }
 }

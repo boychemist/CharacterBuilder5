@@ -1,7 +1,7 @@
 package org.boychemist.characterbuilder5
 
 import org.boychemist.characterbuilder5.dnd5classes._
-import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecializationImpl
+import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecialization
 import org.boychemist.characterbuilder5.races._
 
 import scala.collection.immutable.ListMap
@@ -136,7 +136,7 @@ object Dnd5Character {
         case Dnd5ClassesEnum.Warlock => Dnd5Warlock
         case Dnd5ClassesEnum.Wizard => Dnd5Wizard
       }
-    var specialization: Dnd5ClassSpecializationImpl = _
+    var specialization: Dnd5ClassSpecialization = _
 
     override def toString: String = {
       val builder = new mutable.StringBuilder()
