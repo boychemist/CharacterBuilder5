@@ -701,7 +701,59 @@ insert into spec_features(spec_id, name, level, description)
     You cast the ''raise dead'' spell on a creature you touch with the transmuter''s stone, without expending a spell slot or needing to have the spell in your spellbook.
     RESTORE YOUTH
     You touch the transmuter''s stone to a willing creature, and that creature''s apparent age is reduced by 3d10 years, to a minimum of 13 years.  This effect doesn''t extend the creature''s lifespan.');
-    
+/* Path of the Ancestral Guardian */
+insert into spec_features(spec_id, name, level, description)
+    values(40, 'Ancestral Protectors', 3, 'Starting when you choose this path at 3rd level, spectral warriors appear when you enter your rage.  While you''re raging the first creature you hit with an attack on your turn becomes the target of the warriors, which hinder its attacks.  Until the start of your next turn, that target has disadvantage on any attack roll that isn''t against you, and when that target hits a creature other than you with an attack, that creature has resistance to the damage dealt by the attack.  The effect on the target ends early if your rage ends.');
+insert into spec_features(spec_id, name, level, description)
+    values(40, 'Spirit Shield', 6, 'Starting at 6th level, the guardian spirits that aid you can provide supernatural protection to those you defend.  If you are raging and another creature you can see within 30 feet of you takes damage, you can use your reaction to reduce that damage by 2d6.
+    When you reach certain levels in this class, you can reduce the damage by more:  by 3d6 at 10th level and by 4d6 at 14th level.');
+insert into spec_features(spec_id, name, level, description)
+    values(40, 'Consult the Spirits', 10, 'At 10th level, you gain the ability to consult with your ancestral spirits.  When you do so, you cast the "augury" or "clairvoyance" spell, without using a spell slot or material components.  Rather than creating a spherical sensor, this use of "clairvoyance" invisibly summons one of your ancestral spirits to the chosen location.  Wisdom is your spellcasting ability for these spells.
+    After you cast either spell in this way, you can''t use this feature again until you finish a short or long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(40, 'Vengeful Ancestors', 14, 'At 14th level, your ancestraal spirits grow powerful enough to retaliate.  When you use your Spirit Shield to reduce the damage of an attack, the attacker takes an amount of damage equal to the damage that your Spirit Shield prevents.');
+/* Path of the Storm Herald */
+insert into spec_features(spec_id, name, level, description)
+    values(41, 'Storm Aura', 3, 'Starting at 3rd level, you emanate a stormy, magical aura while you rage.  This aura extends 10 feet from you in every direction, but not through total cover.
+    Your aura has an effect that activates when you enter your rage, and you can activate the effect again on each of your turns as a bonus action.  Choose desert, sea, or tundra.  Your aura''s effect depends on that chosen environment, as detailed below.  You can change your environment choice whenever you gain a level in this class.
+    If your aura''s effects require a saving throw, the DC equals 8 + your proficiency bonus + your Constitution modifier.
+    DESERT
+    When this effect is activated, all other creatures in your aura take 2 fire damage each.  The damage increases when you reach certain levels in this class, increasing to 3 at 5th level, 4 at 10th level, 5 at 15th level, and 6 at 20th level.
+    SEA
+    When this effect is activated, you can choose one other creature you can see in your aura.  The target must make a Dexterity saving throw.  The target takes 1d6 lightning damage on a failed save, or half that much damage on a successful one.  The damage increases when you reach certain levels in this class, increasing to 2d6 at 10th level, 3d6 at 15th level, and 4d6 at 20th level.
+    TUNDRA
+    When this effect is activated, each creature of your choice in your aura gains 2 temporary hit points, as icy spirits inure it to suffering.  The temporary hit points increase when you reach certain levels in this class, increasing to 3 at 5th level, 4 at 10th level, 5 at 15th level, and 6 at 20th level.');
+insert into spec_features(spec_id, name, level, description)
+    values(41, 'Storm Soul', 6, 'At 6th level, the storm grants you benefits even when your aura isn''t active.  The benefits are base on the environment your chose for your Storm Aura.
+    DESERT
+    You gain resistance to fire damage, and you don''t suffer the effects of extreme heat, as described in the "Dungeon Master''s Guide".  Moreover, as an action, you can touch a flammable object that isn''t being worn or carried by anyone else and set it on fire.
+    SEA
+    You gain resistance to lightning damage, and you can breathe underwater.  You also gain a swimming speed of 30 feet.
+    TUNDRA
+    You gain resistance to cold damage, and you don''t suffer the effects of extreme cold, as described in the "Dungeon Master''s Guide".  Moreover, as an action you can touch water and turn a 5-foot cube of it into ice, which melts after 1 minute.  This action fails if a creature is in the cube.');
+insert into spec_features(spec_id, name, level, description)
+    values(41, 'Shielding Storm', 10, 'At 10th level, you learn to use your mastery of the storm to protect others.  Each creature of your choice has the damage resistance your gained from the Storm Soul feature while that creature is in you Storm Aura.');
+insert into spec_features(spec_id, name, level, description)
+    values(41, 'Raging Storm', 14, 'At 14th level, the power of the storm you channel grows mightier, lashing out at your foes.  The effect is based on the environment you chose for your Storm Aura.
+    DESERT
+    Immediately after a creature in your aura hits you with an attack, you can use your reaction to force that creature to make a Dexterity saving throw.  On a failed save, the creature takes fire damage equal to half your barbarian level.
+    SEA
+    When you hit a creature in your aura with an attack, you can use your reaction to force that creature to make a Strength saving throw.  On a failed save, the creature is knocked prone, as if struck by a wave.
+    TUNDRA
+    Whenever the effect of your Storm Aura is activated, you can choose one creature yoiu can see in the aura.  That creature must succeed on a Strength saving throw, or its speed is reduced to 0 until the start of your next turn, as magical frost covers it.');
+/* Path of the Zealot */
+insert into spec_features(spec_id, name, level, description)
+    values(42, 'Divine Fury', 3, 'Starting when you choose this path at 3rd level, you can channel divine fury into your weapon strikes.  While you''re raging, the first creature you hit on each of your turns with a weapon attack takes extra damage equal to 1d6 + half your barbarian level.  The extra damage is necrotic or radiant; you choose the type of damage when you gain this feature.');
+insert into spec_features(spec_id, name, level, description)
+    values(42, 'Warrior of the Gods', 3, 'At 3rd level, your soul is marked for endless battle.  If a spell, such as "raise dead", has the sole effect of restoring you to life (but not undeath), the caster doesn''t need material components to case the spell on you.');
+insert into spec_features(spec_id, name, level, description)
+    values(42, 'Fanatical Focus', 6, 'Starting at 6th level, the divine power that fuels your rage can protect you.  If you fail a saving throw while you''re raging, you can reroll it, and you must use the new roll.  You can use this ability only once per rage.');
+insert into spec_features(spec_id, name, level, description)
+    values(42, 'Zealous Presence', 10, 'At 10th level, you learn to channel divine power to inspire zealotry in others.  As a bonus action, you unleash a battle cry infused with divine energy.  Up to ten other creatures of your choice within 60 feet of you that can hear you gain advantage on attack rolls and saving throws until the start of your next turn.
+    Once you use this feature, you can''t use it again until you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(42, 'Rage Beyond Death', 14, 'Starting at 14th level, the divine power that fuels your rage allows you to shrug off fatal blows.
+    While you''re raging, having 0 hit points doesn''t knock you unconscious.  You still must make death saving throws, and you suffer the normal effects of taking damage while at 0 hit points.  However, if you would die due to failing death saving throws, you don''t die until your rage ends, and you die only if your still have 0 hit points.');
 
 select * from spec_features;
 /* select spec_id, name from specializations */

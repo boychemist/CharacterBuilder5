@@ -3,7 +3,7 @@ package org.boychemist.characterbuilder5.dnd5classes.specializations
 import org.boychemist.characterbuilder5.dbInterface.DbClassInfo
 
 import scala.collection.mutable
-import scala.collection.mutable.{ListBuffer, HashMap => MutableHashMap}
+import scala.collection.mutable.ListBuffer
 
 case class SpecializationFeature(name: String, description: String)
 

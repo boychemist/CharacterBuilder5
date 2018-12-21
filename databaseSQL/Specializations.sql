@@ -10,6 +10,7 @@ insert into specializations(class_id, name, provides_spells, description)
     values(0, 'Path of the Totem Warrior', 'FALSE',
     'The Path of the Totem Warrior is a spiritual journey, as the barbarian accepts a spirit animal as guide, protector, and inspiration.  In battle, your totem spirit fills you with supernatural might, adding magical fuel to your barbarian rage.
     Most barbarian tribes consider a totem animal to be kin to a particular clan.  In such cases, it is unusual for an individual to have more than one totem animal spirit, though exceptions exist.');
+
 /* bard specializations */
 insert into specializations(class_id, name, provides_spells, description)
     values(1, 'College of Lore', 'FALSE', 'Bards of the College of Lord know something about most things, collecting bits of knowledge from sources as diverse as scholarly tomes and peasant tales.  Whether singing folk ballads in taverns or elaborate compositions in royal courts, these bards use their gifts to hold audiences spellbound.  When the applause dies down, the audience members might find themselves questioning everthing they held to be true, from their faith in the priesthood of the local temple to their loyalty to the king.
@@ -250,5 +251,21 @@ insert into specializations(class_id, name, provides_spells, description)
 insert into specializations(class_id, name, provides_spells, description)
     values(11, 'School of Transmutation', 'false', 'You are a student of spells  the modify energy and matter.  To you, the world is not a fixed thing, but eminently mutable, and you delight in being an agent of change.  You wield the raw stuff of creation and learn to alter both physical forms and mental qualities.  Your magic gives you the tools to become a smith on reality''s forge.
     Some transmuters are tinkerers and pranksters, turning people into toads and transforming copper into silver for fun and occasional profit.  Others pursue their magical studies with deadly seriousness, seeking the power of the gods to make and destroy worlds.');
+/* barbarian paths from Xanthar's Guide */
+insert into specializations(class_id, name, provides_spells, description)
+    values(0, 'Path of the Ancestral Guardian', 'FALSE',
+    'Some barbarians hail from cultures that revere their ancestors.  These tribes teach that the warriors of the past linger in the world as mighty spirits, who can guide and protect the living.  When a barbarian who follows this path rages, the barbarian contacts the spirit world and calls on these guardian spirits for aid.
+    Barbarians who draw on their ancestral guardians can better fight to protect their tribes and allies.  In order to cement ties to their ancestral guardians, barbarians who follow this path cover themselves in elaborate tattoos that celebrate their ancestors'' deeds.  These tattoos tell sagas of victories against terrible monsters and other fearsome rivals.');
+insert into specializations(class_id, name, provides_spells, description)
+    values(0, 'Path of the Storm Herald', 'FALSE',
+    'All barbarians harbor a fury within.  Their rage grants them superior strength, durability, and speed.  Barbarians who follow the Path of the Storm Herald learn to transform that rage into a mantle of primal magic, which swirls around them.  When in a fury, a barbarian of this path taps into the forces of nature to create powerful magical effects.
+    Storm heralds are typically elite champions who train alongside druids, rangers, and others sworn to protect nature.  Other storm heralds hone their craft in lodges in regions wracked by storms, in the frozen reaches at the world''s end, or deep in the hottest deserts.');
+insert into specializations(class_id, name, provides_spells, description)
+    values(0, 'Path of the Zealot', 'FALSE',
+    'Some deities inspire their followers to pitch themselves into a ferocious battle fury.  These barbarians are zealots -- warriors who channel their rage into powerful displays of divine power.
+    A variety of gods across the worlds of D&D inspire their followers to embrace this path.  Tempus from the Forgotten Realms and Hextor and Erythnul of Greyhawk are all prime examples.  In general, the gods who inspire zealots are deities of combat, destruction, and violence.  Not all are evil, but few are good.');
+
+
+
 select * from specializations;
 
