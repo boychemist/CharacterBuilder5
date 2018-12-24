@@ -17,7 +17,7 @@ class BuilderUI(stage: Stage) {
     border = getBorder
     maxWidth = 720
     minWidth = 700
-    maxHeight = 700
+    maxHeight = 600
   }
   topPane += RacesTab.racesTab()
   topPane += ClassesUI.classesTab()

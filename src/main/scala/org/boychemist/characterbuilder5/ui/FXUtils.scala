@@ -43,8 +43,8 @@ object FXUtils {
           bottom = new Button("Close") {
             onAction = handle{outer.close}
           }
-          minHeight = rootNode.width.toDouble + 20.0
-          minWidth = rootNode.height.toDouble + 20.0
+          maxHeight = 600
+          minWidth = rootNode.width.toDouble + 20.0
         }
       }
     }
@@ -64,8 +64,8 @@ object FXUtils {
           bottom = new Button("Close") {
             onAction = handle{outer.close}
           }
-          minHeight = rootNode.width.toDouble + 20.0
-          minWidth = rootNode.height.toDouble + 20.0
+          maxHeight = 600
+          minWidth = rootNode.width.toDouble + 20.0
         }
       }
     }
