@@ -312,7 +312,10 @@ object NewCharacterUI {
           Dnd5Character.getWorkingCharacter.race = newVal
           Dnd5Character.getWorkingCharacter.addRacialBasicAbilities()
           charSpeed.text = Dnd5Character.getWorkingCharacter.speed.toString
-          charSize.text = Dnd5Character.getWorkingCharacter.size.toString
+          if (Dnd5Character.getWorkingCharacter.size != null)
+            charSize.text = Dnd5Character.getWorkingCharacter.size.toString
+          else
+            charSize.text = ""
           NewCharacterUI.racialFeatures.disable = false
           NewCharacterUI.racialAbilities.disable = false
         })
