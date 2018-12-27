@@ -10,6 +10,7 @@ drop table if exists character_jewels;
 drop table if exists equipped_weapons;
 drop table if exists equipped_armor;
 drop table if exists equipped_gear;
+drop table if exists character_coins;
 
 drop table if exists character;
 create table character(
@@ -32,13 +33,19 @@ create table character(
    level int not null,
    base_armor_class int not null,
    base_speed int not null,
+   draconic_ancestry char(6) not null,
+   character_id int identity(0)
+);
+
+create table character_coins(
+   character_id int not null,
    copper bigint not null default 0,
    silver bigint not null default 0,
    electrum bigint not null default 0,
    gold bigint not null default 0,
    platinum bigint not null default 0,
-   draconic_ancestry char(6) not null,
-   character_id int identity(0)
+   primary key (character_id),
+   foreign key (character_id) references character(character_id),
 );
 
 create table character_classes(
