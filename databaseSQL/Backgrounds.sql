@@ -1,4 +1,4 @@
-drop table if exists personalitiy_traits;
+drop table if exists personality_traits;
 drop table if exists ideals;
 drop table if exists bonds;
 drop table if exists flaws;
