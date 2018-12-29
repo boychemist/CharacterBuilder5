@@ -11,6 +11,7 @@ drop table if exists equipped_weapons;
 drop table if exists equipped_armor;
 drop table if exists equipped_gear;
 drop table if exists character_coins;
+drop table if exists character_background;
 
 drop table if exists character;
 create table character(
@@ -129,4 +130,12 @@ create table character_jewels (
    count int not null,
    primary key (character_id, name, value),
    foreign key (character_id) references character(character_id)
+);
+
+create table character_background (
+   character_id int not null,
+   background_id int not null,
+   primary key (character_id, background_id),
+   foreign key (character_id) references character(character_id),
+   foreign key (background_id) references backbrounds(background_id)
 );
