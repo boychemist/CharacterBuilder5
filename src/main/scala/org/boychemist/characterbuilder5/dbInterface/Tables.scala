@@ -14,7 +14,7 @@ trait Tables {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, BackgroundFeatures.schema, Backgrounds.schema, Character.schema, CharacterArmor.schema, CharacterClasses.schema, CharacterCoins.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Languages.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
+  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, BackgroundChoices.schema, BackgroundDetails.schema, BackgroundFeatures.schema, Backgrounds.schema, Bonds.schema, Character.schema, CharacterArmor.schema, CharacterClasses.schema, CharacterCoins.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Flaws.schema, Ideals.schema, Languages.schema, PersonalityTraits.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
 
@@ -95,6 +95,82 @@ trait Tables {
   /** Collection-like TableQuery object for table Armor */
   lazy val Armor = new TableQuery(tag => new Armor(tag))
 
+  /** Entity class storing rows of table BackgroundChoices
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
+   *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
+   *  @param choice Database column CHOICE SqlType(CHAR), Length(200,false) */
+  case class BackgroundChoicesRow(backgroundId: Int, sequenceNum: Int, choice: String)
+  /** GetResult implicit for fetching BackgroundChoicesRow objects using plain SQL queries */
+  implicit def GetResultBackgroundChoicesRow(implicit e0: GR[Int], e1: GR[String]): GR[BackgroundChoicesRow] = GR{
+    prs => import prs._
+    BackgroundChoicesRow.tupled((<<[Int], <<[Int], <<[String]))
+  }
+  /** Table description of table BACKGROUND_CHOICES. Objects of this class serve as prototypes for rows in queries. */
+  class BackgroundChoices(_tableTag: Tag) extends profile.api.Table[BackgroundChoicesRow](_tableTag, "BACKGROUND_CHOICES") {
+    def * = (backgroundId, sequenceNum, choice) <> (BackgroundChoicesRow.tupled, BackgroundChoicesRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(backgroundId), Rep.Some(sequenceNum), Rep.Some(choice)).shaped.<>({r=>import r._; _1.map(_=> BackgroundChoicesRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column BACKGROUND_ID SqlType(INTEGER) */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
+    /** Database column SEQUENCE_NUM SqlType(INTEGER) */
+    val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
+    /** Database column CHOICE SqlType(CHAR), Length(200,false) */
+    val choice: Rep[String] = column[String]("CHOICE", O.Length(200,varying=false))
+
+    /** Primary key of BackgroundChoices (database name CONSTRAINT_1) */
+    val pk = primaryKey("CONSTRAINT_1", (backgroundId, sequenceNum))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_14) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_14", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table BackgroundChoices */
+  lazy val BackgroundChoices = new TableQuery(tag => new BackgroundChoices(tag))
+
+  /** Entity class storing rows of table BackgroundDetails
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER), PrimaryKey
+   *  @param skill1 Database column SKILL_1 SqlType(CHAR), Length(15,false)
+   *  @param skill2 Database column SKILL_2 SqlType(CHAR), Length(15,false)
+   *  @param numLanguages Database column NUM_LANGUAGES SqlType(INTEGER)
+   *  @param tools Database column TOOLS SqlType(CHAR), Length(100,false)
+   *  @param equipment Database column EQUIPMENT SqlType(CHAR), Length(256,false)
+   *  @param gold Database column GOLD SqlType(INTEGER)
+   *  @param characteristics Database column CHARACTERISTICS SqlType(CHAR), Length(1024,false) */
+  case class BackgroundDetailsRow(backgroundId: Int, skill1: String, skill2: String, numLanguages: Int, tools: String, equipment: String, gold: Int, characteristics: Option[String])
+  /** GetResult implicit for fetching BackgroundDetailsRow objects using plain SQL queries */
+  implicit def GetResultBackgroundDetailsRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[String]]): GR[BackgroundDetailsRow] = GR{
+    prs => import prs._
+    BackgroundDetailsRow.tupled((<<[Int], <<[String], <<[String], <<[Int], <<[String], <<[String], <<[Int], <<?[String]))
+  }
+  /** Table description of table BACKGROUND_DETAILS. Objects of this class serve as prototypes for rows in queries. */
+  class BackgroundDetails(_tableTag: Tag) extends profile.api.Table[BackgroundDetailsRow](_tableTag, "BACKGROUND_DETAILS") {
+    def * = (backgroundId, skill1, skill2, numLanguages, tools, equipment, gold, characteristics) <> (BackgroundDetailsRow.tupled, BackgroundDetailsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(backgroundId), Rep.Some(skill1), Rep.Some(skill2), Rep.Some(numLanguages), Rep.Some(tools), Rep.Some(equipment), Rep.Some(gold), characteristics).shaped.<>({r=>import r._; _1.map(_=> BackgroundDetailsRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get, _7.get, _8)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column BACKGROUND_ID SqlType(INTEGER), PrimaryKey */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID", O.PrimaryKey)
+    /** Database column SKILL_1 SqlType(CHAR), Length(15,false) */
+    val skill1: Rep[String] = column[String]("SKILL_1", O.Length(15,varying=false))
+    /** Database column SKILL_2 SqlType(CHAR), Length(15,false) */
+    val skill2: Rep[String] = column[String]("SKILL_2", O.Length(15,varying=false))
+    /** Database column NUM_LANGUAGES SqlType(INTEGER) */
+    val numLanguages: Rep[Int] = column[Int]("NUM_LANGUAGES")
+    /** Database column TOOLS SqlType(CHAR), Length(100,false) */
+    val tools: Rep[String] = column[String]("TOOLS", O.Length(100,varying=false))
+    /** Database column EQUIPMENT SqlType(CHAR), Length(256,false) */
+    val equipment: Rep[String] = column[String]("EQUIPMENT", O.Length(256,varying=false))
+    /** Database column GOLD SqlType(INTEGER) */
+    val gold: Rep[Int] = column[Int]("GOLD")
+    /** Database column CHARACTERISTICS SqlType(CHAR), Length(1024,false) */
+    val characteristics: Rep[Option[String]] = column[Option[String]]("CHARACTERISTICS", O.Length(1024,varying=false))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_4431) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_4431", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table BackgroundDetails */
+  lazy val BackgroundDetails = new TableQuery(tag => new BackgroundDetails(tag))
+
   /** Entity class storing rows of table BackgroundFeatures
    *  @param name Database column NAME SqlType(CHAR), PrimaryKey, Length(50,false)
    *  @param variant Database column VARIANT SqlType(BOOLEAN)
@@ -130,18 +206,19 @@ trait Tables {
   /** Entity class storing rows of table Backgrounds
    *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER), AutoInc, PrimaryKey
    *  @param name Database column NAME SqlType(CHAR), Length(14,false)
-   *  @param description Database column DESCRIPTION SqlType(CHAR), Length(2048,false) */
-  case class BackgroundsRow(backgroundId: Int, name: String, description: String)
+   *  @param description Database column DESCRIPTION SqlType(CHAR), Length(2048,false)
+   *  @param choices Database column CHOICES SqlType(CHAR), Length(512,false) */
+  case class BackgroundsRow(backgroundId: Int, name: String, description: String, choices: Option[String])
   /** GetResult implicit for fetching BackgroundsRow objects using plain SQL queries */
-  implicit def GetResultBackgroundsRow(implicit e0: GR[Int], e1: GR[String]): GR[BackgroundsRow] = GR{
+  implicit def GetResultBackgroundsRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[String]]): GR[BackgroundsRow] = GR{
     prs => import prs._
-    BackgroundsRow.tupled((<<[Int], <<[String], <<[String]))
+    BackgroundsRow.tupled((<<[Int], <<[String], <<[String], <<?[String]))
   }
   /** Table description of table BACKGROUNDS. Objects of this class serve as prototypes for rows in queries. */
   class Backgrounds(_tableTag: Tag) extends profile.api.Table[BackgroundsRow](_tableTag, "BACKGROUNDS") {
-    def * = (backgroundId, name, description) <> (BackgroundsRow.tupled, BackgroundsRow.unapply)
+    def * = (backgroundId, name, description, choices) <> (BackgroundsRow.tupled, BackgroundsRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = (Rep.Some(backgroundId), Rep.Some(name), Rep.Some(description)).shaped.<>({r=>import r._; _1.map(_=> BackgroundsRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = (Rep.Some(backgroundId), Rep.Some(name), Rep.Some(description), choices).shaped.<>({r=>import r._; _1.map(_=> BackgroundsRow.tupled((_1.get, _2.get, _3.get, _4)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column BACKGROUND_ID SqlType(INTEGER), AutoInc, PrimaryKey */
     val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID", O.AutoInc, O.PrimaryKey)
@@ -149,12 +226,46 @@ trait Tables {
     val name: Rep[String] = column[String]("NAME", O.Length(14,varying=false))
     /** Database column DESCRIPTION SqlType(CHAR), Length(2048,false) */
     val description: Rep[String] = column[String]("DESCRIPTION", O.Length(2048,varying=false))
+    /** Database column CHOICES SqlType(CHAR), Length(512,false) */
+    val choices: Rep[Option[String]] = column[Option[String]]("CHOICES", O.Length(512,varying=false))
 
     /** Uniqueness Index over (name) (database name CONSTRAINT_INDEX_E) */
     val index1 = index("CONSTRAINT_INDEX_E", name, unique=true)
   }
   /** Collection-like TableQuery object for table Backgrounds */
   lazy val Backgrounds = new TableQuery(tag => new Backgrounds(tag))
+
+  /** Entity class storing rows of table Bonds
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
+   *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
+   *  @param bond Database column BOND SqlType(CHAR), Length(200,false) */
+  case class BondsRow(backgroundId: Int, sequenceNum: Int, bond: String)
+  /** GetResult implicit for fetching BondsRow objects using plain SQL queries */
+  implicit def GetResultBondsRow(implicit e0: GR[Int], e1: GR[String]): GR[BondsRow] = GR{
+    prs => import prs._
+    BondsRow.tupled((<<[Int], <<[Int], <<[String]))
+  }
+  /** Table description of table BONDS. Objects of this class serve as prototypes for rows in queries. */
+  class Bonds(_tableTag: Tag) extends profile.api.Table[BondsRow](_tableTag, "BONDS") {
+    def * = (backgroundId, sequenceNum, bond) <> (BondsRow.tupled, BondsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(backgroundId), Rep.Some(sequenceNum), Rep.Some(bond)).shaped.<>({r=>import r._; _1.map(_=> BondsRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column BACKGROUND_ID SqlType(INTEGER) */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
+    /** Database column SEQUENCE_NUM SqlType(INTEGER) */
+    val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
+    /** Database column BOND SqlType(CHAR), Length(200,false) */
+    val bond: Rep[String] = column[String]("BOND", O.Length(200,varying=false))
+
+    /** Primary key of Bonds (database name CONSTRAINT_3C) */
+    val pk = primaryKey("CONSTRAINT_3C", (backgroundId, sequenceNum))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_3C7) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_3C7", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table Bonds */
+  lazy val Bonds = new TableQuery(tag => new Bonds(tag))
 
   /** Entity class storing rows of table Character
    *  @param name Database column NAME SqlType(CHAR), Length(30,false)
@@ -638,6 +749,70 @@ trait Tables {
   /** Collection-like TableQuery object for table DamageType */
   lazy val DamageType = new TableQuery(tag => new DamageType(tag))
 
+  /** Entity class storing rows of table Flaws
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
+   *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
+   *  @param flaw Database column FLAW SqlType(CHAR), Length(200,false) */
+  case class FlawsRow(backgroundId: Int, sequenceNum: Int, flaw: String)
+  /** GetResult implicit for fetching FlawsRow objects using plain SQL queries */
+  implicit def GetResultFlawsRow(implicit e0: GR[Int], e1: GR[String]): GR[FlawsRow] = GR{
+    prs => import prs._
+    FlawsRow.tupled((<<[Int], <<[Int], <<[String]))
+  }
+  /** Table description of table FLAWS. Objects of this class serve as prototypes for rows in queries. */
+  class Flaws(_tableTag: Tag) extends profile.api.Table[FlawsRow](_tableTag, "FLAWS") {
+    def * = (backgroundId, sequenceNum, flaw) <> (FlawsRow.tupled, FlawsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(backgroundId), Rep.Some(sequenceNum), Rep.Some(flaw)).shaped.<>({r=>import r._; _1.map(_=> FlawsRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column BACKGROUND_ID SqlType(INTEGER) */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
+    /** Database column SEQUENCE_NUM SqlType(INTEGER) */
+    val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
+    /** Database column FLAW SqlType(CHAR), Length(200,false) */
+    val flaw: Rep[String] = column[String]("FLAW", O.Length(200,varying=false))
+
+    /** Primary key of Flaws (database name CONSTRAINT_3F) */
+    val pk = primaryKey("CONSTRAINT_3F", (backgroundId, sequenceNum))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_3FD) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_3FD", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table Flaws */
+  lazy val Flaws = new TableQuery(tag => new Flaws(tag))
+
+  /** Entity class storing rows of table Ideals
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
+   *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
+   *  @param ideal Database column IDEAL SqlType(CHAR), Length(200,false) */
+  case class IdealsRow(backgroundId: Int, sequenceNum: Int, ideal: String)
+  /** GetResult implicit for fetching IdealsRow objects using plain SQL queries */
+  implicit def GetResultIdealsRow(implicit e0: GR[Int], e1: GR[String]): GR[IdealsRow] = GR{
+    prs => import prs._
+    IdealsRow.tupled((<<[Int], <<[Int], <<[String]))
+  }
+  /** Table description of table IDEALS. Objects of this class serve as prototypes for rows in queries. */
+  class Ideals(_tableTag: Tag) extends profile.api.Table[IdealsRow](_tableTag, "IDEALS") {
+    def * = (backgroundId, sequenceNum, ideal) <> (IdealsRow.tupled, IdealsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(backgroundId), Rep.Some(sequenceNum), Rep.Some(ideal)).shaped.<>({r=>import r._; _1.map(_=> IdealsRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column BACKGROUND_ID SqlType(INTEGER) */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
+    /** Database column SEQUENCE_NUM SqlType(INTEGER) */
+    val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
+    /** Database column IDEAL SqlType(CHAR), Length(200,false) */
+    val ideal: Rep[String] = column[String]("IDEAL", O.Length(200,varying=false))
+
+    /** Primary key of Ideals (database name CONSTRAINT_80) */
+    val pk = primaryKey("CONSTRAINT_80", (backgroundId, sequenceNum))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_807) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_807", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table Ideals */
+  lazy val Ideals = new TableQuery(tag => new Ideals(tag))
+
   /** Entity class storing rows of table Languages
    *  @param langId Database column LANG_ID SqlType(INTEGER), AutoInc, PrimaryKey
    *  @param language Database column LANGUAGE SqlType(CHAR), Length(12,false) */
@@ -660,6 +835,40 @@ trait Tables {
   }
   /** Collection-like TableQuery object for table Languages */
   lazy val Languages = new TableQuery(tag => new Languages(tag))
+
+  /** Entity class storing rows of table PersonalityTraits
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
+   *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
+   *  @param `trait` Database column TRAIT SqlType(CHAR), Length(200,false) */
+  case class PersonalityTraitsRow(backgroundId: Int, sequenceNum: Int, `trait`: String)
+  /** GetResult implicit for fetching PersonalityTraitsRow objects using plain SQL queries */
+  implicit def GetResultPersonalityTraitsRow(implicit e0: GR[Int], e1: GR[String]): GR[PersonalityTraitsRow] = GR{
+    prs => import prs._
+    PersonalityTraitsRow.tupled((<<[Int], <<[Int], <<[String]))
+  }
+  /** Table description of table PERSONALITY_TRAITS. Objects of this class serve as prototypes for rows in queries.
+   *  NOTE: The following names collided with Scala keywords and were escaped: trait */
+  class PersonalityTraits(_tableTag: Tag) extends profile.api.Table[PersonalityTraitsRow](_tableTag, "PERSONALITY_TRAITS") {
+    def * = (backgroundId, sequenceNum, `trait`) <> (PersonalityTraitsRow.tupled, PersonalityTraitsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(backgroundId), Rep.Some(sequenceNum), Rep.Some(`trait`)).shaped.<>({r=>import r._; _1.map(_=> PersonalityTraitsRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column BACKGROUND_ID SqlType(INTEGER) */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
+    /** Database column SEQUENCE_NUM SqlType(INTEGER) */
+    val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
+    /** Database column TRAIT SqlType(CHAR), Length(200,false)
+     *  NOTE: The name was escaped because it collided with a Scala keyword. */
+    val `trait`: Rep[String] = column[String]("TRAIT", O.Length(200,varying=false))
+
+    /** Primary key of PersonalityTraits (database name CONSTRAINT_B7) */
+    val pk = primaryKey("CONSTRAINT_B7", (backgroundId, sequenceNum))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_B7B) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_B7B", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table PersonalityTraits */
+  lazy val PersonalityTraits = new TableQuery(tag => new PersonalityTraits(tag))
 
   /** Entity class storing rows of table Races
    *  @param raceId Database column RACE_ID SqlType(INTEGER), AutoInc, PrimaryKey
