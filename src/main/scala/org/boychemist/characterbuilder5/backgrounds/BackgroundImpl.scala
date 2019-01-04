@@ -18,7 +18,7 @@ class BackgroundImpl(backgroundID: Int) extends BackgroundBase {
   }
   private var specName, specDescription: String = ""
   if (choices.length > 0) {
-    val parts = choices.split("|")
+    val parts = choices.split("""\|""")
     specName = parts(0)
     specDescription = parts(1)
   }
@@ -44,18 +44,18 @@ class BackgroundImpl(backgroundID: Int) extends BackgroundBase {
   private val details =
     DbBackgroundInfo.getBackgroundDetailsByBackgroundID(backgroundID)
   override val skills: List[Dnd5SkillsEnum.Value] =
-    List(Dnd5SkillsEnum.withName(details.skill1),
-         Dnd5SkillsEnum.withName(details.skill2))
+    List(Dnd5SkillsEnum.withName(details.skill1.trim),
+         Dnd5SkillsEnum.withName(details.skill2.trim))
   override val characteristics: String = details.characteristics
   private val toolsList: ListBuffer[String] = new ListBuffer()
   if (details.tools.length > 0) {
-    for (atool <- details.tools.split("|")) {
+    for (atool <- details.tools.split("""\|""")) {
       toolsList += atool
     }
   }
   override val toolOptions: List[String] = toolsList.toList
   private val equipmentList = new ListBuffer[String]
-  for (aPart <- details.equipment.split("|")) {
+  for (aPart <- details.equipment.split("""\|""")) {
     equipmentList += aPart
   }
   override val equipmentOptions: List[String] = equipmentList.toList

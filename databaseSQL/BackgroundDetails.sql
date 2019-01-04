@@ -19,7 +19,7 @@ values (0, 'Insight', 'Religion', 2, '', 'A holy symbol(a gift to you when you e
 
 /* Charlatan */
 insert into background_details (background_id, skill_1, skill_2, num_languages, tools, equipment, gold, characteristics)
-values (1, 'Deception', 'Slight of Hand', 0, 'Disguise kit|Forgery kit', 'A fine set of clothes|A disguise kit| tools of the con of your choice (ten stoppered bottles filled with colored liquid, a set of weighted dice, a deck of marked cards, or a signet ring of an imaginary duke)', 15, 'Charlatans are colorful characters who conceal their true selves behind the masks they construct.  They reflect what people want to see, what they want to believe, and how they see the world.  But their true selves are sometimes plagued by an uneasy conscience, an old enemy, or deep-seated trust issues.');
+values (1, 'Deception', 'Sleight Of Hand', 0, 'Disguise kit|Forgery kit', 'A fine set of clothes|A disguise kit| tools of the con of your choice (ten stoppered bottles filled with colored liquid, a set of weighted dice, a deck of marked cards, or a signet ring of an imaginary duke)', 15, 'Charlatans are colorful characters who conceal their true selves behind the masks they construct.  They reflect what people want to see, what they want to believe, and how they see the world.  But their true selves are sometimes plagued by an uneasy conscience, an old enemy, or deep-seated trust issues.');
 
 /* Criminal */
 insert into background_details (background_id, skill_1, skill_2, num_languages, tools, equipment, gold, characteristics)
@@ -65,7 +65,7 @@ values (11, 'Athletics', 'Intimidation', 0, 'One type of gaming set|vehicles (la
 
 /* Urchin */
 insert into background_details (background_id, skill_1, skill_2, num_languages, tools, equipment, gold, characteristics)
-values (12, 'Sleight of Hand', 'Stealth', 0, 'Disguise kit|Thieves'' tools', 'A small knife|A map of the city you grew up in|A pet mouse|A token to remember you parents by|A set of common clothes', 10, 'Urchins are shaped by lives of desparate poverty, for good and for ill.  They tend to be driven either by a commitment to the people with whom they shared life on the street or by a burning desire to find a better life -- and maybe get some payback on all the rich people who treated them badly.');
+values (12, 'Sleight Of Hand', 'Stealth', 0, 'Disguise kit|Thieves'' tools', 'A small knife|A map of the city you grew up in|A pet mouse|A token to remember you parents by|A set of common clothes', 10, 'Urchins are shaped by lives of desparate poverty, for good and for ill.  They tend to be driven either by a commitment to the people with whom they shared life on the street or by a burning desire to find a better life -- and maybe get some payback on all the rich people who treated them badly.');
 
 select b.name, d.skill_1, d.skill_2, d.num_languages, d.tools, d.equipment, d.gold, d.characteristics from background_details d, backgrounds b where d.background_id = b.background_id
 

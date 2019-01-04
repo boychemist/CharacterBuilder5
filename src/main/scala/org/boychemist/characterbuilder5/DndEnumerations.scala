@@ -83,7 +83,7 @@ object DndAlignmentEnum extends Enumeration {
 object Dnd5SkillsEnum extends Enumeration {
   val Athletics: Value = Value
   val Acrobatics: Value = Value
-  val SleightOfHand: Value = Value("Slieght of Hand")
+  val SleightOfHand: Value = Value("Sleight Of Hand")
   val Stealth: Value = Value
   val Arcana: Value = Value
   val History: Value = Value
