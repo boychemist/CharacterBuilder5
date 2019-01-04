@@ -8,7 +8,7 @@ create table background_details(
   tools char(100) not null,
   equipment char(256) not null,
   gold int not null,
-  characteristics char(1024),
+  characteristics char(1024) not null,
   primary key (background_id),
   foreign key (background_id) references backgrounds (background_id)
 );

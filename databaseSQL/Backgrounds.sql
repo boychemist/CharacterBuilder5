@@ -3,7 +3,6 @@ drop table if exists ideals;
 drop table if exists bonds;
 drop table if exists flaws;
 drop table if exists background_choices;
-drop table if exists background_specializations;
 drop table if exists background_details;
 drop table if exists backgrounds;
 
