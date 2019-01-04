@@ -26,7 +26,7 @@ object BarbarianDisplay {
 
     val armorLabel = enhancedLabel("Armor Proficiencies")
     val armor =
-      variableTextArea(Dnd5Barbarian.armorProficiencies.mkString("\n"), 150, 60)
+      getFittedTextArea(Dnd5Barbarian.armorProficiencies.mkString("\n"), 150)
     barbGrid.addRow(rowNum, armorLabel)
     barbGrid.addRow(rowNum, armor)
     rowNum += 1
@@ -40,10 +40,9 @@ object BarbarianDisplay {
     barbGrid.addRow(rowNum, weapons)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(
+    val savingThrows = getFittedTextArea(
       Dnd5Barbarian.savingThrowProficiencies.mkString("\n"),
-      150,
-      45)
+      150)
     barbGrid.addRow(rowNum, savingThrowsLabel)
     barbGrid.addRow(rowNum, savingThrows)
     rowNum += 1
@@ -55,7 +54,7 @@ object BarbarianDisplay {
 
     val skillChoicesLabel = enhancedLabel("Skill Choices")
     val skillChoices =
-      variableTextArea(Dnd5Barbarian.skillChoices.mkString("\n"), 150, 120)
+      getFittedTextArea(Dnd5Barbarian.skillChoices.mkString("\n"), 150)
     barbGrid.addRow(rowNum, skillChoicesLabel)
     barbGrid.addRow(rowNum, skillChoices)
     rowNum += 1

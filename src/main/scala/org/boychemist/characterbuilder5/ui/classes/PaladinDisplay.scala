@@ -28,15 +28,15 @@ object PaladinDisplay {
     val hit = easyTextField(Dnd5Paladin.hitDice, 50)
 
     val armorLabel = enhancedLabel("Armor Proficiencies")
-    val armor = variableTextArea(Dnd5Paladin.armorProficiencies.mkString("\n"), 150, 45)
+    val armor = getFittedTextArea(Dnd5Paladin.armorProficiencies.mkString("\n"), 150)
     palGrid.addRow(rowNum, hitLabel, hit, armorLabel, armor)
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Paladin.weaponProficiencies.mkString("\n"), 120, 45)
+    val weapons = getFittedTextArea(Dnd5Paladin.weaponProficiencies.mkString("\n"), 120)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Paladin.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Paladin.savingThrowProficiencies.mkString("\n"), 150)
     palGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -44,7 +44,7 @@ object PaladinDisplay {
     val numberOfSkills = easyTextField(Dnd5Paladin.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Paladin.skillChoices.mkString("\n"), 150, 93)
+    val skillChoices = getFittedTextArea(Dnd5Paladin.skillChoices.mkString("\n"), 150)
     palGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 

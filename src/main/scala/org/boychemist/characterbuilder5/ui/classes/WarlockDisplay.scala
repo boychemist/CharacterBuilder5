@@ -35,7 +35,7 @@ object WarlockDisplay {
     val weapons = easyTextField(Dnd5Warlock.weaponProficiencies.mkString, 120)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Warlock.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Warlock.savingThrowProficiencies.mkString("\n"), 150)
     clericGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -43,7 +43,7 @@ object WarlockDisplay {
     val numberOfSkills = easyTextField(Dnd5Warlock.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Warlock.skillChoices.mkString("\n"), 150, 93)
+    val skillChoices = getFittedTextArea(Dnd5Warlock.skillChoices.mkString("\n"), 150)
     clericGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 

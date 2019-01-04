@@ -15,7 +15,6 @@ object ClassSpecializationDisplay {
       minWidth = 730
       maxWidth = 1000
       minHeight = 700
-      maxHeight = 1000
     }
     specGrid.style = "-fx-background-color: skyblue"
     specGrid.vgap = 2
@@ -36,7 +35,7 @@ object ClassSpecializationDisplay {
     specGrid.add(centeredBox, 0, rowNum, 3, 1)
     rowNum += 1
 
-    val specDescArea = variableTextArea(description, 400, 300)
+    val specDescArea = getFittedTextArea(description, 400)
     specGrid.add(specDescArea, 1, rowNum, 2, 1)
     rowNum += 1
 
@@ -58,7 +57,7 @@ object ClassSpecializationDisplay {
       val featureLevel = enhancedLabel(featureInfo.level.toString)
       val featureName = enhancedLabel(featureInfo.name)
       val featureDescription =
-        variableTextArea(featureInfo.description, 350, 105)
+        getFittedTextArea(featureInfo.description, 350)
       specGrid.addRow(rowNum, featureLevel, featureName, featureDescription)
       rowNum += 1
     }

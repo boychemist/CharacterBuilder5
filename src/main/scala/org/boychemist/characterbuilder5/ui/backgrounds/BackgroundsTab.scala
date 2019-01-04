@@ -53,13 +53,9 @@ object BackgroundsTab {
     val boxChildren = new mutable.ListBuffer[Node]
 
     // description text
-    boxChildren += new TextArea {
-      style = "-fx-background-color: skyblue"
-      wrapText = true
-      text = theBackground.description
-      editable = false
-      maxWidth = 650
-    }
+    val descriptionArea = getFittedTextArea(theBackground.description, 650)
+    descriptionArea.style = "-fx-background-color: skyblue"
+    boxChildren += descriptionArea
 
     var rowIndex = 0
     val detailsGrid = new GridPane {
@@ -79,22 +75,12 @@ object BackgroundsTab {
     }
 
     if (theBackground.toolOptions.nonEmpty) {
-      val toolArea = new TextArea() {
-        text = theBackground.toolOptions.mkString("\n")
-        editable = false
-        wrapText = true
-        maxHeight = 75
-      }
+      val toolArea = getFittedTextArea(theBackground.toolOptions.mkString("\n"), 650)
       detailsGrid.addRow(rowIndex, enhancedLabel("Tools"), toolArea)
       rowIndex += 1
     }
 
-    val equipArea = new TextArea {
-      text = theBackground.equipmentOptions.mkString("\n")
-      editable = false
-      wrapText = true
-      maxHeight = 125
-    }
+    val equipArea = getFittedTextArea(theBackground.equipmentOptions.mkString("\n"), 650)
     detailsGrid.addRow(rowIndex, enhancedLabel("Equipment"), equipArea)
     boxChildren += detailsGrid
 
@@ -108,13 +94,7 @@ object BackgroundsTab {
       rowIndex = 0
       for (aSpec <- theBackground.specializationChoices) {
         val seq = enhancedLabel(aSpec._1.toString)
-        val text = new TextArea {
-          text = aSpec._2
-          editable = false
-          wrapText = true
-          maxHeight = 75
-          maxWidth = 650
-        }
+        val text = getFittedTextArea(aSpec._2, 650)
         specGrid.addRow(rowIndex, seq, text)
         rowIndex += 1
       }
@@ -122,27 +102,14 @@ object BackgroundsTab {
         spacing = 2
         fillWidth = true
         style = "-fx-background-color: skyblue"
-//        alignment = Pos.Center
         children = List(enhancedLabel(theBackground.specializationName),
-          new TextArea {
-            text = theBackground.specializationDescription
-            wrapText = true
-            editable = false
-            maxWidth = 650
-            maxHeight = 150
-          }, specGrid)
+          getFittedTextArea(theBackground.specializationDescription, 650), specGrid)
       }
       boxChildren += specBox
     }
 
     // Background Feature
-    val featureArea = new TextArea {
-      editable = false
-      wrapText = true
-      maxWidth = 650
-      maxHeight = 250
-      text = theBackground.feature.description
-    }
+    val featureArea = getFittedTextArea(theBackground.feature.description, 650)
     val featureBox = new VBox {
       spacing = 2
       alignment = Pos.Center
@@ -153,13 +120,7 @@ object BackgroundsTab {
     boxChildren += featureBox
     if (theBackground.variantFeatures.nonEmpty) {
       for (variant <- theBackground.variantFeatures) {
-        val variantArea = new TextArea {
-          editable = false
-          wrapText = true
-          maxHeight = 250
-          maxWidth = 650
-          text = variant.description
-        }
+        val variantArea = getFittedTextArea(variant.description, 650)
         boxChildren += new VBox {
           spacing = 2
           alignment = Pos.Center
@@ -177,13 +138,7 @@ object BackgroundsTab {
     personalityGrid.addRow(0, enhancedLabel("Personality Trait"))
     rowIndex = 1
     for (personalityRow <- theBackground.personalityTraits) {
-      val traitArea = new TextArea {
-        editable = false
-        wrapText = true
-        maxWidth = 250
-        maxHeight = 75
-        text = personalityRow._2
-      }
+      val traitArea = getFittedTextArea(personalityRow._2)
       val seq: String = personalityRow._1.toString
       personalityGrid.addRow(rowIndex, enhancedLabel(seq), traitArea)
       rowIndex += 1
@@ -197,13 +152,7 @@ object BackgroundsTab {
     idealGrid.addRow(0, enhancedLabel("Ideal"))
     rowIndex = 1
     for (idealRow <- theBackground.idealChoices) {
-      val idealArea = new TextArea {
-        editable = false
-        wrapText = true
-        maxWidth = 250
-        maxHeight = 75
-        text = idealRow._2
-      }
+      val idealArea = getFittedTextArea(idealRow._2)
       idealGrid.addRow(rowIndex, enhancedLabel(idealRow._1.toString), idealArea)
       rowIndex += 1
     }
@@ -221,13 +170,7 @@ object BackgroundsTab {
     bondGrid.addRow(0, enhancedLabel("Bond"))
     rowIndex = 1
     for (bondRow <- theBackground.bondChoices) {
-      val bondArea = new TextArea {
-        editable = false
-        wrapText = true
-        maxWidth = 250
-        maxHeight = 75
-        text = bondRow._2
-      }
+      val bondArea = getFittedTextArea(bondRow._2)
       bondGrid.addRow(rowIndex, enhancedLabel(bondRow._1.toString), bondArea)
       rowIndex += 1
     }
@@ -240,13 +183,7 @@ object BackgroundsTab {
     flawGrid.addRow(0, enhancedLabel("Flaw"))
     rowIndex = 1
     for (flawRow <- theBackground.flawChoices) {
-      val flawArea = new TextArea {
-        editable = false
-        wrapText = true
-        maxWidth = 250
-        maxHeight = 75
-        text = flawRow._2
-      }
+      val flawArea = getFittedTextArea(flawRow._2)
       flawGrid.addRow(rowIndex, enhancedLabel(flawRow._1.toString), flawArea)
       rowIndex += 1
     }
@@ -262,7 +199,6 @@ object BackgroundsTab {
       style = "-fx-background-color: skyblue"
       border = getBorder
       content = new VBox {
-//        alignment = Pos.Center
         spacing = 2
         children = boxChildren
         maxWidth = 700
@@ -270,4 +206,5 @@ object BackgroundsTab {
     }
     thePane
   }
+
 }

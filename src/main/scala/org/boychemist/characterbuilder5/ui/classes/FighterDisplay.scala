@@ -22,15 +22,15 @@ object FighterDisplay {
     val hit = easyTextField(Dnd5Fighter.hitDice, 50)
 
     val armorLabel = enhancedLabel("Armor Proficiencies")
-    val armor = variableTextArea(Dnd5Fighter.armorProficiencies.mkString("\n"), 150, 78)
+    val armor = getFittedTextArea(Dnd5Fighter.armorProficiencies.mkString("\n"), 150)
     fighterGrid.addRow(rowNum, hitLabel, hit, armorLabel, armor)
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Fighter.weaponProficiencies.mkString("\n"), 150, 45)
+    val weapons = getFittedTextArea(Dnd5Fighter.weaponProficiencies.mkString("\n"), 150)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Fighter.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Fighter.savingThrowProficiencies.mkString("\n"), 150)
     fighterGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -38,7 +38,7 @@ object FighterDisplay {
     val numSkillChoices = easyTextField(Dnd5Fighter.numberOfSkills.toString)
 
     val skillChoicesLabel = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Fighter.skillChoices.mkString("\n"), 150, 145)
+    val skillChoices = getFittedTextArea(Dnd5Fighter.skillChoices.mkString("\n"), 150)
     fighterGrid.addRow(rowNum, numSkillChoicesLabel, numSkillChoices, skillChoicesLabel, skillChoices)
     rowNum += 1
 

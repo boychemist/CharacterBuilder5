@@ -31,10 +31,10 @@ object BardDisplay {
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapons")
-    val weapons = variableTextArea(Dnd5Bard.weaponProficiencies.mkString("\n"), 150, 95)
+    val weapons = getFittedTextArea(Dnd5Bard.weaponProficiencies.mkString("\n"), 150)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Bard.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Bard.savingThrowProficiencies.mkString("\n"), 150)
     bardGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -42,12 +42,12 @@ object BardDisplay {
     val numberOfSkills = easyTextField(Dnd5Bard.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Bard.skillChoices.mkString("\n"), 150, 75)
+    val skillChoices = getFittedTextArea(Dnd5Bard.skillChoices.mkString("\n"), 150)
     bardGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 
     val toolProficiencyLabel = enhancedLabel("Tool Proficiency")
-    val toolProficiency = variableTextArea(Dnd5Bard.toolProficiencies.mkString, 120, 60)
+    val toolProficiency = getFittedTextArea(Dnd5Bard.toolProficiencies.mkString, 120)
     bardGrid.addRow(rowNum, toolProficiencyLabel, toolProficiency)
     rowNum += 1
 

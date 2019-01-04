@@ -52,7 +52,7 @@ object WizardDisplay {
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
     val skillChoices =
-      variableTextArea(Dnd5Wizard.skillChoices.mkString("\n"), 150, 93)
+      getFittedTextArea(Dnd5Wizard.skillChoices.mkString("\n"), 150)
     clericGrid.addRow(rowNum,
                       labelNumberOfSkills,
                       numberOfSkills,

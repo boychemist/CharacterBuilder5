@@ -32,10 +32,10 @@ object SorcererDisplay {
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Sorcerer.weaponProficiencies.mkString("\n"), 120, 100)
+    val weapons = getFittedTextArea(Dnd5Sorcerer.weaponProficiencies.mkString("\n"), 120)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Sorcerer.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Sorcerer.savingThrowProficiencies.mkString("\n"), 150)
     clericGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -43,7 +43,7 @@ object SorcererDisplay {
     val numberOfSkills = easyTextField(Dnd5Sorcerer.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Sorcerer.skillChoices.mkString("\n"), 150, 93)
+    val skillChoices = getFittedTextArea(Dnd5Sorcerer.skillChoices.mkString("\n"), 150)
     clericGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 

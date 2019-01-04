@@ -28,16 +28,16 @@ object DruidDisplay {
     val hit = easyTextField(Dnd5Druid.hitDice, 50)
 
     val armorLabel = enhancedLabel("Armor Proficiencies")
-    val armor = variableTextArea(Dnd5Druid.armorProficiencies.mkString("\n"), 100, 60)
+    val armor = getFittedTextArea(Dnd5Druid.armorProficiencies.mkString("\n"), 100)
     druidGrid.addRow(rowNum, hitLabel, hit, armorLabel, armor)
     rowNum += 1
 
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Druid.weaponProficiencies.mkString("\n"), 100, 178)
+    val weapons = getFittedTextArea(Dnd5Druid.weaponProficiencies.mkString("\n"), 100)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Druid.savingThrowProficiencies.mkString("\n"), 100, 45)
+    val savingThrows = getFittedTextArea(Dnd5Druid.savingThrowProficiencies.mkString("\n"), 100)
     druidGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -45,7 +45,7 @@ object DruidDisplay {
     val numberOfSkills = easyTextField(Dnd5Druid.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Druid.skillChoices.mkString("\n"), 100, 165)
+    val skillChoices = getFittedTextArea(Dnd5Druid.skillChoices.mkString("\n"), 100)
     druidGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 

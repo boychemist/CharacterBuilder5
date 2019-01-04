@@ -35,7 +35,7 @@ object ClericDisplay {
     val weapons = easyTextField(Dnd5Cleric.weaponProficiencies.mkString(""), 150)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Cleric.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Cleric.savingThrowProficiencies.mkString("\n"), 150)
     clericGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -43,7 +43,7 @@ object ClericDisplay {
     val numberOfSkills = easyTextField(Dnd5Cleric.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Cleric.skillChoices.mkString("\n"), 150, 93)
+    val skillChoices = getFittedTextArea(Dnd5Cleric.skillChoices.mkString("\n"), 150)
     clericGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 

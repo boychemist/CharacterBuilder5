@@ -33,10 +33,10 @@ object RogueDisplay {
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Rogue.weaponProficiencies.mkString("\n"), 120, 93)
+    val weapons = getFittedTextArea(Dnd5Rogue.weaponProficiencies.mkString("\n"), 120)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Rogue.savingThrowProficiencies.mkString("\n"), 150, 45)
+    val savingThrows = getFittedTextArea(Dnd5Rogue.savingThrowProficiencies.mkString("\n"), 150)
     rangerGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -44,7 +44,7 @@ object RogueDisplay {
     val numberOfSkills = easyTextField(Dnd5Rogue.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Rogue.skillChoices.mkString("\n"), 150, 93)
+    val skillChoices = getFittedTextArea(Dnd5Rogue.skillChoices.mkString("\n"), 150)
     rangerGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 

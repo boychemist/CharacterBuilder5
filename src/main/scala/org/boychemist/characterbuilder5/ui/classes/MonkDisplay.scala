@@ -33,10 +33,10 @@ object MonkDisplay {
     rowNum += 1
 
     val weaponsLabel = enhancedLabel("Weapon Proficiencies")
-    val weapons = variableTextArea(Dnd5Monk.weaponProficiencies.mkString("\n"), 120, 45)
+    val weapons = getFittedTextArea(Dnd5Monk.weaponProficiencies.mkString("\n"), 120)
 
     val savingThrowsLabel = enhancedLabel("Saving Throw Proficiencies")
-    val savingThrows = variableTextArea(Dnd5Monk.savingThrowProficiencies.mkString("\n"), 100, 45)
+    val savingThrows = getFittedTextArea(Dnd5Monk.savingThrowProficiencies.mkString("\n"), 100)
     monkGrid.addRow(rowNum, weaponsLabel, weapons, savingThrowsLabel, savingThrows)
     rowNum += 1
 
@@ -44,12 +44,12 @@ object MonkDisplay {
     val numberOfSkills = easyTextField(Dnd5Monk.numberOfSkills.toString)
 
     val labelSkillChoices = enhancedLabel("Skill Choices")
-    val skillChoices = variableTextArea(Dnd5Monk.skillChoices.mkString("\n"), 100, 112)
+    val skillChoices = getFittedTextArea(Dnd5Monk.skillChoices.mkString("\n"), 100)
     monkGrid.addRow(rowNum, labelNumberOfSkills, numberOfSkills, labelSkillChoices, skillChoices)
     rowNum += 1
 
     val toolProficiencyLabel = enhancedLabel("Tool Proficiency")
-    val toolProficiency = variableTextArea(Dnd5Monk.toolProficiencies.mkString, 120, 80)
+    val toolProficiency = getFittedTextArea(Dnd5Monk.toolProficiencies.mkString, 120)
     monkGrid.addRow(rowNum, toolProficiencyLabel, toolProficiency)
     rowNum += 1
 

@@ -7,7 +7,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.control.{Label, TextArea, TextField}
 import scalafx.scene.input.ClipboardContent
 import scalafx.scene.layout._
-import scalafx.scene.text.{Font, FontWeight}
+import scalafx.scene.text.{Font, FontWeight, Text}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -69,14 +69,7 @@ object CharacterBuilderUIutils {
   }
 
   def wideTextArea(theText: String): TextArea = {
-    val textArea = new TextArea() {
-      text = theText
-      editable = false
-      maxWidth = 500
-      maxHeight = 75
-      minHeight = 50
-      wrapText = true
-    }
+    val textArea = getFittedTextArea(theText, 500)
     textArea
   }
 
@@ -289,5 +282,37 @@ object CharacterBuilderUIutils {
     }
 
     theField
+  }
+
+  def getFittedTextArea(theText: String, width: Double = 250 ): TextArea ={
+    val defaultFont = new Font(Font.default)
+    val computedHeight: Double = computeTextHeight(defaultFont, theText, width)
+    var buffer: Double = 0
+    if (computedHeight < 50) {
+      buffer = 0.5 * computedHeight
+    } else if (computedHeight < 100) {
+      buffer = 0.4 * computedHeight
+    } else if (computedHeight < 150) {
+      buffer = 0.3 * computedHeight
+    } else {
+      buffer = 0.2 * computedHeight
+    }
+    val preferredHeight: Double = Math.ceil(buffer + computedHeight)
+    val theArea = new TextArea {
+      editable = false
+      wrapText = true
+      prefHeight = preferredHeight
+      text = theText
+    }
+    theArea.maxWidth = width
+    theArea
+  }
+
+  private val helper: Text = new Text()
+  def computeTextHeight(theFont: Font, theText: String, width: Double): Double = {
+    helper.text = theText
+    helper.font = theFont
+    helper.wrappingWidth = width
+    helper.layoutBounds.getValue.getHeight
   }
 }
