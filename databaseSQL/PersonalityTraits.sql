@@ -3,7 +3,7 @@ drop table if exists personality_traits;
 create table personality_traits(
   background_id int not null,
   sequence_num int not null,
-  a_trait char(200) not null,
+  a_trait char(135) not null,
   primary key (background_id, sequence_num),
   foreign key (background_id) references backgrounds (background_id)
 );
@@ -212,7 +212,7 @@ values (11, 1, 'I''m alway polite and respectful.');
 insert into personality_traits (background_id, sequence_num, a_trait)
 values (11, 2, 'I''m haunted by memories of war.  I can''t get the images of violence out of my mind.');
 insert into personality_traits (background_id, sequence_num, a_trait)
-values (11, 3, 'I''ve lost too many friends, and I''m slow to make new ones.')
+values (11, 3, 'I''ve lost too many friends, and I''m slow to make new ones.');
 insert into personality_traits (background_id, sequence_num, a_trait)
 values (11, 4, 'I''m full of inspiring and cautionary tales from my military experience relevant to almost every combat situation.');
 insert into personality_traits (background_id, sequence_num, a_trait)

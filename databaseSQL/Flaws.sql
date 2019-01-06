@@ -3,7 +3,7 @@ drop table if exists flaws;
 create table flaws (
   background_id int not null,
   sequence_num int not null,
-  flaw char(200) not null,
+  flaw char(130) not null,
   primary key (background_id, sequence_num),
   foreign key (background_id) references backgrounds (background_id)
 );

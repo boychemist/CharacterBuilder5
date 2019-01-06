@@ -10,15 +10,13 @@ trait Tables {
   val profile: slick.jdbc.JdbcProfile
   import profile.api._
   import slick.model.ForeignKeyAction
-  import slick.collection.heterogeneous._
-  import slick.collection.heterogeneous.syntax._
   // NOTE: GetResult mappers for plain SQL are only generated for tables where Slick knows how to map the types of all columns.
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, BackgroundChoices.schema, BackgroundDetails.schema, BackgroundFeatures.schema, Backgrounds.schema, Bonds.schema, Character.schema, CharacterArmor.schema, CharacterClasses.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Flaws.schema, Ideals.schema, Languages.schema, PersonalityTraits.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
+  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, BackgroundChoices.schema, BackgroundDetails.schema, BackgroundFeatures.schema, Backgrounds.schema, Bonds.schema, Character.schema, CharacterArmor.schema, CharacterBackground.schema, CharacterClasses.schema, CharacterCoins.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Flaws.schema, Ideals.schema, Languages.schema, PersonalityTraits.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
-  def ddl = schema
+  def ddl: profile.SchemaDescription = schema
 
   /** Entity class storing rows of table AdventuringGear
    *  @param name Database column NAME SqlType(CHAR), Length(30,false)
@@ -100,7 +98,7 @@ trait Tables {
   /** Entity class storing rows of table BackgroundChoices
    *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
    *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
-   *  @param choice Database column CHOICE SqlType(CHAR), Length(200,false) */
+   *  @param choice Database column CHOICE SqlType(CHAR), Length(100,false) */
   case class BackgroundChoicesRow(backgroundId: Int, sequenceNum: Int, choice: String)
   /** GetResult implicit for fetching BackgroundChoicesRow objects using plain SQL queries */
   implicit def GetResultBackgroundChoicesRow(implicit e0: GR[Int], e1: GR[String]): GR[BackgroundChoicesRow] = GR{
@@ -117,8 +115,8 @@ trait Tables {
     val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
     /** Database column SEQUENCE_NUM SqlType(INTEGER) */
     val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
-    /** Database column CHOICE SqlType(CHAR), Length(200,false) */
-    val choice: Rep[String] = column[String]("CHOICE", O.Length(200,varying=false))
+    /** Database column CHOICE SqlType(CHAR), Length(100,false) */
+    val choice: Rep[String] = column[String]("CHOICE", O.Length(100,varying=false))
 
     /** Primary key of BackgroundChoices (database name CONSTRAINT_1) */
     val pk = primaryKey("CONSTRAINT_1", (backgroundId, sequenceNum))
@@ -240,7 +238,7 @@ trait Tables {
   /** Entity class storing rows of table Bonds
    *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
    *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
-   *  @param bond Database column BOND SqlType(CHAR), Length(200,false) */
+   *  @param bond Database column BOND SqlType(CHAR), Length(130,false) */
   case class BondsRow(backgroundId: Int, sequenceNum: Int, bond: String)
   /** GetResult implicit for fetching BondsRow objects using plain SQL queries */
   implicit def GetResultBondsRow(implicit e0: GR[Int], e1: GR[String]): GR[BondsRow] = GR{
@@ -257,8 +255,8 @@ trait Tables {
     val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
     /** Database column SEQUENCE_NUM SqlType(INTEGER) */
     val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
-    /** Database column BOND SqlType(CHAR), Length(200,false) */
-    val bond: Rep[String] = column[String]("BOND", O.Length(200,varying=false))
+    /** Database column BOND SqlType(CHAR), Length(130,false) */
+    val bond: Rep[String] = column[String]("BOND", O.Length(130,varying=false))
 
     /** Primary key of Bonds (database name CONSTRAINT_3C) */
     val pk = primaryKey("CONSTRAINT_3C", (backgroundId, sequenceNum))
@@ -269,20 +267,39 @@ trait Tables {
   /** Collection-like TableQuery object for table Bonds */
   lazy val Bonds = new TableQuery(tag => new Bonds(tag))
 
-  /** Row type of table Character */
-  type CharacterRow = HCons[String,HCons[String,HCons[String,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Int,HCons[Long,HCons[Long,HCons[Long,HCons[Long,HCons[Long,HCons[String,HCons[Int,HNil]]]]]]]]]]]]]]]]]]]]]]]]]]
-  /** Constructor for CharacterRow providing default values if available in the database schema. */
-  def CharacterRow(name: String, race: String, alignment: String, hitPointBonus: Int, strength: Int, dexterity: Int, constitution: Int, intelligence: Int, wisdom: Int, charisma: Int, initialMaxHp: Int, adjustedMaxHp: Int, currentHp: Int, experiencePoints: Int, checkPoints: Int, treasurePoints: Int, level: Int, baseArmorClass: Int, baseSpeed: Int, copper: Long = 0L, silver: Long = 0L, electrum: Long = 0L, gold: Long = 0L, platinum: Long = 0L, draconicAncestry: String, characterId: Int): CharacterRow = {
-    name :: race :: alignment :: hitPointBonus :: strength :: dexterity :: constitution :: intelligence :: wisdom :: charisma :: initialMaxHp :: adjustedMaxHp :: currentHp :: experiencePoints :: checkPoints :: treasurePoints :: level :: baseArmorClass :: baseSpeed :: copper :: silver :: electrum :: gold :: platinum :: draconicAncestry :: characterId :: HNil
-  }
+  /** Entity class storing rows of table Character
+   *  @param name Database column NAME SqlType(CHAR), Length(30,false)
+   *  @param race Database column RACE SqlType(CHAR), Length(18,false)
+   *  @param alignment Database column ALIGNMENT SqlType(CHAR), Length(30,false)
+   *  @param hitPointBonus Database column HIT_POINT_BONUS SqlType(INTEGER)
+   *  @param strength Database column STRENGTH SqlType(INTEGER)
+   *  @param dexterity Database column DEXTERITY SqlType(INTEGER)
+   *  @param constitution Database column CONSTITUTION SqlType(INTEGER)
+   *  @param intelligence Database column INTELLIGENCE SqlType(INTEGER)
+   *  @param wisdom Database column WISDOM SqlType(INTEGER)
+   *  @param charisma Database column CHARISMA SqlType(INTEGER)
+   *  @param initialMaxHp Database column INITIAL_MAX_HP SqlType(INTEGER)
+   *  @param adjustedMaxHp Database column ADJUSTED_MAX_HP SqlType(INTEGER)
+   *  @param currentHp Database column CURRENT_HP SqlType(INTEGER)
+   *  @param experiencePoints Database column EXPERIENCE_POINTS SqlType(INTEGER)
+   *  @param checkPoints Database column CHECK_POINTS SqlType(INTEGER)
+   *  @param treasurePoints Database column TREASURE_POINTS SqlType(INTEGER)
+   *  @param level Database column LEVEL SqlType(INTEGER)
+   *  @param baseArmorClass Database column BASE_ARMOR_CLASS SqlType(INTEGER)
+   *  @param baseSpeed Database column BASE_SPEED SqlType(INTEGER)
+   *  @param draconicAncestry Database column DRACONIC_ANCESTRY SqlType(CHAR), Length(6,false)
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER), AutoInc, PrimaryKey */
+  case class CharacterRow(name: String, race: String, alignment: String, hitPointBonus: Int, strength: Int, dexterity: Int, constitution: Int, intelligence: Int, wisdom: Int, charisma: Int, initialMaxHp: Int, adjustedMaxHp: Int, currentHp: Int, experiencePoints: Int, checkPoints: Int, treasurePoints: Int, level: Int, baseArmorClass: Int, baseSpeed: Int, draconicAncestry: String, characterId: Int)
   /** GetResult implicit for fetching CharacterRow objects using plain SQL queries */
-  implicit def GetResultCharacterRow(implicit e0: GR[String], e1: GR[Int], e2: GR[Long]): GR[CharacterRow] = GR{
+  implicit def GetResultCharacterRow(implicit e0: GR[String], e1: GR[Int]): GR[CharacterRow] = GR{
     prs => import prs._
-    <<[String] :: <<[String] :: <<[String] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Int] :: <<[Long] :: <<[Long] :: <<[Long] :: <<[Long] :: <<[Long] :: <<[String] :: <<[Int] :: HNil
+    CharacterRow.tupled((<<[String], <<[String], <<[String], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[Int], <<[String], <<[Int]))
   }
   /** Table description of table CHARACTER. Objects of this class serve as prototypes for rows in queries. */
   class Character(_tableTag: Tag) extends profile.api.Table[CharacterRow](_tableTag, "CHARACTER") {
-    def * = name :: race :: alignment :: hitPointBonus :: strength :: dexterity :: constitution :: intelligence :: wisdom :: charisma :: initialMaxHp :: adjustedMaxHp :: currentHp :: experiencePoints :: checkPoints :: treasurePoints :: level :: baseArmorClass :: baseSpeed :: copper :: silver :: electrum :: gold :: platinum :: draconicAncestry :: characterId :: HNil
+    def * = (name, race, alignment, hitPointBonus, strength, dexterity, constitution, intelligence, wisdom, charisma, initialMaxHp, adjustedMaxHp, currentHp, experiencePoints, checkPoints, treasurePoints, level, baseArmorClass, baseSpeed, draconicAncestry, characterId) <> (CharacterRow.tupled, CharacterRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(name), Rep.Some(race), Rep.Some(alignment), Rep.Some(hitPointBonus), Rep.Some(strength), Rep.Some(dexterity), Rep.Some(constitution), Rep.Some(intelligence), Rep.Some(wisdom), Rep.Some(charisma), Rep.Some(initialMaxHp), Rep.Some(adjustedMaxHp), Rep.Some(currentHp), Rep.Some(experiencePoints), Rep.Some(checkPoints), Rep.Some(treasurePoints), Rep.Some(level), Rep.Some(baseArmorClass), Rep.Some(baseSpeed), Rep.Some(draconicAncestry), Rep.Some(characterId)).shaped.<>({r=>import r._; _1.map(_=> CharacterRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get, _7.get, _8.get, _9.get, _10.get, _11.get, _12.get, _13.get, _14.get, _15.get, _16.get, _17.get, _18.get, _19.get, _20.get, _21.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column NAME SqlType(CHAR), Length(30,false) */
     val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
@@ -322,23 +339,13 @@ trait Tables {
     val baseArmorClass: Rep[Int] = column[Int]("BASE_ARMOR_CLASS")
     /** Database column BASE_SPEED SqlType(INTEGER) */
     val baseSpeed: Rep[Int] = column[Int]("BASE_SPEED")
-    /** Database column COPPER SqlType(BIGINT), Default(0) */
-    val copper: Rep[Long] = column[Long]("COPPER", O.Default(0L))
-    /** Database column SILVER SqlType(BIGINT), Default(0) */
-    val silver: Rep[Long] = column[Long]("SILVER", O.Default(0L))
-    /** Database column ELECTRUM SqlType(BIGINT), Default(0) */
-    val electrum: Rep[Long] = column[Long]("ELECTRUM", O.Default(0L))
-    /** Database column GOLD SqlType(BIGINT), Default(0) */
-    val gold: Rep[Long] = column[Long]("GOLD", O.Default(0L))
-    /** Database column PLATINUM SqlType(BIGINT), Default(0) */
-    val platinum: Rep[Long] = column[Long]("PLATINUM", O.Default(0L))
     /** Database column DRACONIC_ANCESTRY SqlType(CHAR), Length(6,false) */
     val draconicAncestry: Rep[String] = column[String]("DRACONIC_ANCESTRY", O.Length(6,varying=false))
     /** Database column CHARACTER_ID SqlType(INTEGER), AutoInc, PrimaryKey */
     val characterId: Rep[Int] = column[Int]("CHARACTER_ID", O.AutoInc, O.PrimaryKey)
 
     /** Uniqueness Index over (name) (database name CONSTRAINT_INDEX_35) */
-    val index1 = index("CONSTRAINT_INDEX_35", name :: HNil, unique=true)
+    val index1 = index("CONSTRAINT_INDEX_35", name, unique=true)
   }
   /** Collection-like TableQuery object for table Character */
   lazy val Character = new TableQuery(tag => new Character(tag))
@@ -396,6 +403,49 @@ trait Tables {
   /** Collection-like TableQuery object for table CharacterArmor */
   lazy val CharacterArmor = new TableQuery(tag => new CharacterArmor(tag))
 
+  /** Entity class storing rows of table CharacterBackground
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER), PrimaryKey
+   *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
+   *  @param specialization Database column SPECIALIZATION SqlType(CHAR), Length(100,false)
+   *  @param personalityTrait Database column PERSONALITY_TRAIT SqlType(CHAR), Length(135,false)
+   *  @param ideal Database column IDEAL SqlType(CHAR), Length(135,false)
+   *  @param bond Database column BOND SqlType(CHAR), Length(130,false)
+   *  @param flaw Database column FLAW SqlType(CHAR), Length(130,false) */
+  case class CharacterBackgroundRow(characterId: Int, backgroundId: Int, specialization: String, personalityTrait: String, ideal: String, bond: String, flaw: String)
+  /** GetResult implicit for fetching CharacterBackgroundRow objects using plain SQL queries */
+  implicit def GetResultCharacterBackgroundRow(implicit e0: GR[Int], e1: GR[String]): GR[CharacterBackgroundRow] = GR{
+    prs => import prs._
+    CharacterBackgroundRow.tupled((<<[Int], <<[Int], <<[String], <<[String], <<[String], <<[String], <<[String]))
+  }
+  /** Table description of table CHARACTER_BACKGROUND. Objects of this class serve as prototypes for rows in queries. */
+  class CharacterBackground(_tableTag: Tag) extends profile.api.Table[CharacterBackgroundRow](_tableTag, "CHARACTER_BACKGROUND") {
+    def * = (characterId, backgroundId, specialization, personalityTrait, ideal, bond, flaw) <> (CharacterBackgroundRow.tupled, CharacterBackgroundRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(characterId), Rep.Some(backgroundId), Rep.Some(specialization), Rep.Some(personalityTrait), Rep.Some(ideal), Rep.Some(bond), Rep.Some(flaw)).shaped.<>({r=>import r._; _1.map(_=> CharacterBackgroundRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get, _7.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column CHARACTER_ID SqlType(INTEGER), PrimaryKey */
+    val characterId: Rep[Int] = column[Int]("CHARACTER_ID", O.PrimaryKey)
+    /** Database column BACKGROUND_ID SqlType(INTEGER) */
+    val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
+    /** Database column SPECIALIZATION SqlType(CHAR), Length(100,false) */
+    val specialization: Rep[String] = column[String]("SPECIALIZATION", O.Length(100,varying=false))
+    /** Database column PERSONALITY_TRAIT SqlType(CHAR), Length(135,false) */
+    val personalityTrait: Rep[String] = column[String]("PERSONALITY_TRAIT", O.Length(135,varying=false))
+    /** Database column IDEAL SqlType(CHAR), Length(135,false) */
+    val ideal: Rep[String] = column[String]("IDEAL", O.Length(135,varying=false))
+    /** Database column BOND SqlType(CHAR), Length(130,false) */
+    val bond: Rep[String] = column[String]("BOND", O.Length(130,varying=false))
+    /** Database column FLAW SqlType(CHAR), Length(130,false) */
+    val flaw: Rep[String] = column[String]("FLAW", O.Length(130,varying=false))
+
+    /** Foreign key referencing Backgrounds (database name CONSTRAINT_EC8) */
+    lazy val backgroundsFk = foreignKey("CONSTRAINT_EC8", backgroundId, Backgrounds)(r => r.backgroundId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+    /** Foreign key referencing Character (database name CONSTRAINT_EC) */
+    lazy val characterFk = foreignKey("CONSTRAINT_EC", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table CharacterBackground */
+  lazy val CharacterBackground = new TableQuery(tag => new CharacterBackground(tag))
+
   /** Entity class storing rows of table CharacterClasses
    *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
    *  @param classId Database column CLASS_ID SqlType(INTEGER)
@@ -429,9 +479,49 @@ trait Tables {
     lazy val characterFk = foreignKey("CONSTRAINT_64FD", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
     /** Foreign key referencing Classes (database name CONSTRAINT_64FD1) */
     lazy val classesFk = foreignKey("CONSTRAINT_64FD1", classId, Classes)(r => r.classId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+    /** Foreign key referencing Specializations (database name CONSTRAINT_64) */
+    lazy val specializationsFk = foreignKey("CONSTRAINT_64", classSpecializationId, Specializations)(r => Rep.Some(r.specId), onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
   }
   /** Collection-like TableQuery object for table CharacterClasses */
   lazy val CharacterClasses = new TableQuery(tag => new CharacterClasses(tag))
+
+  /** Entity class storing rows of table CharacterCoins
+   *  @param characterId Database column CHARACTER_ID SqlType(INTEGER), PrimaryKey
+   *  @param copper Database column COPPER SqlType(BIGINT), Default(0)
+   *  @param silver Database column SILVER SqlType(BIGINT), Default(0)
+   *  @param electrum Database column ELECTRUM SqlType(BIGINT), Default(0)
+   *  @param gold Database column GOLD SqlType(BIGINT), Default(0)
+   *  @param platinum Database column PLATINUM SqlType(BIGINT), Default(0) */
+  case class CharacterCoinsRow(characterId: Int, copper: Long = 0L, silver: Long = 0L, electrum: Long = 0L, gold: Long = 0L, platinum: Long = 0L)
+  /** GetResult implicit for fetching CharacterCoinsRow objects using plain SQL queries */
+  implicit def GetResultCharacterCoinsRow(implicit e0: GR[Int], e1: GR[Long]): GR[CharacterCoinsRow] = GR{
+    prs => import prs._
+    CharacterCoinsRow.tupled((<<[Int], <<[Long], <<[Long], <<[Long], <<[Long], <<[Long]))
+  }
+  /** Table description of table CHARACTER_COINS. Objects of this class serve as prototypes for rows in queries. */
+  class CharacterCoins(_tableTag: Tag) extends profile.api.Table[CharacterCoinsRow](_tableTag, "CHARACTER_COINS") {
+    def * = (characterId, copper, silver, electrum, gold, platinum) <> (CharacterCoinsRow.tupled, CharacterCoinsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(characterId), Rep.Some(copper), Rep.Some(silver), Rep.Some(electrum), Rep.Some(gold), Rep.Some(platinum)).shaped.<>({r=>import r._; _1.map(_=> CharacterCoinsRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column CHARACTER_ID SqlType(INTEGER), PrimaryKey */
+    val characterId: Rep[Int] = column[Int]("CHARACTER_ID", O.PrimaryKey)
+    /** Database column COPPER SqlType(BIGINT), Default(0) */
+    val copper: Rep[Long] = column[Long]("COPPER", O.Default(0L))
+    /** Database column SILVER SqlType(BIGINT), Default(0) */
+    val silver: Rep[Long] = column[Long]("SILVER", O.Default(0L))
+    /** Database column ELECTRUM SqlType(BIGINT), Default(0) */
+    val electrum: Rep[Long] = column[Long]("ELECTRUM", O.Default(0L))
+    /** Database column GOLD SqlType(BIGINT), Default(0) */
+    val gold: Rep[Long] = column[Long]("GOLD", O.Default(0L))
+    /** Database column PLATINUM SqlType(BIGINT), Default(0) */
+    val platinum: Rep[Long] = column[Long]("PLATINUM", O.Default(0L))
+
+    /** Foreign key referencing Character (database name CONSTRAINT_C1) */
+    lazy val characterFk = foreignKey("CONSTRAINT_C1", characterId, Character)(r => r.characterId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
+  }
+  /** Collection-like TableQuery object for table CharacterCoins */
+  lazy val CharacterCoins = new TableQuery(tag => new CharacterCoins(tag))
 
   /** Entity class storing rows of table CharacterGear
    *  @param characterId Database column CHARACTER_ID SqlType(INTEGER)
@@ -705,7 +795,7 @@ trait Tables {
   /** Entity class storing rows of table Flaws
    *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
    *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
-   *  @param flaw Database column FLAW SqlType(CHAR), Length(200,false) */
+   *  @param flaw Database column FLAW SqlType(CHAR), Length(130,false) */
   case class FlawsRow(backgroundId: Int, sequenceNum: Int, flaw: String)
   /** GetResult implicit for fetching FlawsRow objects using plain SQL queries */
   implicit def GetResultFlawsRow(implicit e0: GR[Int], e1: GR[String]): GR[FlawsRow] = GR{
@@ -722,8 +812,8 @@ trait Tables {
     val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
     /** Database column SEQUENCE_NUM SqlType(INTEGER) */
     val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
-    /** Database column FLAW SqlType(CHAR), Length(200,false) */
-    val flaw: Rep[String] = column[String]("FLAW", O.Length(200,varying=false))
+    /** Database column FLAW SqlType(CHAR), Length(130,false) */
+    val flaw: Rep[String] = column[String]("FLAW", O.Length(130,varying=false))
 
     /** Primary key of Flaws (database name CONSTRAINT_3F) */
     val pk = primaryKey("CONSTRAINT_3F", (backgroundId, sequenceNum))
@@ -737,7 +827,7 @@ trait Tables {
   /** Entity class storing rows of table Ideals
    *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
    *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
-   *  @param ideal Database column IDEAL SqlType(CHAR), Length(200,false) */
+   *  @param ideal Database column IDEAL SqlType(CHAR), Length(135,false) */
   case class IdealsRow(backgroundId: Int, sequenceNum: Int, ideal: String)
   /** GetResult implicit for fetching IdealsRow objects using plain SQL queries */
   implicit def GetResultIdealsRow(implicit e0: GR[Int], e1: GR[String]): GR[IdealsRow] = GR{
@@ -754,8 +844,8 @@ trait Tables {
     val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
     /** Database column SEQUENCE_NUM SqlType(INTEGER) */
     val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
-    /** Database column IDEAL SqlType(CHAR), Length(200,false) */
-    val ideal: Rep[String] = column[String]("IDEAL", O.Length(200,varying=false))
+    /** Database column IDEAL SqlType(CHAR), Length(135,false) */
+    val ideal: Rep[String] = column[String]("IDEAL", O.Length(135,varying=false))
 
     /** Primary key of Ideals (database name CONSTRAINT_80) */
     val pk = primaryKey("CONSTRAINT_80", (backgroundId, sequenceNum))
@@ -792,7 +882,7 @@ trait Tables {
   /** Entity class storing rows of table PersonalityTraits
    *  @param backgroundId Database column BACKGROUND_ID SqlType(INTEGER)
    *  @param sequenceNum Database column SEQUENCE_NUM SqlType(INTEGER)
-   *  @param aTrait Database column A_TRAIT SqlType(CHAR), Length(200,false) */
+   *  @param aTrait Database column A_TRAIT SqlType(CHAR), Length(135,false) */
   case class PersonalityTraitsRow(backgroundId: Int, sequenceNum: Int, aTrait: String)
   /** GetResult implicit for fetching PersonalityTraitsRow objects using plain SQL queries */
   implicit def GetResultPersonalityTraitsRow(implicit e0: GR[Int], e1: GR[String]): GR[PersonalityTraitsRow] = GR{
@@ -809,8 +899,8 @@ trait Tables {
     val backgroundId: Rep[Int] = column[Int]("BACKGROUND_ID")
     /** Database column SEQUENCE_NUM SqlType(INTEGER) */
     val sequenceNum: Rep[Int] = column[Int]("SEQUENCE_NUM")
-    /** Database column A_TRAIT SqlType(CHAR), Length(200,false) */
-    val aTrait: Rep[String] = column[String]("A_TRAIT", O.Length(200,varying=false))
+    /** Database column A_TRAIT SqlType(CHAR), Length(135,false) */
+    val aTrait: Rep[String] = column[String]("A_TRAIT", O.Length(135,varying=false))
 
     /** Primary key of PersonalityTraits (database name CONSTRAINT_B7) */
     val pk = primaryKey("CONSTRAINT_B7", (backgroundId, sequenceNum))
@@ -872,9 +962,6 @@ trait Tables {
     val level: Rep[Int] = column[Int]("LEVEL")
     /** Database column DESCRIPTION SqlType(CHAR), Length(4096,false) */
     val description: Rep[String] = column[String]("DESCRIPTION", O.Length(4096,varying=false))
-
-    /** Foreign key referencing Specializations (database name CONSTRAINT_EF) */
-    lazy val specializationsFk = foreignKey("CONSTRAINT_EF", specId, Specializations)(r => r.specId, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Restrict)
   }
   /** Collection-like TableQuery object for table SpecFeatures */
   lazy val SpecFeatures = new TableQuery(tag => new SpecFeatures(tag))

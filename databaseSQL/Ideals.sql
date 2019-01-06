@@ -3,7 +3,7 @@ drop table if exists ideals;
 create table ideals (
   background_id int not null,
   sequence_num int not null,
-  ideal char(200) not null,
+  ideal char(135) not null,
   primary key (background_id, sequence_num),
   foreign key (background_id) references backgrounds (background_id)
 );

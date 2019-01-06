@@ -135,7 +135,12 @@ create table character_jewels (
 create table character_background (
    character_id int not null,
    background_id int not null,
-   primary key (character_id, background_id),
+   specialization char(100) not null,
+   personality_trait char(135) not null,
+   ideal char(135) not null,
+   bond char(130) not null,
+   flaw char(130) not null,
    foreign key (character_id) references character(character_id),
-   foreign key (background_id) references backbrounds(background_id)
+   foreign key (background_id) references backgrounds(background_id),
+   primary key (character_id),
 );
