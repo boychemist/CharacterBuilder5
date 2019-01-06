@@ -35,7 +35,7 @@ object ClassSpecializationDisplay {
     specGrid.add(centeredBox, 0, rowNum, 3, 1)
     rowNum += 1
 
-    val specDescArea = getFittedTextArea(description, 400)
+    val specDescArea = getFittedTextArea(description, 500)
     specGrid.add(specDescArea, 1, rowNum, 2, 1)
     rowNum += 1
 
