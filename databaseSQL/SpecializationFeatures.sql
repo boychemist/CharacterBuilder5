@@ -823,8 +823,6 @@ insert into spec_features(spec_id, name, level, description)
 
 /* Forge Domain */
 insert into spec_features(spec_id, name, level, description)
-    values(46, 'Domain Spells', 1, 'You gain domain spells at the cleric levels listed in the Forge Domain Spells table in Xanther''s Guide to Everything.  See the Divine Domain class feature for how domain spells work.');
-insert into spec_features(spec_id, name, level, description)
     values(46, 'Bonus Proficiencies', 1, 'When you choose this domain at 1st level, you gain proficiency with heavy armor and smith''s tools.');
 insert into spec_features(spec_id, name, level, description)
     values(46, 'Blessing of the Forge', 1, 'At 1st level, you gain the ability to imbue magic into a weapon or armor.  At the end of a long rest, you can touch one nonmagical object that is a suit of armor or a simple or martial weapon.  Until the end of your next long rest or until you die, the object becomes a magic item, granting it a +1 bonus to AC if it''s armor or a +1 bonus to attack and damage rolls if it''s a weapon.
@@ -846,8 +844,6 @@ insert into spec_features(spec_id, name, level, description)
     - While wearing heavy armor, you have resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks.');
 
 /* Grave Domain */
-insert into spec_features(spec_id, name, level, description)
-    values(47, 'Domain Spells', 1, 'You gain domain spells at the cleric levels listed in the Grave Domain Spells table in Xanther''s Guide to Everything.  See the Divine Domain class feature for how domain spells work.');
 insert into spec_features(spec_id, name, level, description)
     values(47, 'Circle of Mortality', 1, 'At 1st level, you gain the ability to manipulate the line between life and death.  When you would normally roll one or more dice to restore hit points with a spell to a creature at 0 hit points, you instead use the highest number possible for each die.
     In addition, you learn the "spare the dying" cantrip, which doesn''t count against the number of cleric cantrips you know.  For you, it has a range of 30 feet, and you can cast it as a bonus action.');

@@ -279,9 +279,25 @@ insert into specializations(class_id, name, provides_spells, description)
 
 /* Cleric */
 insert into specializations(class_id, name, provides_spells, description)
-    values(2, 'Forge Domain', FALSE, 'The gods of the forge are patrons of artisans who work with metal, from a humble blacksmith who keeps a village in horseshoes and plow blades to the mighty elf artisan whose diamond-tipped arrows of mithral have felled demon lords.  The gods of the forge teach that, with patience and hard work, even the most intractable metal can be transformed from a lump ofore to a beautifully wrought object.  Clerics of these deities search for objects lost to the forces of darkness, liberate mines overrun by orcs, and uncover rare and wondrous materials necessary to create potent magic items.  Followers of these gods take great pride in their work, and they are willing tor craft and use heavy armor and powerful weapons to protect them.  Deities of this domain include Gond, Reorx, Onatar, Moradin, Hephaestus, and Goibhniu.');
+    values(2, 'Forge Domain', FALSE, 'The gods of the forge are patrons of artisans who work with metal, from a humble blacksmith who keeps a village in horseshoes and plow blades to the mighty elf artisan whose diamond-tipped arrows of mithral have felled demon lords.  The gods of the forge teach that, with patience and hard work, even the most intractable metal can be transformed from a lump ofore to a beautifully wrought object.  Clerics of these deities search for objects lost to the forces of darkness, liberate mines overrun by orcs, and uncover rare and wondrous materials necessary to create potent magic items.  Followers of these gods take great pride in their work, and they are willing tor craft and use heavy armor and powerful weapons to protect them.  Deities of this domain include Gond, Reorx, Onatar, Moradin, Hephaestus, and Goibhniu.
+    
+    FORGE DOMAIN SPELLS
+     Cleric Level    Spells
+           1st           identify, searing smite
+           3rd           heat metal, magic weapon
+           5th           elemental weapon, protection from energy
+           7th           fabricate, wall of fire
+           9th           animate objects, creation');
 insert into specializations(class_id, name, provides_spells, description)
-    values(2, 'Grave Domain', FALSE, 'Gods of the grave watch over the line between life and death.  To these deities, death and the afterlife are a foundational part of the multiverse.  To desecrate the peace of the dead is an abomination.  Deities of the grave include Kelemvor, Wee Jas, the ancestral spirits of the Undying Court, Hades, Anubis, and Osiris.  Followers of these deities seek to put wandering spirits to rest, destroy the undead, and ease the suffering of the dying.  Their magic also allows them to stave off death for a time, particularly for a person who still has some great work to accomplish in the world.  This is a delay of death, not a denial of it, for death will eventually get its due.');
+    values(2, 'Grave Domain', FALSE, 'Gods of the grave watch over the line between life and death.  To these deities, death and the afterlife are a foundational part of the multiverse.  To desecrate the peace of the dead is an abomination.  Deities of the grave include Kelemvor, Wee Jas, the ancestral spirits of the Undying Court, Hades, Anubis, and Osiris.  Followers of these deities seek to put wandering spirits to rest, destroy the undead, and ease the suffering of the dying.  Their magic also allows them to stave off death for a time, particularly for a person who still has some great work to accomplish in the world.  This is a delay of death, not a denial of it, for death will eventually get its due.
+    
+    GRAVE DOMAIN SPELLS
+     Cleric Level    Spells
+           1st           bane, false life
+           3rd           gentle repose, ray of enfeeblement
+           5th           revivify, vampiric touch
+           7th           blight, death ward
+           9th           antilife shell, raise dead');
 
 /* Druid */
 insert into specializations(class_id, name, provides_spells, description)
