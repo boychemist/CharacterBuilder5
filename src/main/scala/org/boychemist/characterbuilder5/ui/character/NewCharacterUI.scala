@@ -79,6 +79,8 @@ object NewCharacterUI {
   private def resetRightSide(): Unit = {
     racialFeatures.disable = true
     racialAbilities.disable = true
+    abilityList.disable = false
+    abilityPoints.disable =false
   }
 
   def abilityPointsReadyForUpdate(
@@ -634,6 +636,7 @@ object NewCharacterUI {
       wisdom.text = Dnd5Character.getWorkingCharacter.wisdom.toString
       charisma.text = Dnd5Character.getWorkingCharacter.charisma.toString
       choiceMade = false
+      alignmentIn.value = null
     }
   }
 
