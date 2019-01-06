@@ -753,7 +753,161 @@ insert into spec_features(spec_id, name, level, description)
     Once you use this feature, you can''t use it again until you finish a long rest.');
 insert into spec_features(spec_id, name, level, description)
     values(42, 'Rage Beyond Death', 14, 'Starting at 14th level, the divine power that fuels your rage allows you to shrug off fatal blows.
-    While you''re raging, having 0 hit points doesn''t knock you unconscious.  You still must make death saving throws, and you suffer the normal effects of taking damage while at 0 hit points.  However, if you would die due to failing death saving throws, you don''t die until your rage ends, and you die only if your still have 0 hit points.');
+    While you''re raging, having 0 hit points doesn''t knock you unconscious.  You still must make death saving throws, and you suffer the normal effects of taking damage while at 0 hit points.  However, if you would die due to failing death saving throws, you don''t die until your rage ends, and you die only if you still have 0 hit points.');
+/* College of Glamour */
+insert into spec_features(spec_id, name, level, description)
+    values(43, 'Mantle of Inspiration', 3, 'When you join the College of Glamour at 3rd level, you gain the ability to weave a song of fey magic that imbues your allies with vigor and speed.
+    As a bonus action, you can expend one use of your Bardic Inspiration to grant yourself a wondrous appearance.  When you do so, choose a number of creatures you can see and that can see you within 60 feet of you, up to a number equal to your Charisma modifier (minimum of one).  Each of them gains 5 temporary hit points.  When a creature gains these temporary hit points, it can immediately use its reaction to move up to its speed, without provoking opportunity attacks.
+    The number of temporary hit points increases when you reach certain levels of this class, increasing to 8 at 5th level, 11 at 10th level, and 14 at 15th leve.');
+insert into spec_features(spec_id, name, level, description)
+    values(43, 'Enthralling Performance', 3, 'Starting at 3rd level, you can charge your performance with seductive, fey magic.
+    If you perform for at least 1 minute, you can attempt to inspire wonder in you audience by singing, reciting a poem, or dancing.  At the end of the performance, choose a number of humanoids within 60 feet of you who watched or listened to all of it, up to a number equal to your Charisma modifier (minimum of one).  Each target must succeed on a Wisdom saving throw against your spell DC or be charmed by you.  While charmed in this way, the target idolizes your, it speaks glowingly of you to anyone who talks to it, and it hinders anyone who opposes you, although it avoids violence unless it was already inclined to  fight on your behalf.  This effect ends on a target after 1 hour, if it takes any damage, if you attack it, or if it witnesses you attacking or damaging its allies.
+    If a target succeeds on its saving throw, the target has no hint that you tried to charm it.
+    Once you use this feature, you can''t use it again until you finish a short or long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(43, 'Mantle of Majesty', 6, 'At 6th level, you gain the ability to cloak yourself in a fey magic that makes others want to serve you.  As a bonus action, you cast "command", without expending a spell slot, and you take on an appearance of unearthly beauty for 1 minute or until your concentration ends (as if you were concentrating on a spell).  During this time, you can cast "command" as a bonus action on each of your turns, without expending a spell slot.
+    Any creature charmed by you automatically fails its saving throw against the "command" you cast with this feature.
+    Once you use this feature, you can''t use it again until you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(43, 'Unbreakable Majesty', 14, 'At 14th level, your appearance permanently gains an otherworldly aspect that makes you look more lovely and fierce.
+    In addition, as a bonus action, you can assume a magically majestic presence for 1 minute or until you are incapacitated.  For the duration, whenever any creature tries to attack you for the first time on a turn, the attacker must make a Charisma saving throw against your spell save DC.  On a failed save, it can''t attack you on this turn, and it must choose a new target for its attack or the attack is wasted.  On a successful save, it can attack you on this turn but it has disadvantage on any saving throw it makes against your spells on your next turn.
+    Once your assume this majectic presence, you can''t do so again until you finish a short or long rest.');
 
-select * from spec_features;
+/* College of Swords */
+insert into spec_features(spec_id, name, level, description)
+    values(44, 'Bonus Proficiencies', 3, 'When you join the College of Swords at 3rd level, you gain proficiency with medium armor and the scimitar.
+    If you''re proficient with a simple or martial melee weapon, you can use it as a spellcasting focus for your bard spells.');
+insert into spec_features(spec_id, name, level, description)
+    values(44, 'Fighting Style', 3, 'At 3rd level, you adopt a style of fighting as your speciality.  Choose one of the following options.  You can''t take a Fighting Style option more than once, even if something in the game lets you choose again.
+    DUELING.
+    When your ar wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.
+    TWO-WEAPON FIGHTING.
+    When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.');
+insert into spec_features(spec_id, name, level, description)
+    values(44, 'Blade Flourish', 3, 'At 3rd level, you learn to perform impressive displays of martial prowess and speed.
+    Whenever you take the Attack action on your turn, you walking speed increases by 10 feet until the end of the turn, and if a weapon attack that you make as part of this action hits a creature, you can use one of the following Blade Flourish options of your choice.  You can use on one Blade Flourish option per turn.
+    DEFENSIVE FLOURISH.
+    You can expend on use of your Bardic Inspiration to cause the weapon to deal extra damage to the target you hit.  The damage equals the number you roll on the Bardic Inspiration die.  You also add the number rolled to your AC until the start of your next turn.
+    SLASHING FLOURISH.
+    You can expend on use of your Bardic Inspiriation to cause the weapon to deal extra damage to the target you hit and to any other creature of your choice that you can see within 5 feet of you.  The damage equals the number you roll on the Bardic Inspiration die.
+    MOBILE FLOURISH.
+    You can expend one use of your Bardic Inspiration to cause the weapon to deal extra damage to the target you hit.  The damage equals the number you roll on the Bardic Inspiration die.  You can also push the target up to 5 feet away from your, plus a number of feet equal to the number you roll on that die.  You can then immediately use your reaction to move up to your walking speed to an unoccupied space within 5 feet of the target.');
+insert into spec_features(spec_id, name, level, description)
+    values(44, 'Extra Attack', 6, 'Starting at 6th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.');
+insert into spec_features(spec_id, name, level, description)
+    values(44, 'Master''s Flourish', 14, 'Starting at 14th level, whenever you use a Blade Flourish option, you can roll a d6 and use it instead of expending a Bardic Inspiration die.');
+
+/* College of Whispers */
+insert into spec_features(spec_id, name, level, description)
+    values(45, 'Psychic Blades', 3, 'When you join the College of Whispers at 3rd level, you gain the ability to make your weapon attacks magically toxic to a creature''s mind.
+    When you hit a creature with a weapon attack, you can expend one of your Bardic Inspiration to deal an extra 2d6 psychic damage to that target.  You can do so only once per round on your turn.
+    The psychic damage increases when you reach certain levels in this class, increasing to 3d6 at 5th level, 5d6 at 10th level, and 8d6 at 15th level.');
+insert into spec_features(spec_id, name, level, description)
+    values(45, 'Words of Terror', 3, 'At 3rd level, you learn to infuse innocent-seeming words with an insidious magic that can inspire terror.
+    If you speak to a humanoid alone for at least 1 minute, you can attempt to seed paranoia in its mind.  At the end of the converstion, the target must succeed on a Wisdom saving throw against your spell save DC or be frightened of your or another creature of your choice.  The target is frightened in this way for 1 hour, until it is attacked or damaged, or until it witnesses its allies being attacked or damaged.
+    If the target succeeds on its saving throw, the target has no hint that you tried to frighten it.
+    Once you use this feature, you can''t use it again until you finish a short or long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(45, 'Mantle of Whispers', 6, 'At 6th level, you gain the ability to adopt a humanoid''s persona.  When a humanoid dies within 30 feet of your, you can magically capture its shadow using your reaction.  You retain the shadow until you use it or you finish a long rest.
+    You can use the shadow as an action.  When you do so, it vanishes, magically transforming into a disguise that appears on you.  You now look like the dead person, but healthy and alive.  This disguise lasts for 1 hour or until you end it as a bonus action.
+    While you''re in the disguise, you gain access to all information that a humanoid would freely share with a casual acquaintance.  Such information includes general details on its background and personal life, but doesn''t include secrets.  The information is enough that you can pass yourself off as the person by drawing on its memories.
+    Another creature can see through this disguise by succeeding on a Wisdom(Insight) check contested by your Charisma(Deception) check.  You gaina +5 bonus on your check.
+    Once you capture a shadow with this feature, you can''t capture another one until you finish a short or long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(45, 'Shadow Lore', 14, 'At 14th level, you gain the ability to weave dark magic into your words and tap into a creature''s deepest fears.
+    As an action, you magically whisper a phrase that only one creature of your choice within 30 feet of you can hear.  The target must make a Wisdom saving throw against your spell save DC.  It automatically succeeds if it doesn''t share a language with you or if it can''t hear you.  On a successful saving throw, you whisper sounds like unintelligible mumbling and has no effect.
+    On a failed saving throw, the target is charmed by you for the next 8 hours or until you or your allies attack it, damage it, or force it to make a saving throw.  It interprets the whispers as a description of its most mortifying secret.  You gain no knowledge of this secret, but the target is convinced you know it.
+    The charmed creature obeys your commands for fear that you will reveal its secret.  It won''t risk its life for you or fight for you, unless it is already inclinded to do so.  It grants you favors and gifts it would offer to a close friend.
+    When the effect ends, the creature has no understanding of why it held you in such fear.
+    Once you use this feature, you can''t use it again until you finish a long rest.');
+
+/* Forge Domain */
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Domain Spells', 1, 'You gain domain spells at the cleric levels listed in the Forge Domain Spells table in Xanther''s Guide to Everything.  See the Divine Domain class feature for how domain spells work.');
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Bonus Proficiencies', 1, 'When you choose this domain at 1st level, you gain proficiency with heavy armor and smith''s tools.');
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Blessing of the Forge', 1, 'At 1st level, you gain the ability to imbue magic into a weapon or armor.  At the end of a long rest, you can touch one nonmagical object that is a suit of armor or a simple or martial weapon.  Until the end of your next long rest or until you die, the object becomes a magic item, granting it a +1 bonus to AC if it''s armor or a +1 bonus to attack and damage rolls if it''s a weapon.
+    Once you use this feature, you can''t use it again until you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Channel Divinity:  Artisan''s Blessing', 2, 'Starting at 2nd level, your can use your Channel Divinity to create simple items.
+    You conduct an hour-long ritual that crafts a non-magical item that must include some metal:  a simple or martial weapon, a suit of armor, ten pieces of ammunition, a set of tools, or another metal object (see Chapter 5, "Equipment," in the Player''s Handbook for examples of these items).  The creation is completed at the end of the hour, coalescing in an unoccupied space of your choice on a surface within 5 feet of you.
+    The thing you create can be something that is worth no more than 100 gp.  As part of this ritual, you must lay out metal, which can include coins, with a value equal to the creation.  The metal irretrieveably coalesces and transforms into the creation at the ritual''s end, magically forming even non-metal parts of the creation.
+    The ritual can create a duplicate of a nonmagical item that contains metal, such as a key, if you possess the original during the ritual.');
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Soul of the Forge', 6, 'Starting at 6th level, your mastery of the forge grants you special abilities:
+    - You gain resistance to fire damage.
+    - While wearing heavy armor, you gain a +1 bonus to AC.');
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Divine Strike', 8, 'At 8th level, you gain the ability to infuse your weapon strikes with the fiery power of the forge.  Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal and extra 1d8 fire damage to the target.  When you reach 14th level, the extra damage is 2d8.');
+insert into spec_features(spec_id, name, level, description)
+    values(46, 'Saint of Forge and Fire', 17, 'At 17th level, your blessed affinity with fire and metal becomes more powerful:
+    - You gain immunity to fire damage.
+    - While wearing heavy armor, you have resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks.');
+
+/* Grave Domain */
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Domain Spells', 1, 'You gain domain spells at the cleric levels listed in the Grave Domain Spells table in Xanther''s Guide to Everything.  See the Divine Domain class feature for how domain spells work.');
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Circle of Mortality', 1, 'At 1st level, you gain the ability to manipulate the line between life and death.  When you would normally roll one or more dice to restore hit points with a spell to a creature at 0 hit points, you instead use the highest number possible for each die.
+    In addition, you learn the "spare the dying" cantrip, which doesn''t count against the number of cleric cantrips you know.  For you, it has a range of 30 feet, and you can cast it as a bonus action.');
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Eyes of the Grave', 1, 'At 1st level, you gain the ability to ocassionally sense the presence of undead, whose existence is an insult to the natural cycle of life.  As an action, you can open your awareness to magically detect undead.  Until the end of your next turn, you know the location of any undead within 60 feet of you that isn''t behind total cover and that isn''t protected from divination magic.  This sense doesn''t tell you anything about a creature''s capabilities or identity.
+    You can use this feature a number of times equal to your Wisdom modifier (minimum once).  You regain all expended uses when you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Channel Divinity:  Path to the Grave', 2, 'Starting at 2nd level, you can use your Channel Divinity to mark another creature''s life force for termination.
+    As an action, you choose one creature you can see within 30 feet of you, cursing it until the end of your next turn.  The next time you or an ally of yours hits the cursed creature with an attack, the creature has vulnerability to all of the attack''s damage, and then the curse ends.');
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Sentinel at Death''s Door', 6, 'At 6th level, you gain the ability to impede death''s progress.  As a reaction when you or a creature you can see within 30 feet of you suffers a critical hit, you can turn that hit into a normal hit.  Any effects triggered by a critical hit are cancelled.
+    You can use this feature a number of times equal to your Wisdom modifier (minimum of once).  You regain all expended uses when you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Potent Spellcasting', 8, 'Starting at 8th level, you add your Wisdom modifier to the damage you deal with any cleric cantrip.');
+insert into spec_features(spec_id, name, level, description)
+    values(47, 'Keeper of Souls', 17, 'Starting at 17th level, you can seize a trace of vitality from a parting soul and use it to heal the living.  When an enemy you can see dies within 60 feet of you, you or one creature of your choice that is within 60 feet of you regains hit points equal to the enemy''s number of Hit Dice.  You can use this feature only if you aren''t incapacitated.  Once you use it, you can''t do again until the start of your next turn.');
+
+/* Circle of Dreams */
+insert into spec_features(spec_id, name, level, description)
+    values(48, 'Balm of the Summer Court', 2, 'At 2nd level, you become imbued with the blessings of the Summer Court.  Your are a font of energy that offers respite from injuries.  You have a pool of fey energy represented by a number of d6s equal to your druid level.
+    As a bonus action, you can choose one creature you can see within 120 feet of you and spend a number of those dice equal to half your druid level or less.  Roll the spent dice and add them together.  The target regains a number of hit points equal to the total.  The target also gains 1 temporary hit point per die spent.
+    You regain all expended dice when you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(48, 'Hearth of Moonlight and Shadow', 6, 'At 6th level, home can be wherever you are.  During a short or long rest, you can invoke the shadowy power of the Gloaming Court to help guard your respite.  At the start of the rest, you touch a point in space, and an invisible, 30-foot-radius sphere of magic appears, centered on that point.  Total cover blocks the sphere.
+    While within the sphere, you and your allies gain a +5 bonus to Dexterity(Stealth) and Wisdom(Perception) checks, and any light from open flames in the sphere (a campfire, torches, or the like) isn''t visible outside it.
+    The sphere vanishes at the end of the rest or when you leave the sphere.');
+insert into spec_features(spec_id, name, level, description)
+    values(48, 'Hidden Paths', 10, 'Starting at 10th level, you can use the hidden, magical pathways that some fey use to traverse space in the blink of an eye.  As a bonus action on your turn, you can teleport up to 60 feet to an unoccupied space you can see.  Alternatively, you can use your action to teleport one willing creature ou touch up to 30 feet to an unoccupied space you can see.
+    You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a long rest.');
+insert into spec_features(spec_id, name, level, description)
+    values(48, 'Walker in Dream', 14, 'At 14th level, the magic of the Feywild grants you the ability to travel mentally or physically through dreamlands.
+    When you finish a short rest, you can cast one of the following spells without expending a spell slot or requiring material components: "dream" (with you as the messenger), "scrying", or "teleportation circle".
+    This use of the "teleportation circle" is special.  Rather than opening a portal to a permanent teleportation circle, it opens a portal to the last location where you finished a long rest on your current plane of existence.  If you haven''t taken a long rest on your current plane, the spell fails but isn''t wasted.
+    Once you use this feature, you can''t use it again until you finish a long rest.');
+
+/* Circle of the Shepherd */
+insert into spec_features(spec_id, name, level, description)
+    values(49, 'Speech of the Woods', 2, 'At 2nd level, you gain the ability to converse with beasts and many fey.
+    You learn to speak, read, and write Sylvan.  In addition, beasts can understand your speach, and you gain the ability to decipher their noises and motions.  Most beasts lack the intelligence to convey or understand sophisticated concepts, but a friendly beast could relay what it has seen or heard in the recent past.  This ability doesn''t grant you friendship with beasts, though you can combine this ability with gifts to curry favor with them as you would with any nonplayer character.');
+insert into spec_features(spec_id, name, level, description)
+    values(49, 'Spirit Totem', 2, 'Starting at 2nd level, you can call forth nature spirits to influence the world around you.  As a bonus action, you can magically summon an incorporeal spirit to a point you can see within 60 feet of you.  The spirit creates and aurain a 30-foot radius around that point.  It counts as neither a creature nor an object, though it has the spectral appearance of the creature it represents.
+    As a bonus action, you can move the spirit up to 60 feet to a point that you can see.
+    The spirit persists for 1 minute or until you''re incapacitated.  Once you use this feature, you can''t use it again until you finish a short or long rest.
+    The effect of the spirit''s aura depends on the type of spirit you summon from the options below.
+    BEAR SPIRIT.
+    The bear spirit grants you and your allies its might and endurance.  Each creature of your choice in the aura when the spirit appears gains temporary hit points equal to 5 + your druid level.  In addition, you and your allies gain advantage on Strength checks and Strength saving throws while in the aura.
+    HAWK SPIRIT.
+    The hawk spirit is a consummant hunter, aiding you and your allies with its keen sight.  When a creature makes an attack roll against a target in the spirit''s aura, you can use your reaction to grant advantage to that attack roll.  In addition, you and your allies have advantage on Wisdom(Perception) checks while in the aura.
+    UNICORN SPIRIT.
+    The unicorn spirit lends its protection to those nearby.  You and your allies gain advantage on all ability checks made to detect creatures in the spirit''s aura.  In addition, if you cast a spell using a spell slot that restores hit points to any creature inside or outside the aura, each creature of you choice in the aura also regains hit points equal to your druid level.');
+insert into spec_features(spec_id, name, level, description)
+    values(49, 'Mighty Summoner', 6, 'Starting at 6th level, beasts and fey that you conjure are more resilient than normal.  Any beast or fey summoned or created by a spell you cast gains the following benefits:
+    - The creature appears with more hit points than normal:  2 extra hit points per Hit Die it has.
+    - The damage from its natural weapons is considered magical for the purpose of overcomming immunity and resistance to nonmagical attacks and damage.');
+insert into spec_features(spec_id, name, level, description)
+    values(49, 'Guardian Spirit', 10, 'Beginning at 10th level, your Spirit Totem safeguards the beasts and fey that you call forth with your magic.  When a beast or fey that you summoned or created with a spell ends its turn in your Spirit Totum aura, that creature regains a number of hit points equal to half your druid level.');
+insert into spec_features(spec_id, name, level, description)
+    values(49, 'Faithful Summons', 14, 'Starting at 14th level, the nature spirits you commune with protect your when you are the most defenseless.  If you are reduced to 0 hit points or are incapacitated against your will, you can immediately gain the benefits of "conjure animals" as if it were cast using a 9th-level spell slot.  It summons four beasts of your choice that are challenge rating 2 or lower.  The conjured beasts appear within 20 feet of you.  If they receive no commands from you, they protect you from harm and attack your foes.  The spell lasts for 1 hour, requiring no concentration, or until you dismiss it (no action required).
+    Once you use this feature, you can''t use it again until you finish a long rest.');
+
+select s.name, sf.name, sf.level, sf.description from specializations s, spec_features sf where sf.spec_id = s.spec_id;
+/* select * from spec_features; */
 /* select spec_id, name from specializations */
