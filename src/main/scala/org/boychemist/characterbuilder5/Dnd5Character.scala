@@ -3,6 +3,7 @@ package org.boychemist.characterbuilder5
 import org.boychemist.characterbuilder5.dnd5classes._
 import org.boychemist.characterbuilder5.dnd5classes.specializations.Dnd5ClassSpecialization
 import org.boychemist.characterbuilder5.races._
+import org.boychemist.characterbuilder5.dbInterface.Tables.CharacterBackgroundRow
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -107,7 +108,9 @@ object Dnd5Character {
                             damageBonus: Int = 0,
                             abilityAdjustments: String = "")
 
-  case class CharacterJewel(name: String, value: Int, count: Int = 1)
+  case class CharacterTool(name:String, weight: Double)
+
+  case class CharacterJewel(name: String, value: BigDecimal, count: Int = 1)
 
   class CharacterClassDescription(charClass: String) {
     /*
@@ -152,7 +155,6 @@ object Dnd5Character {
     }
   }
 
-
 }
 
 /**
@@ -180,11 +182,11 @@ class Dnd5Character {
   var treasurePoints: Int = 0 // alternate mechanism for getting magic items
   var maximumHitPoints: Int = 0
   var currentHitPoints: Int = 0
-  var copper: Int = 0
-  var silver: Int = 0
-  var electrum: Int = 0
-  var gold: Int = 0
-  var platinum: Int = 0
+  var copper: Long = 0
+  var silver: Long = 0
+  var electrum: Long = 0
+  var gold: Long = 0
+  var platinum: Long = 0
   var jewels: List[Dnd5Character.CharacterJewel] = List()
   var strength: Int = 8
   var constitution: Int = 8
@@ -195,7 +197,7 @@ class Dnd5Character {
   var draconicAncestry: String = "" // Dragonborn and draconic sorcerer only
   var characterId: Int = -1 // not set value, database serial key for this character
   var racialFeaturesAddedToLists: Boolean = false
-
+  var background: CharacterBackgroundRow = _
   // todo -- add character background skills, tools, languages, equipment, specialization
 
   /*
@@ -311,43 +313,6 @@ class Dnd5Character {
     }
   }
 
-  override def hashCode: Int = {
-    ((name,
-      race,
-      size,
-      characterClass.hashCode,
-      gear.hashCode,
-      equippedGear.hashCode,
-      weapons.hashCode,
-      equippedWeapons.hashCode,
-      armor.hashCode,
-      equippedArmor.hashCode,
-      armorProficiencies.hashCode,
-      weaponProficiencies.hashCode,
-      toolProficiencies.hashCode,
-      skillProficiencies.hashCode,
-      characterLevel).##,
-      experiencePoints,
-      checkPoints,
-      treasurePoints,
-      maximumHitPoints,
-      currentHitPoints,
-      copper,
-      silver,
-      electrum,
-      gold,
-      platinum,
-      jewels.hashCode,
-      strength,
-      constitution,
-      dexterity,
-      intelligence,
-      wisdom,
-      charisma,
-      characterId,
-      draconicAncestry).##
-  }
-
   def copy: Dnd5Character = {
     val theCopy = new Dnd5Character()
     theCopy.name = name
@@ -410,7 +375,8 @@ class Dnd5Character {
 
   /**
     * method to add the racial abilities that do not need to be chosen by a human and the ability score
-    * adjustments that need to be done only once as part of character creation.
+    * adjustments that need to be done only once as part of character creation.  Used by the UI when
+    * creating a character.
     */
   def addRacialBasicAbilities(): Unit = {
     if (race == null) return
@@ -420,5 +386,5 @@ class Dnd5Character {
     racialAbilities = theRace.racialAbilities
   }
   // todo -- add a method to compute hit bonus and damage bonus for a weapon (includes proficiency bonus and other pluses)
-  // todo -- add a method to compute armor class based on what is equipped, class, dexterity, and other factors
+  // todo -- add a method to compute armor class based on what is equipped, class, dexterity, and other (magic) factors
 }
