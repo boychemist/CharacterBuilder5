@@ -14,7 +14,7 @@ trait Tables {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, BackgroundChoices.schema, BackgroundDetails.schema, BackgroundFeatures.schema, Backgrounds.schema, Bonds.schema, Character.schema, CharacterArmor.schema, CharacterBackground.schema, CharacterClasses.schema, CharacterCoins.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterTools.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Flaws.schema, Ideals.schema, Languages.schema, PersonalityTraits.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
+  lazy val schema: profile.SchemaDescription = Array(AdventuringGear.schema, Armor.schema, BackgroundChoices.schema, BackgroundDetails.schema, BackgroundFeatures.schema, Backgrounds.schema, Bonds.schema, Character.schema, CharacterArmor.schema, CharacterBackground.schema, CharacterClasses.schema, CharacterCoins.schema, CharacterGear.schema, CharacterJewels.schema, CharacterLanguages.schema, CharacterProficiencies.schema, CharacterSpells.schema, CharacterTools.schema, CharacterWeapons.schema, Classes.schema, DamageType.schema, Flaws.schema, Ideals.schema, Languages.schema, PersonalityTraits.schema, Races.schema, SpecFeatures.schema, Specializations.schema, Tools.schema, Weapons.schema, WeaponType.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
 
@@ -1047,6 +1047,37 @@ trait Tables {
   }
   /** Collection-like TableQuery object for table Specializations */
   lazy val Specializations = new TableQuery(tag => new Specializations(tag))
+
+  /** Entity class storing rows of table Tools
+   *  @param name Database column NAME SqlType(CHAR), Length(30,false)
+   *  @param weight Database column WEIGHT SqlType(DOUBLE)
+   *  @param `type` Database column TYPE SqlType(CHAR), Length(18,false) */
+  case class ToolsRow(name: String, weight: Double, `type`: Option[String])
+  /** GetResult implicit for fetching ToolsRow objects using plain SQL queries */
+  implicit def GetResultToolsRow(implicit e0: GR[String], e1: GR[Double], e2: GR[Option[String]]): GR[ToolsRow] = GR{
+    prs => import prs._
+    ToolsRow.tupled((<<[String], <<[Double], <<?[String]))
+  }
+  /** Table description of table TOOLS. Objects of this class serve as prototypes for rows in queries.
+   *  NOTE: The following names collided with Scala keywords and were escaped: type */
+  class Tools(_tableTag: Tag) extends profile.api.Table[ToolsRow](_tableTag, "TOOLS") {
+    def * = (name, weight, `type`) <> (ToolsRow.tupled, ToolsRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(name), Rep.Some(weight), `type`).shaped.<>({r=>import r._; _1.map(_=> ToolsRow.tupled((_1.get, _2.get, _3)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column NAME SqlType(CHAR), Length(30,false) */
+    val name: Rep[String] = column[String]("NAME", O.Length(30,varying=false))
+    /** Database column WEIGHT SqlType(DOUBLE) */
+    val weight: Rep[Double] = column[Double]("WEIGHT")
+    /** Database column TYPE SqlType(CHAR), Length(18,false)
+     *  NOTE: The name was escaped because it collided with a Scala keyword. */
+    val `type`: Rep[Option[String]] = column[Option[String]]("TYPE", O.Length(18,varying=false))
+
+    /** Uniqueness Index over (name) (database name CONSTRAINT_INDEX_4C) */
+    val index1 = index("CONSTRAINT_INDEX_4C", name, unique=true)
+  }
+  /** Collection-like TableQuery object for table Tools */
+  lazy val Tools = new TableQuery(tag => new Tools(tag))
 
   /** Entity class storing rows of table Weapons
    *  @param weaponId Database column WEAPON_ID SqlType(INTEGER), AutoInc, PrimaryKey

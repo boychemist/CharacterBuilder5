@@ -171,6 +171,7 @@ class Dnd5Character {
   var gear: List[Dnd5Character.CharacterGearItem] = List()
   var weapons: List[Dnd5Character.CharacterWeapon] = List()
   var armor: List[Dnd5Character.CharacterArmor] = List()
+  var tools: List[Dnd5Character.CharacterTool] = List()
   var armorProficiencies: List[String] = List()
   var weaponProficiencies: List[String] = List()
   var toolProficiencies: List[String] = List()
