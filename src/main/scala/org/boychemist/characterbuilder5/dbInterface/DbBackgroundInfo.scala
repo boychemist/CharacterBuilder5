@@ -23,6 +23,17 @@ object DbBackgroundInfo {
     exec(allBackgrounds.result)
   }
 
+  def getAllBackgroundNames: Seq[String] = {
+    val allNames = allBackgrounds.map(_.name)
+    exec(allNames.result)
+  }
+
+  def getBackgroundIdByName(backgroundName: String): Int = {
+    val byName =
+      allBackgrounds.filter(_.name === backgroundName).map(_.backgroundId)
+    exec(byName.result).head
+  }
+
   def getBackgroundById(id: Int): BackgroundsRow = {
     val getRow = allBackgrounds.filter(_.backgroundId === id)
     val retRow = exec(getRow.result)
@@ -74,7 +85,7 @@ object DbBackgroundInfo {
     exec(sortedBonds.result)
   }
 
-  def getFlawsByBackgroundID(ID : Int): Seq[(Int, String)] = {
+  def getFlawsByBackgroundID(ID: Int): Seq[(Int, String)] = {
     val sortedFlaws = allFlaws
       .filter(_.backgroundId === ID)
       .sortBy(_.sequenceNum)

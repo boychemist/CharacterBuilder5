@@ -6,6 +6,16 @@ import org.boychemist.characterbuilder5.dbInterface.Tables.BackgroundFeaturesRow
 
 import scala.collection.mutable.ListBuffer
 
+object BackgroundImpl {
+  def getBackgroundByName(backgroundName: String): BackgroundImpl = {
+    new BackgroundImpl(DbBackgroundInfo.getBackgroundIdByName(backgroundName))
+  }
+
+  def choiceSeqToStringSeq(pairs: Seq[(Int, String)]): Seq[String] = {
+    pairs.map {case (num, str) => num.toString + ") " + str}
+  }
+}
+
 class BackgroundImpl(backgroundID: Int) extends BackgroundBase {
   override val backgroundId: Int = backgroundID
   private val baseRow = DbBackgroundInfo.getBackgroundById(backgroundID)

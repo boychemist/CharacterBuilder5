@@ -10,6 +10,7 @@ import scalafx.scene.Node
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout._
+import org.boychemist.characterbuilder5.dbInterface.DbBackgroundInfo
 
 import scala.collection.mutable.{ListBuffer, MutableList => mList}
 
@@ -21,7 +22,7 @@ object NewCharacterUI {
     val pane = new ScrollPane {
       border = getBorder
       content = getTopLevelNewCharacterPane
-      style = "-fx-background-color: cyan"
+      style = "-fx-background-color: linen"
     }
 
     val hdTab = new Tab {
@@ -65,9 +66,9 @@ object NewCharacterUI {
     val leftSide = LeftSide.pane
     val rightSide = generateRightSide
 
-    val theBox: HBox = new HBox(10) {
+    val theBox: HBox = new HBox(5) {
       children = List(leftSide, rightSide)
-      style = "-fx-background-color: red"
+      style = "-fx-background-color: linen"
     }
     theBox
   }
@@ -183,10 +184,10 @@ object NewCharacterUI {
     raceId match {
       case Dnd5RacesEnum.MountainDwarf =>
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane(ToolChoicePanel.toolChoicePanel(workingChar)))
+          FXUtils.showDialogPane(ToolChoicePanel.dwarfToolChoicePanel(workingChar)))
       case Dnd5RacesEnum.HillDwarf =>
         FXUtils.onFXAndWait(
-          FXUtils.showDialogPane(ToolChoicePanel.toolChoicePanel(workingChar)))
+          FXUtils.showDialogPane(ToolChoicePanel.dwarfToolChoicePanel(workingChar)))
       case Dnd5RacesEnum.HighElf =>
         FXUtils.onFXAndWait(
           FXUtils.showDialogPane(
@@ -287,7 +288,7 @@ object NewCharacterUI {
       border = getBorder
       columnHalignment = HPos.Center
       children = theChildren.toList
-      style = "-fx-background-color: cyan"
+      style = "-fx-background-color: linen"
     }
 
     fPane
@@ -310,7 +311,7 @@ object NewCharacterUI {
       new ComboBox[Dnd5RacesEnum.Value](getRaceNames) {
         promptText = "Select a race"
         editable = false
-        value.onChange((_, _, newVal) => {
+         value.onChange((_, _, newVal) => {
           Dnd5Character.getWorkingCharacter.race = newVal
           Dnd5Character.getWorkingCharacter.addRacialBasicAbilities()
           charSpeed.text = Dnd5Character.getWorkingCharacter.speed.toString
@@ -321,6 +322,13 @@ object NewCharacterUI {
           NewCharacterUI.racialFeatures.disable = false
           NewCharacterUI.racialAbilities.disable = false
         })
+      }
+
+    val backgroundIn: ComboBox[String] =
+      new ComboBox[String](DbBackgroundInfo.getAllBackgroundNames) {
+        promptText = "Select a background"
+        editable = false
+        // todo -- add on change method
       }
 
     private val alignmentIn =
@@ -519,7 +527,7 @@ object NewCharacterUI {
         maxWidth = 700
         vgap = 2
         hgap = 2
-        style = "-fx-background-color: cyan"
+        style = "-fx-background-color: linen"
       }
       var leftRowNum = 0
 
@@ -527,7 +535,9 @@ object NewCharacterUI {
       leftRowNum += 1
 
       leftSide.addRow(leftRowNum, enhancedLabel("Race"), raceIn)
-      GridPane.setHalignment(raceIn, HPos.Center)
+      leftRowNum += 1
+
+      leftSide.addRow(leftRowNum, enhancedLabel("Background"), backgroundIn)
       leftRowNum += 1
 
       leftSide.addRow(leftRowNum, enhancedLabel("Speed"), charSpeed)
@@ -627,6 +637,8 @@ object NewCharacterUI {
       nameIn.text = ""
       raceIn.disable = false
       raceIn.value = null
+      backgroundIn.disable = false
+      backgroundIn.value = null
       strength.text = Dnd5Character.getWorkingCharacter.strength.toString
       constitution.text =
         Dnd5Character.getWorkingCharacter.constitution.toString

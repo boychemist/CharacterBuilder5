@@ -32,3 +32,16 @@
      -fx-background-color: #7092BE;
      -fx-text-fill: -fx-selection-bar-text;
 }
+
+.combo-box .list-cell {
+    -fx-text-fill: black;
+}
+
+.combo-box: disabled {
+    -fx-opacity: 1;
+    -fx-background-color: white;
+}
+
+.combo-box:disabled .list-cell {
+    -fx-text-fill: darkblue;
+}
