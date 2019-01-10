@@ -4,7 +4,7 @@ import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import org.boychemist.characterbuilder5.{Dnd5Character, Dnd5LanguagesEnum}
 import scalafx.geometry.Pos
 import scalafx.scene.control._
-import scalafx.scene.layout.{HBox, VBox}
+import scalafx.scene.layout.{GridPane, HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 import scalafx.Includes.handle
 import scalafx.scene.Node
@@ -67,18 +67,29 @@ object LanguageChoicesPanel {
     }
 
     val langBuffer = new ListBuffer[Node]
-    langBuffer += enhancedLabel("Choose a language")
     val langIter = Dnd5LanguagesEnum.values.iterator
     while (langIter.hasNext) {
       val lang = langIter.next()
       // get the set of languages not already known (knowable) by the character
       if (!unselectableLanguages.contains(lang)) langBuffer += dragCopyFromField(lang.toString, 100)
     }
-
-    val rightSide = new VBox {
-      spacing = 10
-      children = langBuffer.toList
+    val langArray = langBuffer.toArray
+    val rightSide = new GridPane  {
+      style = "-fx-background-color: linen"
+      vgap = 2
+      hgap = 2
     }
+    rightSide.addRow(0, enhancedLabel("Choose a language"))
+    val maxIter = langArray.length/2
+    // assumes at least 2 languages available
+    for (i <- 0 until maxIter) {
+      val idx = i * 2
+      rightSide.addRow(i + 1, langArray(idx), langArray(idx + 1))
+    }
+    if ((langArray.length % 2) == 1) {
+      rightSide.addRow(maxIter + 1, langArray.last)
+    }
+
 
     val bothSides = new HBox {
       spacing = 10
@@ -90,6 +101,13 @@ object LanguageChoicesPanel {
       children = List(titleVbox, bothSides)
     }
     theWholeBox
+  }
+
+  def get2ElementHbox(node1: Node, node2: Node, inWidth: Int = 220): HBox = {
+    new HBox {
+      maxWidth = inWidth
+      children = List(node1, node2)
+    }
   }
 
   /**
