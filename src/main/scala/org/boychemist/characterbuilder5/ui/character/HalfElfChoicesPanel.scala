@@ -5,7 +5,7 @@ import org.boychemist.characterbuilder5.ui.CharacterBuilderUIutils._
 import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.control.{Button, Label, ScrollPane, TextField}
-import scalafx.scene.layout.{HBox, VBox}
+import scalafx.scene.layout.{GridPane, HBox, VBox}
 import scalafx.scene.text.{Font, FontWeight}
 import scalafx.Includes.handle
 
@@ -169,16 +169,31 @@ class HalfElfChoicesPanel {
     }
 
     val rightSideElements = new ListBuffer[Node]
-    rightSideElements += enhancedLabel("Available Skills")
+//    rightSideElements += enhancedLabel("Available Skills")
     val skillsIter = Dnd5SkillsEnum.values.iterator
     while (skillsIter.hasNext) {
       val skillName = skillsIter.next().toString
       rightSideElements += dragToIfEmptyTextField(skillName, 100)
     }
+    val skillsArray = rightSideElements.toArray
+    val skillsGrid = new GridPane {
+      style = "-fx-background-color: linen"
+      vgap = 2
+      hgap = 2
+    }
+    val maxIter = skillsArray.length / 2
+    for (i <- 0 until maxIter) {
+      val idx = i * 2
+      skillsGrid.addRow(i, skillsArray(idx), skillsArray(idx + 1))
+    }
+    if ((skillsArray.length % 2) == 1) {
+      skillsGrid.addRow(maxIter, skillsArray.last)
+    }
     val skillRightBox = new VBox {
       spacing = 10
       alignment = Pos.Center
-      children = rightSideElements.toList
+//      children = rightSideElements.toList
+      children = List(enhancedLabel("Available Skills"), skillsGrid)
     }
 
     val skillsBox = new HBox {
